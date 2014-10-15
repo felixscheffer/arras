@@ -68,13 +68,6 @@ public class DataTableIT extends ArrasTestCase {
         assertRowCount(200);
     }
 
-    private void sleep() {
-
-        if ("/DataTablesAjaxDemo".equals(this.pagename)) {
-            sleep(15000);
-        }
-    }
-
     private void assertRowsPerPage(int rowsPerPage) {
 
         assertTableHeader("Title", "Album", "Artist", "Genre", "Play Count", "Rating");
@@ -211,6 +204,10 @@ public class DataTableIT extends ArrasTestCase {
     }
 
     private void assertPaginationInfo(int from, int to) {
+
+        // wait until DataTable has finished processing
+        waitUntil(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".datatable_processing")));
+
         assertTextPresent(PAGINATION_INFO, "Showing " + from + " to " + to + " of 1,722 entries");
     }
 
