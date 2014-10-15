@@ -1,0 +1,7 @@
+/target/
+/test-output/
+
+# eclipse specific
+/.settings/
+.classpath
+.project

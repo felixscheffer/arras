@@ -1,0 +1,17 @@
+<t:container xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd" xmlns:p="tapestry:parameter">
+
+	<li class="dropdown">
+		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+			<t:delegate to="label" />
+		</a>
+		<ul class="dropdown-menu" role="menu">
+			<t:body />
+		</ul>
+	</li>
+
+	<t:block t:id="defaultLabel">
+		${name}
+		<span class="caret"></span>
+	</t:block>
+
+</t:container>

@@ -1,0 +1,30 @@
+<div xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
+    <table id="${clientId}" width="100%" class="${tableClass}">
+        <thead t:id="headers"/>
+        <tbody>
+        	<t:if t:test="inPlace">
+        	
+        		<tr><td>Loading data from server</td></tr>
+        		
+        		<p:else>
+					<tr t:type="loop" t:source="loopSource" t:value="index" class="${rowClass}">
+	        		
+	        			<t:loop t:source="propertyNames" index="columnIndex" t:value="cellModel">
+							<td>	        			
+	        					<t:delegate t:to="cellBlock" />
+	        				</td>
+	        				<t:block t:id="cell">${cellValue}</t:block>	
+	        				
+	        			</t:loop>
+	        		
+	        		</tr>
+        		</p:else>
+        	
+        	</t:if>
+        </tbody>
+        <tfoot t:id="footers"/>
+        
+    </table>
+
+	<t:block id="empty">${message:no-grid-data-to-display}</t:block>
+</div>

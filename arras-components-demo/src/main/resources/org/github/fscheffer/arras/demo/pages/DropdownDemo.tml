@@ -1,0 +1,49 @@
+<html t:type="Layout" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd">
+	<h1>Dropdown Demo</h1>
+
+	<h3>Simple dropdown</h3>
+	<t:arras.Dropdown t:id="dropdown1">
+		<t:arras.DropdownItem>
+			<t:pagelink page="index">Index</t:pagelink>
+		</t:arras.DropdownItem>
+		<t:arras.DropdownItem>
+			<t:pagelink page="dropdownDemo">Dropdown demo</t:pagelink>
+		</t:arras.DropdownItem>
+		<t:arras.DropdownItem>
+			<t:pagelink page="tabgroupDemo">Tabgroup demo</t:pagelink>
+		</t:arras.DropdownItem>
+	</t:arras.Dropdown>
+
+	<h3>Dropdown in a navbar</h3>
+	<ul class="nav nav-pills">
+		<t:arras.Dropdown t:id="dropdown2" element="li" icon="glyphicon glyphicon-plus">
+			<t:arras.DropdownItem>
+				<t:pagelink page="tabgroupDemo">A dropdown item</t:pagelink>
+			</t:arras.DropdownItem>
+			<t:arras.DropdownItem>
+				<t:pagelink page="index">Another item</t:pagelink>
+			</t:arras.DropdownItem>
+			<t:arras.DropdownItem>
+				<t:pagelink page="dropdownDemo">And another item</t:pagelink>
+			</t:arras.DropdownItem>
+		</t:arras.Dropdown>
+
+		<t:arras.Dropdown t:id="dropdown3" element="li" label="block:customLabel">
+			<t:arras.DropdownItem>
+				<t:pagelink page="dropdownDemo">Item 1</t:pagelink>
+			</t:arras.DropdownItem>
+			<t:arras.DropdownItem>
+				<t:pagelink page="tabgroupDemo">Item 2</t:pagelink>
+			</t:arras.DropdownItem>
+			<t:arras.DropdownItem divider="true"/>
+			<t:arras.DropdownItem>
+				<t:pagelink page="index">Item 3</t:pagelink>
+			</t:arras.DropdownItem>
+		</t:arras.Dropdown>
+		
+		<t:block t:id="customLabel">
+			<span class="glyphicon glyphicon-arrow-down"></span>
+			Custom label
+		</t:block>
+	</ul>
+</html>

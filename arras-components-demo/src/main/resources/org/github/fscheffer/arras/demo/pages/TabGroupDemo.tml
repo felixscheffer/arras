@@ -1,0 +1,63 @@
+<html t:type="Layout" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd">
+<h1>TabGroup Demo</h1>
+
+		<t:arras.TabGroup fade="true" active="tab1" t:mixins="RenderClientId">
+			<t:arras.Tab t:id="tab1">
+				<p>
+					This is just a normal tab. The tab's name is read from the properties file.
+				</p>
+			</t:arras.Tab>
+			<t:arras.Tab t:id="tab2" ajax="true">
+				<p>
+					This is an ajax tab! It is reloaded when the user clicks on it.
+				</p>
+			</t:arras.Tab>
+			<t:arras.TabDropdown t:id="dropdown">
+				<t:arras.Tab t:id="tab3">
+					<p>
+						This is a tab within a dropdown.
+					</p>
+				</t:arras.Tab>
+				<t:arras.Tab t:id="tab4" label="block:customLabel">
+					<p>
+						This tab has a custom label with an icon in it.
+					</p>
+				</t:arras.Tab>
+			</t:arras.TabDropdown>
+			<t:arras.Tab t:id="TabWithSubtabs">
+				<p>
+					This is a tab that contains even more tabs.
+				</p>
+				<t:arras.TabGroup active="fooTab">
+					<t:arras.Tab t:id="fooTab">
+						<p>
+							foo
+						</p>
+					</t:arras.Tab>
+					<t:arras.Tab t:id="barTab">
+						<p>
+							bar
+						</p>
+					</t:arras.Tab>
+					<t:arras.TabDropdown t:id="dropdownMenu">
+						<t:arras.Tab t:id="apacheTab">
+							<p>
+								Apache
+							</p>
+						</t:arras.Tab>
+						<t:arras.Tab t:id="tapestryTab">
+							<p>
+								Tapestry
+							</p>
+						</t:arras.Tab>
+					</t:arras.TabDropdown>
+				</t:arras.TabGroup>
+			</t:arras.Tab>			
+		</t:arras.TabGroup>
+
+		<t:block t:id="customLabel">
+			<span class="glyphicon glyphicon-home" />
+			Custom tab
+		</t:block>
+		
+</html>

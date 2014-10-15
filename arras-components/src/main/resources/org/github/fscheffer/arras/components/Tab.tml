@@ -1,0 +1,13 @@
+<t:container xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd" xmlns:p="tapestry:parameter">
+	<t:block t:id="content">
+		<div id="${id}" class="${paneClasses}">
+			<t:if test="renderContent">
+				<t:body />
+			</t:if>
+		</div>
+	</t:block>
+
+	<t:block t:id="defaultLabel">
+		${name}
+	</t:block>
+</t:container>

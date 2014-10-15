@@ -1,0 +1,18 @@
+<t:container
+    xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+    xmlns:p="tapestry:parameter">
+    
+    <a id="${anchorId}" role="button" data-toggle="dropdown" href="#">
+    	<t:delegate to="label" />
+    </a>
+    
+    <ul class="dropdown-menu" role="menu" aria-labelledby="${anchorId}">
+    	<t:body />
+    </ul>
+    
+    <t:block t:id="defaultLabel">
+    	${name}
+    	<span class="${icon}"></span>
+    </t:block>
+    
+</t:container>
