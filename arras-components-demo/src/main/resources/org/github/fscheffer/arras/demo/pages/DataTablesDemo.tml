@@ -1,9 +1,9 @@
-<html t:type="Layout" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd" xmlns:p="tapestry:parameter">
+<html t:type="Layout" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd" xmlns:p="tapestry:parameter" xmlns:a="tapestry-library:arras">
 	<h1>DataTables Demo</h1>
     
-    <t:arras.DataTable source="tracks" row="track" add="link">
+    <a:DataTable source="tracks" row="track" add="link">
     	<p:LinkCell>
     		<t:GoogleSearch track="track" />
     	</p:LinkCell>
-    </t:arras.DataTable>
+    </a:DataTable>
 </html>
