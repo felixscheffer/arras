@@ -243,7 +243,12 @@ public abstract class ArrasTestCase {
                 sleep(100);
             }
 
-            if (getCssCount("body[data-ajax-active='0']").equals(1)) {
+            // TODO: body[data-ajax-active=false] is broken in Prototype
+            //       This was fixed in tapestry-5.4-beta-23 which is a non-public beta
+            //       Once Tapesty releases a new beta change the selector to
+            //
+            //          body[data-ajax-active='0']
+            if (getCssCount("body[data-ajax-active=false]").equals(1)) {
                 return;
             }
         }
