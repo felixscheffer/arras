@@ -9,6 +9,7 @@ import org.apache.tapestry5.ioc.annotations.Contribute;
 import org.apache.tapestry5.services.LibraryMapping;
 import org.apache.tapestry5.services.javascript.JavaScriptModuleConfiguration;
 import org.apache.tapestry5.services.javascript.ModuleManager;
+import org.github.fscheffer.arras.ArrasConstants;
 
 public class ArrasComponentsModule {
 
@@ -20,7 +21,7 @@ public class ArrasComponentsModule {
 
     public static void contributeFactoryDefaults(MappedConfiguration<String, String> conf) {
 
-        conf.add(Lightbox.SYMBOL_CSS_PATH, "colorbox/example1/colorbox.css");
+        conf.add(ArrasConstants.LIGHTBOX_CSS_PATH, "colorbox/example1/colorbox.css");
     }
 
     @Contribute(ModuleManager.class)
