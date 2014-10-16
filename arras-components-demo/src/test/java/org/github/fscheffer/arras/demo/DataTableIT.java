@@ -45,12 +45,11 @@ public class DataTableIT extends ArrasTestCase {
 
         open(this.pagename);
         waitForPageToLoad();
+        waitUntilInvisible(By.cssSelector(".datatable_processing"));
     }
 
     @Test
     void testRowsPerPage() {
-
-        logger.info(this.pagename);
 
         assertRowsPerPage(25);
 
