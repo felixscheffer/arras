@@ -52,7 +52,7 @@
 	      
 	  });
 	      
-	  var initialize = function(element, container) {
+	  function initialize(element, container) {
 
 	      var active = container.findFirst("> .active")
 	      var supportsTransition = transition && active.hasClass("fade")
@@ -78,19 +78,9 @@
 	        	  element.closest("li.dropdown").addClass("active")
 	      }
 	      
-	      // emulating jQuery.one() 
-	      var fired = false  
-	      var nextOnce = function() {
-	    	
-	      	// unbinding the event handler (like jQuery) would be better but t5-dom does not expose an off() or unbind() method
-	      	if(fired)
-	      	  return
-	      	fired = true
-	      	next()
-	      }
-	      
 	      if(supportsTransition) {
-	    	  active.on(transition.end, nextOnce)
+	    	  
+	    	  onOnce(active, transition.end, next);
 	    	  transition.emulateTransitionEnd(active, 200)
 	      }
 	      else {
@@ -98,6 +88,17 @@
 	      }
 	      
 	      active.removeClass("in")
+	  }
+	  
+	  // emulating jQuery.one() 
+	  function onOnce(elementWrapper, event, handler) {
+		  
+		  var off = dom.on(elementWrapper.element, event, function() {
+			 
+			  // remove the event handler and call the actual handler
+			  off();
+			  handler.call(arguments);
+		  });
 	  }
   });
  

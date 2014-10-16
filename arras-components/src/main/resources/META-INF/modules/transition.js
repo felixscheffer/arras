@@ -34,20 +34,23 @@
 		    return false // explicit for ie8 ( ._.)
 		}
 	
-		var exports = transitionEnd()
+		var transition = transitionEnd()
 		
-		return _.extend(exports, {
+		return _.extend(transition, {
 			
 			// http://blog.alexmaccaw.com/css-transitions
 			emulateTransitionEnd: function($el, duration) {
 		        
 				var called = false
-				
-		        $el.on(exports.end, function() { called = true })
+		        var off = dom.on($el.element, transition.end, function() { called = true })
 	
-		        var callback = function() { 
+		        var callback = function() {
+					
+					// remove the event handler and trigger the event manually if it was not triggered yet
+					off()
+					
 					if (!called)
-						$el.trigger(exports.end)
+						$el.trigger(transition.end)
 				}
 	
 		        setTimeout(callback, duration)
