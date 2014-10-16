@@ -1,3 +1,15 @@
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 package org.github.fscheffer.arras.components;
 
 import java.io.IOException;
@@ -230,11 +242,11 @@ public class DataTable extends AbstractTable {
     private JSONObject                  options;
 
     @Component(parameters = { "index=inherit:columnIndex", "lean=inherit:lean", "overrides=overrides",
-        "model=dataModel", "mode=true" })
+                              "model=dataModel", "mode=true" })
     private GridColumns                 headers;
 
     @Component(parameters = { "index=inherit:columnIndex", "lean=inherit:lean", "overrides=overrides",
-        "model=dataModel", "mode=false" })
+                              "model=dataModel", "mode=false" })
     private GridColumns                 footers;
 
     /**
@@ -242,8 +254,8 @@ public class DataTable extends AbstractTable {
      * element.
      */
     @Parameter(name = "class", defaultPrefix = BindingConstants.LITERAL, value = BindingConstants.SYMBOL
-                                                                                 + ":"
-                                                                                 + ComponentParameterConstants.GRID_TABLE_CSS_CLASS)
+        + ":"
+        + ComponentParameterConstants.GRID_TABLE_CSS_CLASS)
     @Property(write = false)
     private String                      tableClass;
 
@@ -354,9 +366,9 @@ public class DataTable extends AbstractTable {
 
         dataTableParams.put("iDisplayLength", rowsPerPage);
         dataTableParams.put("aLengthMenu", new JSONLiteral("[[" + rowsPerPage + "," + rowsPerPage * 2 + ","
-                                                           + rowsPerPage * 4 + "," + rowsPerPage * 8 + "],["
-                                                           + rowsPerPage + "," + rowsPerPage * 2 + "," + rowsPerPage
-                                                           * 4 + "," + rowsPerPage * 8 + "]]"));
+            + rowsPerPage * 4 + "," + rowsPerPage * 8 + "],["
+            + rowsPerPage + "," + rowsPerPage * 2 + "," + rowsPerPage
+            * 4 + "," + rowsPerPage * 8 + "]]"));
 
         //We set the bSortable parameters for each column. Cf : http://www.datatables.net/usage/columns
         //We set also the mDataProp parameters to handle ColReorder plugin. Cf : http://datatables.net/release-datatables/extras/ColReorder/server_side.html
