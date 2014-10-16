@@ -140,7 +140,7 @@ public class DataTableIT extends ArrasTestCase {
         text(FILTER, term);
 
         // wait until DataTable has finished processing
-        waitUntil(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".datatable_processing")));
+        waitUntilInvisible(By.cssSelector(".datatable_processing"));
     }
 
     @Test
