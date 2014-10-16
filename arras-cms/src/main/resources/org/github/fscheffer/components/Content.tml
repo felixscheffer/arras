@@ -1,0 +1,20 @@
+<t:container xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd" xmlns:p="tapestry:parameter">
+
+	<div class="cms-content">
+		<t:if test="editMode">
+			<t:zone id="contentZone-${contentId}">
+				<t:form t:id="contentForm" zone="^">
+					<t:delegate to="block:contentBlock" />
+				</t:form>
+			</t:zone>
+			<p:else>${content}</p:else>
+		</t:if>
+
+	</div>
+
+	<t:block t:id="contentBlock">
+		<!-- inplaceedit -->
+		<t:textarea value="content" />
+	</t:block>
+
+</t:container>
