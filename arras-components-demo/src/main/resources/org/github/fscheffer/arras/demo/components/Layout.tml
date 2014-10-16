@@ -21,6 +21,9 @@
 						<li>
 							<t:pagelink page="dataTablesAjaxDemo">Data tables (Ajax)</t:pagelink>
 						</li>
+						<li>
+							<t:pagelink page="lightboxDemo">Lightbox</t:pagelink>
+						</li>
 					</ul>
 				</div>
 			</div>

@@ -1,0 +1,55 @@
+<html t:type="Layout" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd">
+	<h1>Lightbox Demo</h1>
+
+	<h3>Single photo</h3>
+	<p>
+		<t:arras.LightboxTrigger href="${asset:photos/landscape/bridge-over-river.jpg}">Bridge over river</t:arras.LightboxTrigger>
+	</p>
+
+	<h3>Group of photos (using rel attribute)</h3>
+	<p>
+		<t:arras.LightboxTrigger rel="group1" class="group1" href="${asset:photos/landscape/man_point-arena-stornetta.jpg}">Stornetta</t:arras.LightboxTrigger>
+	</p>
+	<p>
+		<t:arras.LightboxTrigger rel="group1" class="group1" href="${asset:photos/landscape/pointarena_rockycliffs.jpg}">Rocky cliffs</t:arras.LightboxTrigger>
+	</p>
+	<p>
+		<t:arras.LightboxTrigger rel="group1" class="group1" href="${asset:photos/landscape/san-joaquin-river-view.jpg}">San Joaquin River</t:arras.LightboxTrigger>
+	</p>
+
+	<h3>Fixed size</h3>
+	<p>
+		<t:arras.LightboxTrigger height="700px" width="500px" href="${asset:photos/landscape/san-joaquin-river-view.jpg}">San Joaquin River (Fixed size)</t:arras.LightboxTrigger>
+	</p>
+
+	<h3>Iframe</h3>
+	<p>
+		<t:arras.LightboxTrigger iframe="true" innerWidth="640" innerHeight="390" href="http://www.youtube.com/embed/VOJyrQa_WR4?rel=0&amp;wmode=transparent">Business Cats</t:arras.LightboxTrigger>
+	</p>
+
+	<h3>Html content</h3>
+	<t:arras.LightboxContent t:id="content">
+		<h3>Kafka</h3>
+		<p>One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked. "What's happened to me?" he thought. It wasn't a dream. His room, a proper human room although a little too small, lay peacefully between its four familiar walls. A collection of textile samples lay spread out on the table - Samsa was a travelling salesman - and above it there hung a picture that he had recently cut out of an illustrated magazine and housed in a nice, gilded frame. It showed a lady fitted out with a fur hat and fur boa who sat upright, raising a heavy fur muff that covered the whole of her lower arm
+			towards the viewer. Gregor then turned to look out the window at the dull weather.</p>
+	</t:arras.LightboxContent>
+	<p>
+		<t:arras.LightboxTrigger inline="true" width="50%" href="${contentId}">Show Kafka!</t:arras.LightboxTrigger>
+	</p>
+
+	<h3>Zone update</h3>
+	<t:arras.LightboxContent t:id="contentWithZone" zone="sampleZone" width="640" height="390">
+		<t:zone id="sampleZone">
+			Zone without content			
+		</t:zone>
+	</t:arras.LightboxContent>
+	
+	<p>
+		<t:eventlink t:event="someAjaxEvent" zone="sampleZone">Some ajax event</t:eventlink>
+	</p>
+	
+	<t:block t:id="zoneContent">
+		<h3>Updated zone at ${date}</h3>
+		<p>The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps. Bawds jog, flick quartz, vex nymphs. Waltz, bad nymph, for quick jigs vex! Fox nymphs grab quick-jived waltz. Brick quiz whangs jumpy veldt fox. Bright vixens jump; dozy fowl quack. Quick wafting zephyrs vex bold Jim. Quick zephyrs blow, vexing daft Jim. Sex-charged fop blew my junk TV quiz. How quickly daft jumping zebras vex. Two driven jocks help fax my big quiz. Quick, Baz, get my woven flax jodhpurs! "Now fax quiz Jack!" my brave ghost pled. Five quacking zephyrs jolt my wax bed. Flummoxed by job, kvetching W. zaps Iraq. Cozy sphinx waves quart jug of bad milk. A very bad quack might jinx zippy fowls. Few quips galvanized the mock jury box. Quick brown dogs jump over the lazy fox. The jay, pig, fox, zebra, and my wolves quack! Blowzy red vixens fight for a quick jump. Joaquin Phoenix was gazed by MTV for luck. A wizard’s job is to vex chumps quickly in fog. Watch "Jeopardy!", Alex Trebek's fun TV quiz game. Woven silk pyjamas exchanged for blue quartz.</p>
+	</t:block>
+</html>

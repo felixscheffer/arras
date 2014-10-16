@@ -14,6 +14,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
@@ -131,8 +132,16 @@ public abstract class ArrasTestCase {
         return this.driver.findElements(by);
     }
 
+    protected final String attr(By by, String attribute) {
+        return element(by).getAttribute(attribute);
+    }
+
     protected final String title() {
         return this.driver.getTitle();
+    }
+
+    protected final boolean isDisplayed(By by) {
+        return element(by).isDisplayed();
     }
 
     protected final void assertClassPresent(By by, String... classes) {
@@ -201,6 +210,14 @@ public abstract class ArrasTestCase {
             reportAndThrowAssertionError("Element '" + element + "' is not focused. '" + focusedElement
                                          + "' is currently focused.");
         }
+    }
+
+    protected final void waitUntilInvisible(By by) {
+        waitUntil(ExpectedConditions.invisibilityOfElementLocated(by));
+    }
+
+    protected final void waitUntilVisible(By by) {
+        waitUntil(ExpectedConditions.visibilityOfElementLocated(by));
     }
 
     protected final <T> void waitUntil(ExpectedCondition<T> condition) {
