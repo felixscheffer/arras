@@ -9,7 +9,6 @@ import org.apache.tapestry5.ioc.annotations.Contribute;
 import org.apache.tapestry5.services.LibraryMapping;
 import org.apache.tapestry5.services.javascript.JavaScriptModuleConfiguration;
 import org.apache.tapestry5.services.javascript.ModuleManager;
-import org.github.fscheffer.arras.components.Lightbox;
 
 public class ArrasComponentsModule {
 
@@ -26,7 +25,7 @@ public class ArrasComponentsModule {
 
     @Contribute(ModuleManager.class)
     public static void setupBaseModules(MappedConfiguration<String, Object> conf,
-                                        @Path("META-INF/assets/colorbox/jquery.colorbox.js") Resource colorbox) {
+                                        @Path("META-INF/assets/arras/colorbox/jquery.colorbox.js") Resource colorbox) {
 
         conf.add("jquery.colorbox", new JavaScriptModuleConfiguration(colorbox).dependsOn("jquery"));
     }
