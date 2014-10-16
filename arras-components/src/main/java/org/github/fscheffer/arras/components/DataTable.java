@@ -30,6 +30,7 @@ import org.apache.tapestry5.annotations.Environmental;
 import org.apache.tapestry5.annotations.OnEvent;
 import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.annotations.Property;
+import org.apache.tapestry5.annotations.RequestParameter;
 import org.apache.tapestry5.annotations.SetupRender;
 import org.apache.tapestry5.beaneditor.BeanModel;
 import org.apache.tapestry5.beaneditor.PropertyModel;
@@ -102,40 +103,46 @@ public class DataTable extends AbstractTable {
 
         private final int               rowsPerPage;
 
-        private final JSONArray         rows;
-
         private final PropertyOverrides overrides;
 
         private final BeanModel         model;
 
         private PartialMarkupRendererFilterImplementation(GridDataSource source,
                                                           GridSortModel sortModel,
-                                                          int records,
                                                           int startIndex,
                                                           String sEcho,
-                                                          int totalRecords,
                                                           int rowsPerPage,
-                                                          JSONArray rows,
                                                           PropertyOverrides overrides,
                                                           BeanModel model) {
             this.source = source;
             this.sortModel = sortModel;
-            this.records = records;
-            this.startIndex = startIndex;
-            this.sEcho = sEcho;
-            this.totalRecords = totalRecords;
-            this.rowsPerPage = rowsPerPage;
-            this.rows = rows;
             this.overrides = overrides;
             this.model = model;
+            this.sEcho = sEcho;
+            this.startIndex = startIndex;
+            this.rowsPerPage = rowsPerPage;
+            this.records = source.getAvailableRows();
+            this.totalRecords = determineTotalRecords(source);
+        }
+
+        private int determineTotalRecords(GridDataSource source) {
+            return source instanceof FilteringDataSource ? ((FilteringDataSource) source).getTotalRows()
+                                                        : source.getAvailableRows();
         }
 
         @Override
         public void renderMarkup(MarkupWriter writer, JSONObject reply, PartialMarkupRenderer renderer) {
-            reply.put("aaData", this.rows);
+
+            JSONArray rows = new JSONArray();
+
             reply.put("sEcho", this.sEcho);
             reply.put("iTotalDisplayRecords", this.records);
             reply.put("iTotalRecords", this.totalRecords);
+            reply.put("aaData", rows);
+
+            if (this.records == 0) {
+                return;
+            }
 
             int endIndex = this.startIndex + this.rowsPerPage - 1;
             if (endIndex > this.records - 1) {
@@ -148,7 +155,7 @@ public class DataTable extends AbstractTable {
                 //JSONArray cell = new JSONArray();
                 JSONObject cell = new JSONObject();
 
-                this.rows.put(cell);
+                rows.put(cell);
 
                 Object obj = this.source.getRowValue(index);
 
@@ -195,7 +202,7 @@ public class DataTable extends AbstractTable {
                         /**
                          * Must check JSONArray's length because partialRenderer.renderPartialPageMarkup() is done twice (see AjaxComponentEventRequestHandler)!
                          * */
-                        if (this.rows.length() > rowIndex) {
+                        if (rows.length() > rowIndex) {
                             //rows.getJSONArray(rowIndex).put(columnIndex,zoneUpdateContent);
                             cell.put(name, zoneUpdateContent);
                         }
@@ -242,11 +249,11 @@ public class DataTable extends AbstractTable {
     private JSONObject                  options;
 
     @Component(parameters = { "index=inherit:columnIndex", "lean=inherit:lean", "overrides=overrides",
-                              "model=dataModel", "mode=true" })
+        "model=dataModel", "mode=true" })
     private GridColumns                 headers;
 
     @Component(parameters = { "index=inherit:columnIndex", "lean=inherit:lean", "overrides=overrides",
-                              "model=dataModel", "mode=false" })
+        "model=dataModel", "mode=false" })
     private GridColumns                 footers;
 
     /**
@@ -254,8 +261,8 @@ public class DataTable extends AbstractTable {
      * element.
      */
     @Parameter(name = "class", defaultPrefix = BindingConstants.LITERAL, value = BindingConstants.SYMBOL
-        + ":"
-        + ComponentParameterConstants.GRID_TABLE_CSS_CLASS)
+                                                                                 + ":"
+                                                                                 + ComponentParameterConstants.GRID_TABLE_CSS_CLASS)
     @Property(write = false)
     private String                      tableClass;
 
@@ -300,42 +307,75 @@ public class DataTable extends AbstractTable {
      * @throws IOException
      */
     @OnEvent(value = DATA)
-    JSONObject onData(Object context) throws IOException {
-        /**
-         * If ajax mode, we filter on server-side, otherwise, we filter from the available data already loaded (see DefaultDataTableModel#filterData)
-         */
-        updateSortModel();
+    void onData(Object context, //
+                @RequestParameter(value = DataTable.SORTING_COLS) String sortingCols,
+                @RequestParameter(value = DataTable.SEARCH, allowBlank = true) String search,
+                @RequestParameter(value = DataTable.ECHO) String sEcho, //
+                @RequestParameter(value = DataTable.DISPLAY_START) int startIndex,
+                @RequestParameter(value = DataTable.DISPLAY_LENGTH) int rowsPerPage) throws IOException {
 
         this.context = context;
 
-        return buildResponse();
+        if (InternalUtils.isNonBlank(sortingCols)) {
+            updateSortModel(sortingCols);
+        }
+
+        final GridDataSource source = getSource();
+        BeanModel model = getDataModel();
+
+        if (source instanceof FilteringDataSource) {
+            ((FilteringDataSource) source).updateFilter(search, toFilterModel(model));
+        }
+        else {
+            /**
+             * Give a chance to the developer to update the GridDataSource to filter data server-side
+             * */
+            this.resources.triggerEvent(FILTER_DATA, new Object[] { search }, null);
+        }
+
+        GridSortModel sortModel = getSortModel();
+        PropertyOverrides overrides = getOverrides();
+
+        /**
+         * Add a filter to initialize the data to be sent to the client
+         * */
+        this.pageRenderQueue.addPartialMarkupRendererFilter(new PartialMarkupRendererFilterImplementation(source,
+                                                                                                          sortModel,
+                                                                                                          startIndex,
+                                                                                                          sEcho,
+                                                                                                          rowsPerPage,
+                                                                                                          overrides,
+                                                                                                          model));
+
+        /**
+         * Even if it will be done once again in AjaxComponentEventRequestHandler, we must call
+         * partialRenderer.renderPartialPageMarkup() here to "flush" the PartialMarkupRendererFilters that we've added
+         * into the JSONArray!
+         * It would be great if we could tell the partialRenderer that the job have already been done ...
+         * */
+        this.partialRenderer.renderPartialPageMarkup();
     }
 
-    public void updateSortModel() {
+    public void updateSortModel(String sortingCols) {
 
-        String sortingCols = this.request.getParameter(DataTable.SORTING_COLS);
+        int nbSortingCols = Integer.parseInt(sortingCols);
+        if (nbSortingCols > 0) {
 
-        if (InternalUtils.isNonBlank(sortingCols)) {
+            String sord = this.request.getParameter(DataTable.SORT_DIR + "0");
+            String sidx = this.request.getParameter(DataTable.SORT_COL + "0");
 
-            int nbSortingCols = Integer.parseInt(sortingCols);
-            if (nbSortingCols > 0) {
+            List<String> names = getDataModel().getPropertyNames();
 
-                String sord = this.request.getParameter(DataTable.SORT_DIR + "0");
-                String sidx = this.request.getParameter(DataTable.SORT_COL + "0");
+            int indexProperty = Integer.parseInt(sidx);
 
-                List<String> names = getDataModel().getPropertyNames();
+            String propName = names.get(indexProperty);
 
-                int indexProperty = Integer.parseInt(sidx);
+            GridSortModel sortModel = getSortModel();
 
-                String propName = names.get(indexProperty);
+            ColumnSort colSort = sortModel.getColumnSort(propName);
 
-                GridSortModel sortModel = getSortModel();
-
-                ColumnSort colSort = sortModel.getColumnSort(propName);
-
-                if (!(InternalUtils.isNonBlank(colSort.name()) && colSort.name().startsWith(sord.toUpperCase()))) {
-                    getSortModel().updateSort(propName);
-                }
+            if (!(InternalUtils.isNonBlank(colSort.name()) && colSort.name().startsWith(sord.toUpperCase()))) {
+                getSortModel().updateSort(propName);
             }
         }
 
@@ -366,9 +406,9 @@ public class DataTable extends AbstractTable {
 
         dataTableParams.put("iDisplayLength", rowsPerPage);
         dataTableParams.put("aLengthMenu", new JSONLiteral("[[" + rowsPerPage + "," + rowsPerPage * 2 + ","
-            + rowsPerPage * 4 + "," + rowsPerPage * 8 + "],["
-            + rowsPerPage + "," + rowsPerPage * 2 + "," + rowsPerPage
-            * 4 + "," + rowsPerPage * 8 + "]]"));
+                                                           + rowsPerPage * 4 + "," + rowsPerPage * 8 + "],["
+                                                           + rowsPerPage + "," + rowsPerPage * 2 + "," + rowsPerPage
+                                                           * 4 + "," + rowsPerPage * 8 + "]]"));
 
         //We set the bSortable parameters for each column. Cf : http://www.datatables.net/usage/columns
         //We set also the mDataProp parameters to handle ColReorder plugin. Cf : http://datatables.net/release-datatables/extras/ColReorder/server_side.html
@@ -415,10 +455,11 @@ public class DataTable extends AbstractTable {
         language.put("sSearch", this.messages.get("datatable.sSearch"));
         language.put("sUrl", this.messages.get("datatable.sUrl"));
 
-        JSONObject classes = new JSONObject();
+        //JSONObject classes = new JSONObject();
         //        classes.put("sSortable", "ui-state-default sorting");
         //        classes.put("sSortAsc", "ui-state-default sorting");
         //        classes.put("sSortDesc", "ui-state-default sorting");
+        //dataTableParams.put("oClasses", classes);
 
         JSONObject paginate = new JSONObject();
         paginate.put("sFirst", this.messages.get("datatable.sFirst"));
@@ -429,7 +470,6 @@ public class DataTable extends AbstractTable {
         language.put("oPaginate", paginate);
 
         dataTableParams.put("oLanguage", language);
-        dataTableParams.put("oClasses", classes);
         dataTableParams.put("aaSorting", sorting);
 
         ArrasUtils.merge(dataTableParams, this.options);
@@ -454,75 +494,6 @@ public class DataTable extends AbstractTable {
 
     private boolean isEmpty() {
         return getSource().getAvailableRows() == 0;
-    }
-
-    /**
-     * Method returning the desired data
-     * @throws IOException
-     */
-    public JSONObject buildResponse() throws IOException {
-
-        String search = this.request.getParameter(DataTable.SEARCH);
-        String sEcho = this.request.getParameter(DataTable.ECHO);
-        String displayStart = this.request.getParameter(DataTable.DISPLAY_START);
-        String displayLength = this.request.getParameter(DataTable.DISPLAY_LENGTH);
-
-        final GridDataSource source = getSource();
-        BeanModel model = getDataModel();
-
-        int totalRows = 0;
-        if (source instanceof FilteringDataSource) {
-            FilteringDataSource filteringSource = (FilteringDataSource) source;
-            totalRows = filteringSource.getTotalRows();
-            filteringSource.updateFilter(search, toFilterModel(model));
-        }
-        else {
-            /**
-             * Give a chance to the developer to update the GridDataSource to filter data server-side
-             * */
-            this.resources.triggerEvent(FILTER_DATA, new Object[] { search }, null);
-        }
-
-        int records = source.getAvailableRows();
-        int totalRecords = totalRows == 0 ? records : totalRows;
-        JSONArray rows = new JSONArray();
-
-        if (records == 0) {
-            JSONObject response = new JSONObject();
-            response.put("sEcho", sEcho);
-            response.put("iTotalDisplayRecords", records);
-            response.put("iTotalRecords", totalRecords);
-            response.put("aaData", rows);
-            return response;
-        }
-
-        int startIndex = Integer.parseInt(displayStart);
-        int rowsPerPage = Integer.parseInt(displayLength);
-
-        GridSortModel sortModel = getSortModel();
-        PropertyOverrides overrides = getOverrides();
-
-        /**
-         * Add a filter to initialize the data to be sent to the client
-         * */
-        this.pageRenderQueue.addPartialMarkupRendererFilter(new PartialMarkupRendererFilterImplementation(source,
-                                                                                                          sortModel,
-                                                                                                          records,
-                                                                                                          startIndex,
-                                                                                                          sEcho,
-                                                                                                          totalRecords,
-                                                                                                          rowsPerPage,
-                                                                                                          rows,
-                                                                                                          overrides,
-                                                                                                          model));
-
-        /**
-         * Even if it will be done once again in AjaxComponentEventRequestHandler , we must call partialRenderer.renderPartialPageMarkup() here to "flush" the PartialMarkupRendererFilters that we've added into the JSONArray !
-         * It would be great if we could tell the partialRenderer that the job have already been done ...
-         * */
-        this.partialRenderer.renderPartialPageMarkup();
-
-        return new JSONObject();
     }
 
     private List<PropertyModel> toFilterModel(BeanModel<?> model) {
