@@ -6,8 +6,8 @@ Arras is a set of components for [Apache Tapestry 5.4](http://tapestry.apache.or
 
 * TabGroup
 * Dropdown
-* Lightbox (requires jQuery - based on Colorbox)
-* DataTable (requires jQuery)
+* Lightbox (requires jQuery - based on [Colorbox](http://www.jacklmoore.com/colorbox/))
+* DataTable (requires jQuery - based on [DataTables](http://www.datatables.net/))
 
 Please checkout the arras-components-demo project for examples.
 
