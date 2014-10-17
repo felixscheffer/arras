@@ -18,6 +18,7 @@
 		<module>arras-cms</module>
 		<module>arras-components-demo</module>
 		<module>arras-test</module>
+		<module>arras-cms-demo</module>
 	</modules>
 
 	<build>
