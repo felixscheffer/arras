@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd">
 	<head>
-		<title>Tapestry Integration Test Application</title>
+		<title>Tapestry Components Integration Test Application</title>
 	</head>
 	<body>
 
@@ -9,6 +9,9 @@
 			<div class="container">
 				<div class="navbar-header">
 					<ul class="nav navbar-nav">
+						<li>
+							<t:pagelink page="index">Index</t:pagelink>
+						</li>
 						<li>
 							<t:pagelink page="dropdownDemo">Dropdown</t:pagelink>
 						</li>
