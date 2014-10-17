@@ -33,19 +33,19 @@ public class DropdownIT extends ArrasTestCase {
         click(By.id("drop"));
         // assert tag name is div and is open
         assertClassPresent(By.cssSelector("div.dropdown"), "open");
-        assertTextPresent("Index");
+        assertTextPresent(By.cssSelector("#main-content"), "Index");
 
         click(By.id("drop"));
-        assertTextNotPresent("Index");
+        assertTextNotPresent(By.cssSelector("#main-content"), "Index");
 
         click(By.id("drop_0"));
         // assert tag name is li and is open
         assertClassPresent(By.cssSelector("ul.nav.nav-pills > li:first-child"), "dropdown", "open");
-        assertTextPresent("A dropdown item");
+        assertTextPresent(By.cssSelector("#main-content"), "A dropdown item");
 
         // clicking outside of the dropdown should close the dropdown
         click(By.cssSelector("h3"));
-        assertTextNotPresent("A dropdown item");
+        assertTextNotPresent(By.cssSelector("#main-content"), "A dropdown item");
     }
 
     @Test
