@@ -24,13 +24,17 @@ import org.github.fscheffer.arras.components.LightboxContent;
 public class LightboxDemo {
 
     @InjectComponent
-    private LightboxContent content;
+    private LightboxContent content, contentWithinZone;
 
     @Inject
-    private Block           zoneContent;
+    private Block           lightboxContent, zoneContent;
 
     public String getContentId() {
         return "#" + this.content.getClientId();
+    }
+
+    public String getContentWithinZoneId() {
+        return "#" + this.contentWithinZone.getClientId();
     }
 
     public Date getDate() {
@@ -39,6 +43,12 @@ public class LightboxDemo {
 
     @OnEvent("someAjaxEvent")
     public Block onUpdateZone() {
+        return this.lightboxContent;
+    }
+
+    @OnEvent("triggerZone")
+    public Block onTriggerZone() {
         return this.zoneContent;
     }
+
 }

@@ -2,6 +2,7 @@ package org.github.fscheffer.arras.demo;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -81,7 +82,37 @@ public class LightboxIT extends ArrasTestCase {
 
         openLightbox(By.linkText("Some ajax event"));
 
+        waitUntil(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#cboxLoadedContent h3")));
+
         assertTextPresent(By.cssSelector("#cboxLoadedContent h3"), "Updated zone at");
+
+        closeLightbox();
+    }
+
+    @Test
+    void testLightboxInZone() {
+
+        click(By.linkText("Trigger zone"));
+
+        waitForAjaxRequestsToComplete();
+
+        driver().switchTo().defaultContent();
+
+        assertTextPresent(By.cssSelector("#lightboxZone"), "Stornetta in a Zone");
+        assertTextPresent(By.cssSelector("#lightboxZone"), "Show content with zone");
+
+        // check LightboxTrigger
+        openLightbox(By.linkText("Stornetta in a Zone"));
+
+        assertUrlAttribute("#cboxLoadedContent > img", "src",
+                           "/arras/assets/meta/dedf595e/photos/landscape/man_point-arena-stornetta.jpg");
+
+        closeLightbox();
+
+        // check LightboxContent
+        openLightbox(By.linkText("Show content with zone"));
+
+        assertTextPresent(By.cssSelector("#cboxLoadedContent h3"), "Content loaded by Zone");
 
         closeLightbox();
     }
@@ -90,6 +121,7 @@ public class LightboxIT extends ArrasTestCase {
 
         click(by);
 
+        waitUntil(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#cboxLoadedContent")));
         waitUntilVisible(By.cssSelector("#cboxLoadedContent"));
     }
 
