@@ -11,27 +11,20 @@
 // limitations under the License.
 
 (function() {
-	define(["jquery", "shim/jquery.colorbox"], function($, colorbox) {
+	define(["jquery", "shim/jquery.colorbox", "t5/core/dom"], function($, colorbox, dom) {
 		
 		var supportedOptions = ["rel", "transition", "height", "width", "innerWidth", "innerHeight", "inline", "fixed", "slideshow", "iframe"];
 		
-		$("[data-container-type=lightbox]").each(function() {
+		dom.scanner("[data-container-type=lightbox]", function(elementWrapper) {
 			
-			var $this = $(this);
+			var $this = $(elementWrapper.element);
 			var options = readOptions($this, supportedOptions);
 			$this.colorbox(options);
 		});
-
-		// resize the lightbox when the size of the window changes
-		$(window).resize(function () {
-			if($('#cboxOverlay').is(':visible')){
-				$.colorbox.resize();
-			}
-		});
 		
-		$("[data-container-type=lightbox-content]").each(function() {
+		dom.scanner("[data-container-type=lightbox-content]", function(elementWrapper) {
 			
-			var $this = $(this);
+			var $this = $(elementWrapper.element);
 			
 			var zone = $this.attr("data-zone");
 			var open = $this.attr("data-open");
@@ -40,7 +33,7 @@
 				
 				var options = readOptions($this, supportedOptions);
 				options["inline"] = true;
-				options["href"] = "#" + this.id;
+				options["href"] = "#" + $this.attr("id");
 				
 				// show the lightbox immediately
 				if(open === true) {
@@ -54,7 +47,14 @@
 					});
 				}				
 			}
-		})
+		});
+		
+		// resize the lightbox when the size of the window changes
+		$(window).resize(function () {
+			if($('#cboxOverlay').is(':visible')){
+				$.colorbox.resize();
+			}
+		});
 		
 		function readOptions($this, optionNames) {
 			
