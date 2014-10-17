@@ -2,7 +2,6 @@ package org.github.fscheffer.arras.demo;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -82,7 +81,7 @@ public class LightboxIT extends ArrasTestCase {
 
         openLightbox(By.linkText("Some ajax event"));
 
-        waitUntil(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#cboxLoadedContent h3")));
+        waitUntilPresent(By.cssSelector("#cboxLoadedContent h3"));
 
         assertTextPresent(By.cssSelector("#cboxLoadedContent h3"), "Updated zone at");
 
@@ -95,8 +94,6 @@ public class LightboxIT extends ArrasTestCase {
         click(By.linkText("Trigger zone"));
 
         waitForAjaxRequestsToComplete();
-
-        driver().switchTo().defaultContent();
 
         assertTextPresent(By.cssSelector("#lightboxZone"), "Stornetta in a Zone");
         assertTextPresent(By.cssSelector("#lightboxZone"), "Show content with zone");
@@ -121,7 +118,7 @@ public class LightboxIT extends ArrasTestCase {
 
         click(by);
 
-        waitUntil(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#cboxLoadedContent")));
+        waitUntilPresent(By.cssSelector("#cboxLoadedContent"));
         waitUntilVisible(By.cssSelector("#cboxLoadedContent"));
     }
 

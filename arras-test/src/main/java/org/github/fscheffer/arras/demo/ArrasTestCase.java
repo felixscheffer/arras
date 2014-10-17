@@ -211,6 +211,10 @@ public abstract class ArrasTestCase {
         }
     }
 
+    protected final void waitUntilPresent(By by) {
+        waitUntil(ExpectedConditions.presenceOfElementLocated(by));
+    }
+
     protected final void waitUntilInvisible(By by) {
         waitUntil(ExpectedConditions.invisibilityOfElementLocated(by));
     }
