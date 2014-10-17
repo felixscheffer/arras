@@ -11,7 +11,7 @@
 // limitations under the License.
 
 (function() {
-	define(["jquery", "t5/core/pageinit", "jquery.dataTables"], function($, pi, datatable) {
+	define(["jquery", "t5/core/pageinit", "./original/jquery.dataTables"], function($, pi, datatable) {
 		
 		return {
 			init: function(specs) {

@@ -18,6 +18,7 @@ import org.apache.tapestry5.Asset;
 import org.apache.tapestry5.BindingConstants;
 import org.apache.tapestry5.MarkupWriter;
 import org.apache.tapestry5.annotations.Environmental;
+import org.apache.tapestry5.annotations.Import;
 import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.annotations.Path;
 import org.apache.tapestry5.annotations.SetupRender;
@@ -25,6 +26,7 @@ import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 import org.github.fscheffer.arras.ArrasConstants;
 import org.github.fscheffer.arras.ArrasUtils;
 
+@Import(module = "arras/lightbox")
 public class AbstractLightbox {
 
     @Parameter(defaultPrefix = BindingConstants.LITERAL)

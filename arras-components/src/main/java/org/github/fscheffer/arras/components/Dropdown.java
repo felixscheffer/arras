@@ -31,7 +31,7 @@ import org.apache.tapestry5.runtime.RenderCommand;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 import org.github.fscheffer.arras.ArrasUtils;
 
-@Import(module = "dropdown")
+@Import(module = "arras/dropdown")
 @SupportsInformalParameters
 public class Dropdown implements ClientElement {
 

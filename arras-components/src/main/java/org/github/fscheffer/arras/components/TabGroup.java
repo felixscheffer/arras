@@ -44,7 +44,7 @@ import org.github.fscheffer.arras.TabGroupContext;
  * @see TabDropdown
  * @see TabGroupContext
  */
-@Import(module = "tabgroup")
+@Import(module = "arras/tabgroup")
 public class TabGroup implements ClientElement {
 
     /**
@@ -78,11 +78,11 @@ public class TabGroup implements ClientElement {
 
     private static RenderCommand RENDER_CLOSE_TAG = new RenderCommand() {
 
-                                                      @Override
-                                                      public void render(MarkupWriter writer, RenderQueue queue) {
-                                                          writer.end();
-                                                      }
-                                                  };
+        @Override
+        public void render(MarkupWriter writer, RenderQueue queue) {
+            writer.end();
+        }
+    };
 
     @BeginRender
     void begin(MarkupWriter writer) {

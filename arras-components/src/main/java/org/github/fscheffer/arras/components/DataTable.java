@@ -58,6 +58,7 @@ import org.apache.tapestry5.services.TranslatorSource;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 import org.github.fscheffer.arras.ArrasUtils;
 import org.github.fscheffer.arras.FilteringDataSource;
+import org.github.fscheffer.arras.base.AbstractTable;
 import org.github.fscheffer.arras.base.GridColumns;
 
 public class DataTable extends AbstractTable {
@@ -475,7 +476,7 @@ public class DataTable extends AbstractTable {
         ArrasUtils.merge(dataTableParams, this.options);
         setup.put("params", dataTableParams);
 
-        this.support.require("datatables:init").with(setup);
+        this.support.require("arras/datatables:init").with(setup);
     }
 
     @SetupRender

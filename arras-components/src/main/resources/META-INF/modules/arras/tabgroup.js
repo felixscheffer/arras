@@ -10,7 +10,7 @@
 (function () {
   'use strict';
   
-  define(["t5/core/dom", "transition"], function(dom, transition) { 
+  define(["t5/core/dom", "./transition"], function(dom, transition) { 
 
 	  //assign .active class to li.dropdown when a dropdown item is marked as active
 	  var actives = dom.body.find(".nav-tabs .dropdown-menu > .active")

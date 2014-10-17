@@ -11,7 +11,7 @@
 // limitations under the License.
 
 (function() {
-	define(["jquery", "jquery.colorbox"], function($, colorbox) {
+	define(["jquery", "shim/jquery.colorbox"], function($, colorbox) {
 		
 		var supportedOptions = ["rel", "transition", "height", "width", "innerWidth", "innerHeight", "inline", "fixed", "slideshow", "iframe"];
 		

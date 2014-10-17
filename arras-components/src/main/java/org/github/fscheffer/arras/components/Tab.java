@@ -29,8 +29,6 @@ import org.github.fscheffer.arras.ArrasUtils;
 import org.github.fscheffer.arras.TabGroupContext;
 
 /**
- *
- * @tapestrydoc
  * @see TabGroup
  * @see TabDropdown
  */

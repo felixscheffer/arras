@@ -24,7 +24,7 @@ import org.apache.tapestry5.runtime.RenderCommand;
 import org.github.fscheffer.arras.ArrasUtils;
 import org.github.fscheffer.arras.TabGroupContext;
 
-@Import(module = "dropdown")
+@Import(module = "arras/dropdown")
 public class TabDropdown {
 
     @Environmental
