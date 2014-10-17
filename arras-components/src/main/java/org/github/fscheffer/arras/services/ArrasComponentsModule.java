@@ -38,8 +38,10 @@ public class ArrasComponentsModule {
 
     @Contribute(ModuleManager.class)
     public static void setupBaseModules(MappedConfiguration<String, Object> conf,
-                                        @Path("META-INF/assets/arras/colorbox/jquery.colorbox.js") Resource colorbox) {
+                                        @Path("META-INF/assets/arras/colorbox/jquery.colorbox.js") Resource colorbox,
+                                        @Path("META-INF/assets/arras/medium-editor/medium-editor.js") Resource mediumEditor) {
 
-        conf.add("jquery.colorbox", new JavaScriptModuleConfiguration(colorbox).dependsOn("jquery"));
+        conf.add("shim/jquery.colorbox", new JavaScriptModuleConfiguration(colorbox).dependsOn("jquery"));
+        conf.add("shim/medium-editor", new JavaScriptModuleConfiguration(mediumEditor).exports("MediumEditor"));
     }
 }
