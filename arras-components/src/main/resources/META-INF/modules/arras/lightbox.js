@@ -21,6 +21,13 @@
 			var options = readOptions($this, supportedOptions);
 			$this.colorbox(options);
 		});
+
+		// resize the lightbox when the size of the window changes
+		$(window).resize(function () {
+			if($('#cboxOverlay').is(':visible')){
+				$.colorbox.resize();
+			}
+		});
 		
 		$("[data-container-type=lightbox-content]").each(function() {
 			
