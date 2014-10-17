@@ -35,15 +35,36 @@
 			<a:DropdownItem>
 				<t:pagelink page="tabgroupDemo">Item 2</t:pagelink>
 			</a:DropdownItem>
-			<a:DropdownItem divider="true"/>
+			<a:DropdownItem divider="true" />
 			<a:DropdownItem>
 				<t:pagelink page="index">Item 3</t:pagelink>
 			</a:DropdownItem>
 		</a:Dropdown>
-		
+
 		<t:block t:id="customLabel">
 			<span class="glyphicon glyphicon-arrow-down"></span>
 			Custom label
 		</t:block>
 	</ul>
+
+	<h3>Dropdown in Zone</h3>
+
+	<t:eventlink event="triggerZone" zone="dropdownZone">trigger zone</t:eventlink>
+
+	<t:zone id="dropdownZone">
+	</t:zone>
+
+	<t:block t:id="zoneContent">
+		<a:Dropdown t:id="dropdownInZone">
+			<a:DropdownItem>
+				<a href="http://httpd.apache.org/">Apache HTTP Server</a>
+			</a:DropdownItem>
+			<a:DropdownItem>
+				<a href="http://tapestry.apache.org">Apache Tapestry 5</a>
+			</a:DropdownItem>
+			<a:DropdownItem>
+				<a href="http://felix.apache.org">Apache Felix</a>
+			</a:DropdownItem>
+		</a:Dropdown>
+	</t:block>
 </html>

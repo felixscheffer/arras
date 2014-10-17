@@ -12,6 +12,18 @@
 
 package org.github.fscheffer.arras.demo.pages;
 
+import javax.inject.Inject;
+
+import org.apache.tapestry5.Block;
+import org.apache.tapestry5.annotations.OnEvent;
+
 public class DropdownDemo {
 
+    @Inject
+    private Block zoneContent;
+
+    @OnEvent(value = "triggerZone")
+    Block onTriggerZone() {
+        return this.zoneContent;
+    }
 }

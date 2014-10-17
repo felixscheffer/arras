@@ -1,63 +1,84 @@
 <html t:type="Layout" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd" xmlns:a="tapestry-library:arras">
-<h1>TabGroup Demo</h1>
+	<h1>TabGroup Demo</h1>
 
-		<a:TabGroup fade="true" active="tab1" t:mixins="RenderClientId">
-			<a:Tab t:id="tab1">
+	<a:TabGroup fade="true" active="tab1" t:mixins="RenderClientId">
+		<a:Tab t:id="tab1">
+			<p>
+				This is just a normal tab. The tab's name is read from the properties file.
+			</p>
+		</a:Tab>
+		<a:Tab t:id="tab2" ajax="true">
+			<p>
+				This is an ajax tab! It is reloaded when the user clicks on it.
+			</p>
+		</a:Tab>
+		<a:TabDropdown t:id="dropdown">
+			<a:Tab t:id="tab3">
 				<p>
-					This is just a normal tab. The tab's name is read from the properties file.
+					This is a tab within a dropdown.
 				</p>
 			</a:Tab>
-			<a:Tab t:id="tab2" ajax="true">
+			<a:Tab t:id="tab4" label="block:customLabel">
 				<p>
-					This is an ajax tab! It is reloaded when the user clicks on it.
+					This tab has a custom label with an icon in it.
 				</p>
 			</a:Tab>
-			<a:TabDropdown t:id="dropdown">
-				<a:Tab t:id="tab3">
+		</a:TabDropdown>
+		<a:Tab t:id="TabWithSubtabs">
+			<p>
+				This is a tab that contains even more tabs.
+			</p>
+			<a:TabGroup active="fooTab">
+				<a:Tab t:id="fooTab">
 					<p>
-						This is a tab within a dropdown.
+						foo
 					</p>
 				</a:Tab>
-				<a:Tab t:id="tab4" label="block:customLabel">
+				<a:Tab t:id="barTab">
 					<p>
-						This tab has a custom label with an icon in it.
+						bar
 					</p>
 				</a:Tab>
-			</a:TabDropdown>
-			<a:Tab t:id="TabWithSubtabs">
+				<a:TabDropdown t:id="dropdownMenu">
+					<a:Tab t:id="apacheTab">
+						<p>
+							Apache
+						</p>
+					</a:Tab>
+					<a:Tab t:id="tapestryTab">
+						<p>
+							Tapestry
+						</p>
+					</a:Tab>
+				</a:TabDropdown>
+			</a:TabGroup>
+		</a:Tab>
+	</a:TabGroup>
+
+	<t:block t:id="customLabel">
+		<span class="glyphicon glyphicon-home" />
+		Custom tab
+	</t:block>
+
+	<h3>Tab in Zone</h3>
+	
+	<t:eventlink event="triggerZone" zone="tabgroupZone">trigger zone</t:eventlink>
+	
+	<t:zone id="tabgroupZone">
+	</t:zone>
+	
+	<t:block t:id="zoneContent">
+		<a:TabGroup active="tabInZone1">
+			<a:Tab t:id="tabInZone1">
 				<p>
-					This is a tab that contains even more tabs.
+					a tab in a zone
 				</p>
-				<a:TabGroup active="fooTab">
-					<a:Tab t:id="fooTab">
-						<p>
-							foo
-						</p>
-					</a:Tab>
-					<a:Tab t:id="barTab">
-						<p>
-							bar
-						</p>
-					</a:Tab>
-					<a:TabDropdown t:id="dropdownMenu">
-						<a:Tab t:id="apacheTab">
-							<p>
-								Apache
-							</p>
-						</a:Tab>
-						<a:Tab t:id="tapestryTab">
-							<p>
-								Tapestry
-							</p>
-						</a:Tab>
-					</a:TabDropdown>
-				</a:TabGroup>
-			</a:Tab>			
+			</a:Tab>
+			<a:Tab t:id="tabInZone2">
+				<p>
+					another tab in the same zone
+				</p>
+			</a:Tab>
 		</a:TabGroup>
-
-		<t:block t:id="customLabel">
-			<span class="glyphicon glyphicon-home" />
-			Custom tab
-		</t:block>
-		
+	</t:block>
 </html>

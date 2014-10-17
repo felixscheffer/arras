@@ -62,6 +62,20 @@ public class TabGroupIT extends ArrasTestCase {
         assertTextPresent(By.cssSelector(".tab-content > .active .tab-content"), "bar");
     }
 
+    @Test
+    void testTabInZone() {
+
+        click(By.linkText("trigger zone"));
+
+        waitForAjaxRequestsToComplete();
+
+        assertTextPresent(By.cssSelector("#tabgroupZone"), "a tab in a zone");
+
+        click(By.linkText("Tab In Zone2"));
+
+        assertTextPresent(By.cssSelector("#tabgroupZone"), "another tab in the same zone");
+    }
+
     private void assertTabContentPresent(String value) {
         assertTextPresent(By.cssSelector(".tab-content > .active"), value);
     }

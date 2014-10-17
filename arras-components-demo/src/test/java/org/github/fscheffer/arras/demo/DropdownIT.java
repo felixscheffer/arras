@@ -80,6 +80,22 @@ public class DropdownIT extends ArrasTestCase {
         assertFocused(By.cssSelector("ul.nav.nav-pills > li:nth-child(2) > a"));
     }
 
+    @Test
+    void testDropdownInZone() {
+
+        click(By.linkText("trigger zone"));
+
+        waitForAjaxRequestsToComplete();
+
+        assertTextPresent(By.cssSelector("#dropdownZone"), "Dropdown In Zone");
+
+        click(By.linkText("Dropdown In Zone"));
+
+        assertTextPresent(dropdownItem(1), "Apache HTTP Server");
+        assertTextPresent(dropdownItem(2), "Apache Tapestry 5");
+        assertTextPresent(dropdownItem(3), "Apache Felix");
+    }
+
     private By dropdownItem(int n) {
         return By.cssSelector(".dropdown.open > ul > li:nth-child(" + n + ") > a");
     }
