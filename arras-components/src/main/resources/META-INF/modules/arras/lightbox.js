@@ -68,22 +68,5 @@
 			
 			return options;
 		}
-		
-		var init = function(triggerSelector, options) {
-			
-			if(triggerSelector) {
-				$(triggerSelector).colorbox(options);
-			}
-			else {
-				// show the lightbox immediately
-				$.colorbox(options);
-			}
-
-			$(window).resize(function () {
-				if($('#cboxOverlay').is(':visible')){
-					$.colorbox.resize({width: options.width, height: options.height});
-				}
-			});
-		};
 	});
 }.call(this));
