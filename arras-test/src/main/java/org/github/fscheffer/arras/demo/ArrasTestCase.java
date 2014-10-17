@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import org.github.fscheffer.arras.ArrasUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -38,7 +37,7 @@ public abstract class ArrasTestCase {
         String port = System.getProperty("testing.port", "8080");
         String path = System.getProperty("testing.path", "/arras");
 
-        this.baseUrl = ArrasUtils.buildUrl(host, port, path);
+        this.baseUrl = ArrasTestUtils.buildUrl(host, port, path);
 
         this.driver = getWebdriver(context);
         if (this.driver != null) {
@@ -90,7 +89,7 @@ public abstract class ArrasTestCase {
 
     protected final void open(String url) {
 
-        String completeUrl = ArrasUtils.appendPath(this.baseUrl, url);
+        String completeUrl = ArrasTestUtils.appendPath(this.baseUrl, url);
         this.driver.get(completeUrl);
     }
 

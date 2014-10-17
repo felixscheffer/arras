@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.github.fscheffer</groupId>
 	<artifactId>arras</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>${arras-version}</version>
 	<packaging>pom</packaging>
 	<name>Arras</name>
 	<description>Parent project module</description>
@@ -10,12 +10,14 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<arras-version>1.0.0-SNAPSHOT</arras-version>
 	</properties>
 
 	<modules>
 		<module>arras-components</module>
 		<module>arras-cms</module>
 		<module>arras-components-demo</module>
+		<module>arras-test</module>
 	</modules>
 
 	<build>
