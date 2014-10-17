@@ -53,33 +53,6 @@ public class ArrasUtils {
         return TapestryInternalUtils.toUserPresentable(componentId);
     }
 
-    public static final String buildUrl(String host, String port, String context) {
-
-        StringBuilder builder = new StringBuilder();
-
-        builder.append(host);
-
-        if (InternalUtils.isNonBlank(port)) {
-            builder.append(":");
-            builder.append(port);
-        }
-
-        if (InternalUtils.isNonBlank(context)) {
-
-            if (!context.startsWith("/")) {
-                builder.append("/");
-            }
-
-            builder.append(context);
-        }
-
-        return builder.toString();
-    }
-
-    public static final String appendPath(String baseUrl, String path) {
-        return path.startsWith("/") ? baseUrl + path : baseUrl + "/" + path;
-    }
-
     public static final void addOption(MarkupWriter writer, String option, String value) {
 
         if (InternalUtils.isNonBlank(value)) {
