@@ -27,6 +27,9 @@
 						<li>
 							<t:pagelink page="lightboxDemo">Lightbox</t:pagelink>
 						</li>
+						<li>
+							<t:pagelink page="IconDemo">Icon</t:pagelink>
+						</li>
 					</ul>
 				</div>
 			</div>

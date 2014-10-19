@@ -1,0 +1,58 @@
+<html t:type="Layout" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd" xmlns:a="tapestry-library:arras">
+	<h1>Icon Demo</h1>
+	<p>
+		Check out <a href="http://fortawesome.github.io/Font-Awesome/icons/">http://fortawesome.github.io/Font-Awesome/icons/</a> for a complete list of icons. 
+	</p>
+
+	<h3>Simple icon</h3>
+	<p id="simple">
+		<a:Icon icon="bus" />
+	</p>
+
+	<h3>Sizes</h3>
+	<p id="sizes">
+		<a:Icon icon="check" size="1x" />
+		<a:Icon icon="check" size="2x" />
+		<a:Icon icon="check" size="3x" />
+		<a:Icon icon="check" size="4x" />
+		<a:Icon icon="check" size="5x" />
+	</p>
+
+
+	<h3>Effects</h3>
+	<p id="spin">
+		<a:Icon icon="spinner" effect="SPIN" />
+		spin
+	</p>
+
+	<p id="normal">
+		<a:Icon icon="shield" />
+		normal
+	</p>
+
+	<p id="rotate90">
+		<a:Icon icon="shield" effect="ROTATE90" />
+		rotate 90
+	</p>
+
+	<p id="rotate180">
+		<a:Icon icon="shield" effect="ROTATE180" />
+		rotate 180
+	</p>
+
+	<p id="rotate270">
+		<a:Icon icon="shield" effect="ROTATE270" />
+		rotate 270
+	</p>
+
+	<p id="flipHorizontal">
+		<a:Icon icon="shield" effect="FLIP_HORIZONTAL" />
+		flip horizontal
+	</p>
+
+	<p id="flipVertical">
+		<a:Icon icon="shield" effect="FLIP_VERTICAL" />
+		flip vertical
+	</p>
+
+</html>
