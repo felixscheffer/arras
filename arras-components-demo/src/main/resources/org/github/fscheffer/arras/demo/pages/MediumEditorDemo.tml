@@ -9,19 +9,19 @@
 
 	<t:Form t:id="editorForm">
 		<h3>Simple example</h3>
-		<t:arras.MediumEditor value="value1" />
+		<t:arras.MediumEditor t:id="simple" value="value1" />
 
 		<h3>Toolbar with "bold", "italic" and "underline"</h3>
-		<t:arras.MediumEditor value="value2" buttons="bold,italic,underline" />
+		<t:arras.MediumEditor t:id="minimal" value="value2" buttons="bold,italic,underline" />
 
 		<h3>Without toolbar</h3>
-		<t:arras.MediumEditor value="value3" toolbar="false" />
+		<t:arras.MediumEditor t:id="noToolbar" value="value3" toolbar="false" />
 
 		<h3>Disabled</h3>
-		<t:arras.MediumEditor value="value4" disabled="true" />
+		<t:arras.MediumEditor t:id="disabled" value="value4" disabled="true" />
 
 		<h3>Toolbar with addition features</h3>
-		<t:arras.MediumEditor value="value5" buttons="bold,italic,underline,anchor,header1,header2,quote,justifyLeft,justifyCenter,justifyRight,justifyFull" />
+		<t:arras.MediumEditor t:id="extended" value="value5" buttons="bold,italic,underline,anchor,header1,header2,quote,justifyLeft,justifyCenter,justifyRight,justifyFull" />
 
 		<h3>Editor in a loop</h3>
 		<t:loop source="rows" value="row" formState="ITERATION">

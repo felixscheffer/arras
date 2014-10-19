@@ -179,7 +179,8 @@
 .medium-editor-placeholder {
   position: relative; }
   .medium-editor-placeholder:after {
-    position: absolute;
+/* fscheffer: causes display issue in firefox and the tests to fail because Selenium thinks the element is no visible! */
+/*    position: absolute; */
     top: 0;
     left: 0;
     content: attr(data-placeholder) !important;
