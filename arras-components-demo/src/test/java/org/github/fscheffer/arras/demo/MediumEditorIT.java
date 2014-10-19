@@ -13,6 +13,8 @@ public class MediumEditorIT extends ArrasTestCase {
         waitForPageToLoad();
     }
 
+    // TODO: test the toolbar but I have absolutely no clue how to select a text using selenium webdriver api
+
     @Test
     void testNoToolbar() {
 
