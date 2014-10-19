@@ -12,6 +12,7 @@
 
 package org.github.fscheffer.arras.services;
 
+import org.apache.tapestry5.SymbolConstants;
 import org.apache.tapestry5.annotations.Path;
 import org.apache.tapestry5.ioc.Configuration;
 import org.apache.tapestry5.ioc.MappedConfiguration;
@@ -34,6 +35,7 @@ public class ArrasComponentsModule {
     public static void contributeFactoryDefaults(MappedConfiguration<String, String> conf) {
 
         conf.add(ArrasConstants.LIGHTBOX_CSS_PATH, "colorbox/example1/colorbox.css");
+        conf.override(SymbolConstants.HMAC_PASSPHRASE, "dcc0ca4c-57b3-11e4-a536-5c260a602453");
     }
 
     @Contribute(ModuleManager.class)

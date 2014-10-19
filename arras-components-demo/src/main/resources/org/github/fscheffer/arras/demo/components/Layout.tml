@@ -30,6 +30,9 @@
 						<li>
 							<t:pagelink page="IconDemo">Icon</t:pagelink>
 						</li>
+						<li>
+							<t:pagelink page="mediumEditorDemo">Medium editor</t:pagelink>
+						</li>
 					</ul>
 				</div>
 			</div>

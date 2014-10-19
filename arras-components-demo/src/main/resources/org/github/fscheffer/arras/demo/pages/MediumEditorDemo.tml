@@ -1,0 +1,32 @@
+<html t:type="Layout" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd">
+	<h1>Medium Editor Demo</h1>
+
+	<t:alerts />
+	
+	<p>
+		<t:eventlink event="reset" class="btn btn-default">Reset demo</t:eventlink>
+	</p>
+
+	<t:Form t:id="editorForm">
+		<h3>Simple example</h3>
+		<t:arras.MediumEditor value="value1" />
+
+		<h3>Toolbar with "bold", "italic" and "underline"</h3>
+		<t:arras.MediumEditor value="value2" buttons="bold,italic,underline" />
+
+		<h3>Without toolbar</h3>
+		<t:arras.MediumEditor value="value3" toolbar="false" />
+
+		<h3>Disabled</h3>
+		<t:arras.MediumEditor value="value4" disabled="true" />
+
+		<h3>Toolbar with addition features</h3>
+		<t:arras.MediumEditor value="value5" buttons="bold,italic,underline,anchor,header1,header2,quote,justifyLeft,justifyCenter,justifyRight,justifyFull" />
+
+		<h3>Editor in a loop</h3>
+		<t:loop source="rows" value="row" formState="ITERATION">
+			<t:arras.MediumEditor value="row.value" />
+		</t:loop>
+		<t:submit class="btn btn-primary" value="Save" />
+	</t:Form>
+</html>
