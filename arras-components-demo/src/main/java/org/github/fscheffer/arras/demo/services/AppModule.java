@@ -30,6 +30,7 @@ public class AppModule {
     public static void contributeApplicationDefaults(MappedConfiguration<String, Object> conf) {
 
         conf.add(SymbolConstants.JAVASCRIPT_INFRASTRUCTURE_PROVIDER, "jquery");
+        // disable production mode to enable live-reloading
         conf.add(SymbolConstants.PRODUCTION_MODE, false);
     }
 
