@@ -15,7 +15,7 @@
 		<dependency>
 			<groupId>org.apache.tapestry</groupId>
 			<artifactId>tapestry-core</artifactId>
-			<version>5.4-beta-22</version>
+			<version>${tapestry-version}</version>
 		</dependency>
 	</dependencies>
 </project>
