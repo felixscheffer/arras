@@ -1,3 +1,15 @@
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 package org.github.fscheffer.arras.demo;
 
 import org.openqa.selenium.By;
@@ -19,7 +31,7 @@ public class LightboxIT extends ArrasTestCase {
         openLightbox(By.linkText("Bridge over river"));
 
         assertUrlAttribute("#cboxLoadedContent > img", "src",
-            "/arras/assets/meta/b9626ecd/photos/landscape/bridge-over-river.jpg");
+                           "/arras/assets/meta/b9626ecd/photos/landscape/bridge-over-river.jpg");
 
         closeLightbox();
     }
@@ -31,22 +43,22 @@ public class LightboxIT extends ArrasTestCase {
         openLightbox(By.linkText("Rocky cliffs"));
 
         assertUrlAttribute("#cboxLoadedContent > img", "src",
-            "/arras/assets/meta/d45fddff/photos/landscape/pointarena_rockycliffs.jpg");
+                           "/arras/assets/meta/d45fddff/photos/landscape/pointarena_rockycliffs.jpg");
 
         click(By.cssSelector("#cboxLoadedContent > img"));
 
         assertUrlAttribute("#cboxLoadedContent > img", "src",
-            "/arras/assets/meta/3aad432/photos/landscape/san-joaquin-river-view.jpg");
+                           "/arras/assets/meta/3aad432/photos/landscape/san-joaquin-river-view.jpg");
 
         click(By.cssSelector("#cboxLoadedContent > img"));
 
         assertUrlAttribute("#cboxLoadedContent > img", "src",
-            "/arras/assets/meta/dedf595e/photos/landscape/man_point-arena-stornetta.jpg");
+                           "/arras/assets/meta/dedf595e/photos/landscape/man_point-arena-stornetta.jpg");
 
         click(By.cssSelector("#cboxLoadedContent > img"));
 
         assertUrlAttribute("#cboxLoadedContent > img", "src",
-            "/arras/assets/meta/d45fddff/photos/landscape/pointarena_rockycliffs.jpg");
+                           "/arras/assets/meta/d45fddff/photos/landscape/pointarena_rockycliffs.jpg");
 
         closeLightbox();
     }
@@ -102,7 +114,7 @@ public class LightboxIT extends ArrasTestCase {
         openLightbox(By.linkText("Stornetta in a Zone"));
 
         assertUrlAttribute("#cboxLoadedContent > img", "src",
-                           "/arras/assets/meta/dedf595e/photos/landscape/man_point-arena-stornetta.jpg");
+            "/arras/assets/meta/dedf595e/photos/landscape/man_point-arena-stornetta.jpg");
 
         closeLightbox();
 
