@@ -8,9 +8,9 @@ Arras is a set of components for [Apache Tapestry 5.4](http://tapestry.apache.or
 * Dropdown
 * LightboxTrigger and LightboxContent (requires jQuery - based on [Colorbox](http://www.jacklmoore.com/colorbox/))
 * DataTable (requires jQuery - based on [DataTables](http://www.datatables.net/))
-* Icon (based on [font-awesome](http://fortawesome.github.io/Font-Awesome/)
+* Icon (based on [font-awesome](http://fortawesome.github.io/Font-Awesome/))
 * RemoteSubmit (triggers form submission from the outside)
-* MediumEditor (based on [Medium-Editor](https://github.com/daviferreira/medium-editor)
+* MediumEditor (based on [Medium-Editor](https://github.com/daviferreira/medium-editor))
 
 Please checkout the arras-components-demo project for examples.
 
