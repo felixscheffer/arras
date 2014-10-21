@@ -33,6 +33,9 @@
 						<li>
 							<t:pagelink page="mediumEditorDemo">Medium editor</t:pagelink>
 						</li>
+						<li>
+							<t:pagelink page="remoteSubmitDemo">Remote submit</t:pagelink>
+						</li>
 					</ul>
 				</div>
 			</div>

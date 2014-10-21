@@ -1,0 +1,36 @@
+<html t:type="Layout" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd" xmlns:a="tapestry-library:arras">
+	<h1>Icon Demo</h1>
+
+	<t:alerts />
+
+	<div id="visibleExample">
+		<h3>Trigger form from the outside</h3>
+
+		<t:arras.RemoteSubmit selector="#visibleSubmit" class="btn btn-danger">Remote submit 1</t:arras.RemoteSubmit>
+
+		<hr />
+
+		<t:form t:id="formWithVisibleButton">
+			<p>
+				<t:textfield t:value="dummy1" />
+			</p>
+			<t:submit t:id="visibleSubmit" value="submit" class="btn btn-primary" />
+		</t:form>
+	</div>
+
+	<div id="invisibleExample">
+		<h3>Trigger form with an invisible submit button</h3>
+
+		<t:arras.RemoteSubmit selector="#invisibleSubmit" class="btn btn-danger">Remote submit 2</t:arras.RemoteSubmit>
+
+		<hr />
+
+		<t:form t:id="formWithInvisibleButton">
+			<p>
+				<t:textfield t:value="dummy2" />
+			</p>
+			<t:submit t:id="invisibleSubmit" value="submit" style="display: none;" />
+		</t:form>
+	</div>
+
+</html>
