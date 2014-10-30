@@ -1,0 +1,13 @@
+<html t:type="Layout" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd" xmlns:a="tapestry-library:arras">
+	<h1>Sortable Demo</h1>
+	
+	<p>Sortable uses jQuery UI sortable. Since 1.11.x jQuery UI supports AMD.</p>
+	
+	<t:any element="ul" t:mixins="arras/Sortable">
+		<li>Item A</li>
+		<li>Item B</li>
+		<li>Item C</li>
+		<li>Item D</li>
+		<li>Item E</li>
+	</t:any>
+</html>

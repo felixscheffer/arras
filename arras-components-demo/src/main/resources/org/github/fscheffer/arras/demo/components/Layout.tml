@@ -36,6 +36,9 @@
 						<li>
 							<t:pagelink page="remoteSubmitDemo">Remote submit</t:pagelink>
 						</li>
+						<li>
+							<t:pagelink page="sortableDemo">Sortable</t:pagelink>
+						</li>
 					</ul>
 				</div>
 			</div>
