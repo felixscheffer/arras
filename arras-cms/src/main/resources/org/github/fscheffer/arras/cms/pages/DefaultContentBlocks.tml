@@ -1,0 +1,14 @@
+<hmtl xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd" xmlns:p="tapestry:parameter">
+
+	<t:block t:id="article">
+		<t:arras.Content t:id="h1" toolbar="false" />
+		<t:arras.Content t:id="h2" toolbar="false" />
+		<t:arras.Content t:id="articleContent" />
+	</t:block>
+
+	<t:block t:id="feature">
+		<t:arras.Content t:id="h3" toolbar="false" />
+		<t:arras.Content t:id="featureContent"  />
+	</t:block>
+
+</hmtl>

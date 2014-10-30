@@ -1,0 +1,35 @@
+<t:container xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd" xmlns:p="tapestry:parameter">
+
+	<t:if test="editing">
+
+		<div class="content-blocks">
+
+			<div t:type="any" t:mixins="arras/Sortable" cancel="literal:[data-container-type=medium-editor]">
+				<t:arras.ContentLoop contents="contents" block="block:contentBlock" howMany="howMany" />
+			</div>
+
+			<t:if test="!howMany">
+				<div class="${sizeClass}">
+					<t:arras.ContentAdd block="block:contentBlock" class="btn btn-default btn-block">
+						<t:arras.Icon icon="plus" />
+					</t:arras.ContentAdd>
+				</div>
+			</t:if>
+		</div>
+
+		<p:else>
+			<t:arras.ContentLoop contents="contents" block="block:contentBlock" howMany="howMany" />
+		</p:else>
+	</t:if>
+
+	<t:block t:id="contentBlock">
+		<t:remove>Note: all divs above this element have a height of 0px due to its floating nature </t:remove>
+		<div class="${sizeClass}">
+			<t:remove>Note: we need the extra sizer div above because the scanner will only detect subelements</t:remove>
+			<div class="content-block" data-component-type="content-block" data-context="${context}" data-removal="${allowRemoval}">
+				<t:delegate to="block" />
+			</div>
+		</div>
+	</t:block>
+
+</t:container>

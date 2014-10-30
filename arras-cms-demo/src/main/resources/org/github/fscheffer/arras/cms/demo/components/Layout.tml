@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd" xmlns:p="tapestry:parameter">
+	<head>
+		<title>Arras CMS Integration Test Application</title>
+	</head>
+	<body>
+
+		<div class="navbar navbar-inverse navbar-static-top" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<ul class="nav navbar-nav">
+						<li>
+							<t:pagelink page="index">Index</t:pagelink>
+						</li>
+						<li>
+							<t:pagelink page="simple">Simple</t:pagelink>
+						</li>
+					</ul>
+				</div>
+				<div class="navbar-collapse collapse">
+					<div class="navbar-form navbar-right">
+						<t:if test="!loggedIn">
+							<t:form t:id="loginForm" role="form">
+								<div class="form-group">
+									<t:textfield t:id="username" placeholder="Username" class="form-control" />
+								</div>
+								<div class="form-group">
+									<t:PasswordField t:id="password" placeholder="Password" class="form-control" />
+								</div>
+								<t:submit class="btn btn-success" value="Sign in" />
+							</t:form>
+							<p:else>
+								<t:arras.RemoteSubmit class="btn btn-default" selector=".content-submit">Save</t:arras.RemoteSubmit>
+								<t:eventlink t:event="logout" class="btn btn-success">Logout</t:eventlink>
+							</p:else>
+						</t:if>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="container">
+			<t:alerts showDismissAll="false" />
+		</div>
+		
+		<t:body />
+	</body>
+</html>

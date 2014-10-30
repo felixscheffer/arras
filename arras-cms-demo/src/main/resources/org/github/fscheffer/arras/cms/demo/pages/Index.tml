@@ -1,0 +1,43 @@
+<html t:type="Layout" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd" xmlns:a="tapestry-library:arras">
+
+	<a:ContentContainer t:id="container">
+		<section style="margin-bottom: 30px;">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-6">
+						<a:Image value="imageUrl" />
+					</div>
+					<a:ContentBlock t:id="article" blockId="literal:article" contentId="literal:article1" howMany="1" sizeClass="col-sm-6" />
+				</div>
+			</div>
+		</section>
+
+		<section style="background: #00b3e7; color: white; padding: 30px 0px;">
+			<div class="container">
+				<a:Content t:id="featureH1" toolbar="false" />
+
+				<div class="row">
+					<a:ContentBlock t:id="features" blockId="literal:feature" contentId="literal:features" sizeClass="col-md-4 col-sm-6" />
+				</div>
+			</div>
+		</section>
+
+		<section style="background: #F0AB3E; color: white; padding: 30px 0px;">
+			<div class="container">
+				<a:Content t:id="moreFeatureH1" toolbar="false" />
+
+				<div class="row">
+					<a:ContentBlock t:id="moreFeatures" blockId="literal:feature" contentId="literal:moreFeatures" howMany="3" sizeClass="col-md-4 col-sm-6" />
+				</div>
+			</div>
+		</section>
+
+		<div class="container">
+			<div class="row">
+				<a:ContentBlock t:id="article2" blockId="literal:article" contentId="literal:article2" sizeClass="col-sm-12" />
+			</div>
+		</div>
+
+		<a:ContentSubmit class="btn btn-primary content-submit" style="display: none">Save content</a:ContentSubmit>
+	</a:ContentContainer>
+</html>

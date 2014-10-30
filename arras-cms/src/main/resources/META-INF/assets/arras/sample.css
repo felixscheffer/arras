@@ -1,0 +1,107 @@
+.content-image {
+	position: relative;
+}
+
+.content-image > img {
+	width: 100%;
+}
+
+.content-image-overlay {
+
+	display: none;
+	
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	bottom: 0px;
+	right: 0px;
+	
+	background-color: rgba(0,0,0,0.5);
+	color: #fff;
+}
+
+.content-image:hover > .content-image-overlay {
+	display: block;
+}
+
+.content-image-overlay > a {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	
+	margin-top: -13px;
+	margin-left: -18px;
+}
+
+.content-image-selection {
+	height: 190px;
+	margin-bottom: 20px;
+}
+
+.content-image-selection img {
+	max-width: 100%;
+	max-height: 180px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.content-add {
+	margin-top: 9px;
+	margin-bottom: 18px;
+}
+
+.content-overlay-actions {
+	position: absolute;
+	top: -40px;
+	left: 0px;
+	right: 0px;
+	text-align: center;
+	
+	/* push above bootstrap nav which has a z-index: 1000; */
+	z-index: 1001;
+}
+
+
+.content-overlay-border {
+	display: none;
+	position: absolute;
+	border-width: 0px;
+	border-style: dashed;
+	border-color: silver;
+	/* push above bootstrap nav which has a z-index: 1000; */
+	z-index: 1001;
+}
+
+.content-overlay-top {
+	border-top-width: 2px;
+	top: -4px; 
+	left: 0px;
+	right: 0px;
+	height: 0px;
+}
+
+.content-overlay-right {
+	border-right-width: 2px;
+	top: 0px;
+	bottom: 0px;
+	right: -4px;
+}
+
+.content-overlay-bottom {
+	border-bottom-width: 2px;
+	bottom: -4px;
+	left: 0px;
+	right: 0px;
+	height: 0px;
+}
+
+.content-overlay-left {
+	border-left-width: 2px;
+	top: 0px; 
+	bottom: 0px;
+	left: -4px;
+}
+
+.medium-editor:focus {
+	outline: silver auto 2px;
+}

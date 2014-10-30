@@ -1,0 +1,38 @@
+<t:container xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd" xmlns:p="tapestry:parameter" xmlns:a="tapestry-library:arras">
+
+	<t:if test="editing">
+
+		<div class="content-image" data-component-type="content-image" data-context="${completeId}">
+			<img src="${value}" id="${clientId}" />
+
+			<div class="content-image-overlay">
+				<a:LightboxContent t:id="imageSelection">
+					<div class="container">
+						<div class="row">
+							<t:loop source="images" value="image">
+								<div class="col-md-2">
+									<div class="content-image-selection">
+										<a href="#${clientId}" class="thumbnail" data-component-type="image-selector" >
+											<img src="${image}" />
+										</a>
+									</div>
+								</div>
+							</t:loop>
+						</div>
+					</div>
+				</a:LightboxContent>
+
+				<a:LightboxTrigger href="prop:imageSelectionId" inline="true" >
+					<a:Icon icon="camera" class="btn btn-default btn-sm" />
+				</a:LightboxTrigger>
+			</div>
+		</div>
+
+		<p:else>
+			<div class="content-image">
+				<img src="${value}" />
+			</div>
+		</p:else>
+	</t:if>
+
+</t:container>

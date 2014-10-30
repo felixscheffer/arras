@@ -1,0 +1,22 @@
+<t:container xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd" xmlns:p="tapestry:parameter">
+
+	<div class="content-overlay">
+		<div class="content-overlay-border content-overlay-top" />
+		<div class="content-overlay-border content-overlay-right" />
+		<div class="content-overlay-border content-overlay-bottom" />
+		<div class="content-overlay-border content-overlay-left" />
+		
+		<div class="content-overlay-actions">
+			<div class="btn-group">
+				<button type="button" class="content-remove btn btn-default btn-sm">
+					<t:arras.Icon icon="trash" />
+				</button>
+
+				<button type="button" class="content-move btn btn-default btn-sm">
+					<t:arras.Icon icon="arrows" />
+				</button>
+			</div>
+		</div>
+	</div>
+
+</t:container>

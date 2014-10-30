@@ -1,0 +1,11 @@
+<html t:type="Layout" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd">
+
+	<t:arras.ContentContainer t:id="container">
+		<div class="container">
+			<t:arras.Content t:id="h1" content="h1" toolbar="false" />
+			<t:arras.Content t:id="h2" content="h2" toolbar="false" />
+			<t:arras.Content t:id="subtitel" content="subtitel" toolbar="false" />
+			<t:arras.Content t:id="content" content="content" />
+		</div>
+	</t:arras.ContentContainer>
+</html>

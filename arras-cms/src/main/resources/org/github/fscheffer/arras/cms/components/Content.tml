@@ -1,0 +1,12 @@
+<t:container xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd" xmlns:p="tapestry:parameter">
+
+	<t:if test="editing">
+
+		<t:arras.MediumEditor class="medium-editor" value="value" toolbar="toolbar" />
+
+		<p:else>
+			<t:OutputRaw value="value" />
+		</p:else>
+	</t:if>
+
+</t:container>
