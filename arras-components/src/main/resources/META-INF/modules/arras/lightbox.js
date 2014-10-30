@@ -68,5 +68,11 @@
 			
 			return options;
 		}
+		
+		return {
+			close: function() {
+				$.colorbox.close();
+			}
+		}
 	});
 }.call(this));
