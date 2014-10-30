@@ -71,4 +71,10 @@ public class ArrasUtils {
         writer.attributes("data-" + option, value);
     }
 
+    public static String get(JSONObject data, String property, String defaultValue) {
+
+        String value = String.class.cast(data.opt(property));
+
+        return value != null ? value : defaultValue;
+    }
 }
