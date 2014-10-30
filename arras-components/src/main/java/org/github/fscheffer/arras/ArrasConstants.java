@@ -14,7 +14,11 @@ package org.github.fscheffer.arras;
 
 public class ArrasConstants {
 
+    // configs
     public static final String LIGHTBOX_CSS_PATH       = "arras.lightbox.css-path";
 
     public static final String LIGHTBOX_CSS_PATH_VALUE = "${" + LIGHTBOX_CSS_PATH + "}";
+
+    // events
+    public static final String UPDATE_CONTENT          = "updateContent";
 }
