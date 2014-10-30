@@ -23,7 +23,7 @@ public class RemoteSubmit {
 
     @BeginRender
     void before(MarkupWriter writer) {
-        writer.element("button", "type", "submit", "data-container-type", "remote-submit", "data-selector",
+        writer.element("button", "type", "button", "data-container-type", "remote-submit", "data-selector",
                        this.selector);
     }
 
