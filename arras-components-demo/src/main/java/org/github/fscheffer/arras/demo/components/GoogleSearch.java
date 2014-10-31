@@ -19,7 +19,7 @@ import org.apache.tapestry5.MarkupWriter;
 import org.apache.tapestry5.annotations.BeginRender;
 import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.ioc.internal.util.InternalUtils;
-import org.github.fscheffer.arras.demo.Track;
+import org.github.fscheffer.arras.test.Track;
 
 public class GoogleSearch {
 

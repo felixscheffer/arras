@@ -12,6 +12,7 @@
 
 package org.github.fscheffer.arras.demo;
 
+import org.github.fscheffer.arras.test.ArrasTestCase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.annotations.BeforeMethod;

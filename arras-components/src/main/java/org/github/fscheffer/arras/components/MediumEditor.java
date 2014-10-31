@@ -38,7 +38,7 @@ import org.slf4j.Logger;
 //       also supports AMD out of the box
 //       http://jakiestfu.github.io/Medium.js/docs/
 @Import(module = "arras/medium-editor", stylesheet = { "medium-editor/medium-editor.css",
-"medium-editor/themes/default.css" })
+                                                      "medium-editor/themes/default.css" })
 @SupportsInformalParameters
 public class MediumEditor implements ClientElement {
 
@@ -123,7 +123,7 @@ public class MediumEditor implements ClientElement {
     @OnEvent(ArrasConstants.UPDATE_CONTENT)
     boolean onContentSubmit(String newValue) {
 
-        this.logger.info("Saving {}", newValue);
+        this.logger.debug("Saving {}", newValue);
 
         this.value = newValue;
 

@@ -18,8 +18,8 @@ import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.ioc.services.TypeCoercer;
 import org.github.fscheffer.arras.CollectionFilteringDataSource;
 import org.github.fscheffer.arras.FilteringDataSource;
-import org.github.fscheffer.arras.demo.Track;
-import org.github.fscheffer.arras.demo.services.MusicLibrary;
+import org.github.fscheffer.arras.test.Track;
+import org.github.fscheffer.arras.test.services.MusicLibrary;
 
 public class DataTablesAjaxDemo {
 

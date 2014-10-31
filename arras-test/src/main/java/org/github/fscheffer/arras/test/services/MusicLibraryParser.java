@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package org.github.fscheffer.arras.demo.services;
+package org.github.fscheffer.arras.test.services;
 
 import java.io.BufferedInputStream;
 import java.io.InputStream;
@@ -21,7 +21,7 @@ import java.util.List;
 
 import org.apache.tapestry5.ioc.internal.util.CollectionFactory;
 import org.apache.tapestry5.ioc.util.Stack;
-import org.github.fscheffer.arras.demo.Track;
+import org.github.fscheffer.arras.test.Track;
 import org.slf4j.Logger;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;

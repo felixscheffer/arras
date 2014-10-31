@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package org.github.fscheffer.arras.demo;
+package org.github.fscheffer.arras.test;
 
 import org.apache.tapestry5.beaneditor.ReorderProperties;
 

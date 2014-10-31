@@ -26,8 +26,9 @@ import org.apache.tapestry5.services.AssetSource;
 import org.github.fscheffer.arras.cms.services.ArrasCmsModule;
 import org.github.fscheffer.arras.cms.services.AvailableImages;
 import org.github.fscheffer.arras.cms.services.AvailableImagesImpl;
+import org.github.fscheffer.arras.test.services.ArrasTestModule;
 
-@ImportModule(ArrasCmsModule.class)
+@ImportModule({ ArrasCmsModule.class, ArrasTestModule.class })
 public class AppModule {
 
     public static void contributeApplicationDefaults(MappedConfiguration<String, Object> conf) {
@@ -44,14 +45,14 @@ public class AppModule {
     }
 
     public static void contributeAvailableImages(OrderedConfiguration<String> conf, AssetSource assetSource)
-        throws URISyntaxException {
+                                                                                                            throws URISyntaxException {
 
         addFolder(conf, assetSource, "META-INF/assets/photos/landscape/");
         addFolder(conf, assetSource, "META-INF/assets/photos/paris/");
     }
 
     private static void addFolder(OrderedConfiguration<String> conf, AssetSource source, String path)
-        throws URISyntaxException {
+                                                                                                     throws URISyntaxException {
 
         URL baseUrl = Thread.currentThread().getContextClassLoader().getResource(path);
 

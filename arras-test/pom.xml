@@ -31,5 +31,11 @@
 			<artifactId>selenium-java</artifactId>
 			<version>2.43.1</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.tapestry</groupId>
+			<artifactId>tapestry-ioc</artifactId>
+			<version>${tapestry-version}</version>
+		</dependency>
 	</dependencies>
 </project>
