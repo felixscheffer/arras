@@ -7,7 +7,9 @@
 			<t:arras.Content t:id="subtitel" toolbar="false" />
 			<t:arras.Content t:id="content" />
 
-			<t:arras.ContentSubmit class="btn btn-primary content-submit">Save content</t:arras.ContentSubmit>
+			<t:if test="editing">
+				<t:arras.ContentSubmit class="btn btn-primary content-submit">Save content</t:arras.ContentSubmit>
+			</t:if>
 		</div>
 	</t:arras.ContentContainer>
 </html>
