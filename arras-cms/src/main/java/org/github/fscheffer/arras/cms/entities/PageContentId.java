@@ -16,15 +16,12 @@ public class PageContentId implements Serializable {
 
     private String            contentId;
 
-    private int               index;
-
     public PageContentId() {}
 
-    public PageContentId(String pageName, Locale locale, String contentId, int index) {
+    public PageContentId(String pageName, Locale locale, String contentId) {
         this.pageName = pageName;
         this.contentId = contentId;
         this.locale = locale;
-        this.index = index;
     }
 
     public String getPageName() {
@@ -39,25 +36,11 @@ public class PageContentId implements Serializable {
         return this.locale;
     }
 
-    public int getIndex() {
-        return this.index;
-    }
-
-    public PageContentId withIndex(int index) {
-
-        if (this.index == index) {
-            return this;
-        }
-
-        return new PageContentId(this.pageName, this.locale, this.contentId, index);
-    }
-
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + (this.contentId == null ? 0 : this.contentId.hashCode());
-        result = prime * result + this.index;
         result = prime * result + (this.locale == null ? 0 : this.locale.hashCode());
         result = prime * result + (this.pageName == null ? 0 : this.pageName.hashCode());
         return result;
@@ -83,9 +66,6 @@ public class PageContentId implements Serializable {
         else if (!this.contentId.equals(other.contentId)) {
             return false;
         }
-        if (this.index != other.index) {
-            return false;
-        }
         if (this.locale == null) {
             if (other.locale != null) {
                 return false;
@@ -103,6 +83,12 @@ public class PageContentId implements Serializable {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "PageContentId [pageName=" + this.pageName + ", locale=" + this.locale + ", contentId=" + this.contentId
+               + "]";
     }
 
 }
