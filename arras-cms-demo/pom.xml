@@ -31,7 +31,7 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>4.3.6.Final</version>
-			
+
 			<!-- 31.10.2014, fscheffer: conflicts with xml-apis from selenium -->
 			<exclusions>
 				<exclusion>
@@ -64,6 +64,11 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-failsafe-plugin</artifactId>
+				<configuration>
+					<systemPropertyVariables>
+						<testing.path>/arras-cms</testing.path>
+					</systemPropertyVariables>
+				</configuration>
 			</plugin>
 
 			<plugin>
@@ -76,13 +81,6 @@
 					</webApp>
 					<stopPort>8005</stopPort>
 					<stopKey>STOP</stopKey>
-
-					<systemProperties>
-						<systemProperty>
-							<name>testing.path</name>
-							<value>/arras-cms</value>
-						</systemProperty>
-					</systemProperties>
 				</configuration>
 			</plugin>
 		</plugins>
