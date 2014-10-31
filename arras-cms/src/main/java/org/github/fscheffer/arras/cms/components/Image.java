@@ -3,11 +3,15 @@ package org.github.fscheffer.arras.cms.components;
 import javax.inject.Inject;
 
 import org.apache.tapestry5.ComponentResources;
+import org.apache.tapestry5.MarkupWriter;
+import org.apache.tapestry5.annotations.AfterRender;
+import org.apache.tapestry5.annotations.BeginRender;
 import org.apache.tapestry5.annotations.InjectComponent;
 import org.apache.tapestry5.annotations.OnEvent;
 import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SetupRender;
+import org.apache.tapestry5.annotations.SupportsInformalParameters;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 import org.github.fscheffer.arras.ArrasConstants;
 import org.github.fscheffer.arras.cms.services.AvailableImages;
@@ -15,6 +19,7 @@ import org.github.fscheffer.arras.cms.services.PermissionManager;
 import org.github.fscheffer.arras.components.LightboxContent;
 import org.slf4j.Logger;
 
+@SupportsInformalParameters
 public class Image {
 
     @Parameter(required = true, allowNull = false, autoconnect = true)
@@ -56,6 +61,26 @@ public class Image {
         if (this.editing) {
             this.support.require("content-image");
         }
+    }
+
+    @BeginRender
+    void begin(MarkupWriter writer) {
+        writer.element("div", "class", "content-image");
+
+        if (this.editing) {
+            writer.attributes("data-component-type", "content-image", "data-context", getCompleteId());
+        }
+
+        writer.element("img", "src", this.value, "id", this.clientId);
+    }
+
+    @AfterRender
+    void after(MarkupWriter writer) {
+
+        this.resources.renderInformalParameters(writer);
+
+        writer.end(); // img
+        writer.end(); // div
     }
 
     public String getCompleteId() {
