@@ -21,7 +21,6 @@ public class ArrasCmsModule {
 
     public static void bind(ServiceBinder binder) {
         binder.bind(PageContentDao.class, PageContentDaoImpl.class);
-        binder.bind(PageContentIdSource.class, PageContentIdSourceImpl.class);
         binder.bind(ContentBlocks.class, ContentBlocksImpl.class);
         binder.bind(SubmissionProcessor.class, SubmissionProcessorImpl.class);
     }
@@ -34,6 +33,7 @@ public class ArrasCmsModule {
     public static void contributeContentBlocks(MappedConfiguration<String, ContentBlockContribution> conf) {
         conf.add("article", defaultBlocks("article"));
         conf.add("feature", defaultBlocks("feature"));
+        conf.add("teaser", defaultBlocks("teaser"));
     }
 
     private static ContentBlockContribution defaultBlocks(String blockId) {

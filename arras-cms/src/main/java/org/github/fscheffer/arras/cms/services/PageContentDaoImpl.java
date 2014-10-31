@@ -8,7 +8,9 @@ import javax.persistence.Query;
 
 import org.apache.tapestry5.ioc.services.PerThreadValue;
 import org.apache.tapestry5.ioc.services.PerthreadManager;
+import org.apache.tapestry5.ioc.services.ThreadLocale;
 import org.apache.tapestry5.json.JSONArray;
+import org.apache.tapestry5.services.RequestGlobals;
 import org.github.fscheffer.arras.cms.entities.PageContent;
 import org.github.fscheffer.arras.cms.entities.PageContentId;
 
@@ -16,40 +18,26 @@ public class PageContentDaoImpl implements PageContentDao {
 
     private EntityManager           entityManager;
 
+    private RequestGlobals          globals;
+
+    private ThreadLocale            locale;
+
     private PerThreadValue<Boolean> cacheInitialized;
 
-    public PageContentDaoImpl(EntityManager entityManager, PerthreadManager perthreadManager) {
+    public PageContentDaoImpl(EntityManager entityManager,
+                              PerthreadManager perthreadManager,
+                              RequestGlobals globals,
+                              ThreadLocale locale) {
         this.entityManager = entityManager;
+        this.globals = globals;
+        this.locale = locale;
         this.cacheInitialized = perthreadManager.createValue();
     }
 
     @Override
-    public PageContent getContent(PageContentId id, String defaultContent) {
+    public JSONArray getContent(String contentId) {
 
-        if (!this.cacheInitialized.get(false)) {
-
-            // batch load the page content
-            retrievePageContents(id.getPageName(), id.getLocale());
-
-            this.cacheInitialized.set(true);
-        }
-
-        PageContent content = this.entityManager.find(PageContent.class, id);
-
-        if (content == null) {
-
-            content = new PageContent(id);
-
-            content.setContent(defaultContent);
-
-            this.entityManager.persist(content);
-        }
-
-        return content;
-    }
-
-    @Override
-    public JSONArray getContent(PageContentId id) {
+        PageContentId id = createId(contentId);
 
         if (!this.cacheInitialized.get(false)) {
 
@@ -65,7 +53,9 @@ public class PageContentDaoImpl implements PageContentDao {
     }
 
     @Override
-    public void save(PageContentId id, JSONArray obj) {
+    public void save(String contentId, JSONArray obj) {
+
+        PageContentId id = createId(contentId);
 
         if (!this.cacheInitialized.get(false)) {
 
@@ -87,32 +77,15 @@ public class PageContentDaoImpl implements PageContentDao {
         content.setContent(obj.toCompactString());
     }
 
-    @Override
-    public int count(String contentId) {
-
-        // TODO:
-        return 1;
-        /*
-        int count = 0;
-
-        while (true) {
-
-            id = id.withIndex(count);
-
-            if (this.entityManager.find(PageContentId.class, id) == null) {
-                return count;
-            }
-
-            count++;
-        }
-         */
-    }
-
     private List<?> retrievePageContents(String pagename, Locale locale) {
 
         Query query = this.entityManager.createQuery("select c from PageContent c where c.id.pageName = :pagename and c.id.locale = :locale");
         query.setParameter("pagename", pagename);
         query.setParameter("locale", locale);
         return query.getResultList();
+    }
+
+    public PageContentId createId(String contentId) {
+        return new PageContentId(this.globals.getActivePageName(), this.locale.getLocale(), contentId);
     }
 }
