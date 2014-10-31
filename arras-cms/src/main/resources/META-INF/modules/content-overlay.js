@@ -1,5 +1,5 @@
 (function() {
-	define(["t5/core/dom", "content-events"], function(dom, events) {
+	define(["t5/core/dom", "arras/events"], function(dom, events) {
 		
 		var removeSel = ".content-remove";
 		var moveSel = ".content-move";

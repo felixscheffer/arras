@@ -1,5 +1,5 @@
 (function() {
-	define(["t5/core/dom", "arras/lightbox", "./content-events"], function(dom, lightbox, events) {
+	define(["t5/core/dom", "arras/lightbox", "arras/events"], function(dom, lightbox, events) {
 		
 		var SELECTOR = "[data-component-type=image-selector]";
 		

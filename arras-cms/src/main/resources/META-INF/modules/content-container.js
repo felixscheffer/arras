@@ -1,6 +1,6 @@
 (function() {
 
-	define([ "t5/core/dom", "t5/core/pageinit", "t5/core/events", "./content-events" ], function(
+	define([ "t5/core/dom", "t5/core/pageinit", "t5/core/events", "arras/events" ], function(
 			dom, pi, t5events, events) {
 
 		var CONTAINER_SELECTOR = "[data-container-type=content-container]";
