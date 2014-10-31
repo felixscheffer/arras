@@ -35,8 +35,6 @@ public class RemoteSubmitIT extends ArrasTestCase {
 
         waitForPageToLoad();
 
-        waitUntilVisible(By.cssSelector(".alert > span"));
-
         assertTextPresent(By.cssSelector(".alert > span"),
                           "Triggered form with visible submit button! Form content was: \"Hello World!\"");
     }
@@ -50,7 +48,7 @@ public class RemoteSubmitIT extends ArrasTestCase {
 
         waitForPageToLoad();
 
-        waitUntilVisible(By.cssSelector(".alert > span"));
+        sleep(300);
 
         assertTextPresent(By.cssSelector(".alert > span"),
             "Triggered form with invisible submit button! Form content was: \"Hello Tapestry!\"");
