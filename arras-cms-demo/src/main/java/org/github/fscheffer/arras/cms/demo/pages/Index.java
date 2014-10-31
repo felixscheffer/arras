@@ -83,7 +83,7 @@ public class Index {
     }
 
     public String getMoreFeatureH1() {
-        return ArrasUtils.get(this.data, "moreFeatureH1", "<h1>More features</h1>");
+        return ArrasUtils.get(this.data, "moreFeatureH1", "<h1>Teasers</h1>");
     }
 
     public void setFeatureH1(String value) {
