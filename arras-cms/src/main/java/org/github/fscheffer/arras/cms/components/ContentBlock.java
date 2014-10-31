@@ -13,10 +13,8 @@ import org.apache.tapestry5.json.JSONObject;
 import org.apache.tapestry5.services.Environment;
 import org.github.fscheffer.arras.ArrasConstants;
 import org.github.fscheffer.arras.cms.BlockContext;
-import org.github.fscheffer.arras.cms.entities.PageContentId;
 import org.github.fscheffer.arras.cms.services.ContentBlocks;
 import org.github.fscheffer.arras.cms.services.PageContentDao;
-import org.github.fscheffer.arras.cms.services.PageContentIdSource;
 import org.github.fscheffer.arras.cms.services.PermissionManager;
 import org.github.fscheffer.arras.cms.services.SubmissionProcessor;
 
@@ -43,9 +41,6 @@ public class ContentBlock {
 
     @Inject
     private PermissionManager   permissionManager;
-
-    @Inject
-    private PageContentIdSource idSource;
 
     @Inject
     private PageContentDao      contentDao;
@@ -79,9 +74,7 @@ public class ContentBlock {
 
     public JSONArray getContents() {
 
-        PageContentId id = this.idSource.create(this.contentId);
-
-        JSONArray contents = this.contentDao.getContent(id);
+        JSONArray contents = this.contentDao.getContent(this.contentId);
 
         if (this.howMany != null) {
 
@@ -115,9 +108,7 @@ public class ContentBlock {
             contents.put(content);
         }
 
-        PageContentId id = this.idSource.create(this.contentId);
-
-        this.contentDao.save(id, contents);
+        this.contentDao.save(this.contentId, contents);
 
         return true;
     }
