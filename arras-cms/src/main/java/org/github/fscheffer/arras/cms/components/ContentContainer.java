@@ -16,7 +16,7 @@ import org.apache.tapestry5.json.JSONObject;
 import org.apache.tapestry5.services.Request;
 import org.github.fscheffer.arras.cms.ArrasCmsConstants;
 import org.github.fscheffer.arras.cms.services.PermissionManager;
-import org.github.fscheffer.arras.cms.services.SubmissionProcessor;
+import org.github.fscheffer.arras.services.SubmissionProcessor;
 
 @Import(module = "content-container")
 public class ContentContainer {

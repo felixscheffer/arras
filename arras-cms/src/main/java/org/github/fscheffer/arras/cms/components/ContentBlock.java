@@ -16,7 +16,7 @@ import org.github.fscheffer.arras.cms.BlockContext;
 import org.github.fscheffer.arras.cms.services.ContentBlocks;
 import org.github.fscheffer.arras.cms.services.PageContentDao;
 import org.github.fscheffer.arras.cms.services.PermissionManager;
-import org.github.fscheffer.arras.cms.services.SubmissionProcessor;
+import org.github.fscheffer.arras.services.SubmissionProcessor;
 
 public class ContentBlock {
 
