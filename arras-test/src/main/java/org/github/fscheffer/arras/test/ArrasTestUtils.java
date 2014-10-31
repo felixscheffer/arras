@@ -1,4 +1,4 @@
-package org.github.fscheffer.arras.demo;
+package org.github.fscheffer.arras.test;
 
 
 public class ArrasTestUtils {

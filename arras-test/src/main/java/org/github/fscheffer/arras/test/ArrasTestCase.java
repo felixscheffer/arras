@@ -1,4 +1,4 @@
-package org.github.fscheffer.arras.demo;
+package org.github.fscheffer.arras.test;
 
 import java.util.Arrays;
 import java.util.Collections;
