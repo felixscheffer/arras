@@ -4,7 +4,7 @@
 		var removeSel = ".content-remove";
 		var moveSel = ".content-move";
 		
-		var elementToRemove = null;
+		var blockToRemove = null;
 
 		var overlayElements = []
 		overlayElements = overlayElements.concat(dom.body.find(".content-overlay-border"));
@@ -16,7 +16,7 @@
 				element.hide();
 			})
 			
-			elementToRemove = null;
+			blockToRemove = null;
 		})
 		
 		dom.onDocument("click", "[data-component-type=content-block]", function() {
@@ -31,8 +31,7 @@
 			
 			var allowRemoval = block.attr("data-removal") === "true";
 			if(allowRemoval) {
-				// include the sizer
-				elementToRemove = block.parent();
+				blockToRemove = block;
 			}
 			
 			show(removeSel, allowRemoval);
@@ -55,8 +54,11 @@
 		
 		dom.onDocument("click", removeSel, function() {
 			
-			if(elementToRemove !== null && confirm("Are you sure?") ) {
-				elementToRemove.remove();
+			if(blockToRemove !== null && confirm("Are you sure?") ) {
+				
+				// include the sizer
+				blockToRemove.parent().remove();
+				blockToRemove.trigger("arras:removeHandler");
 			}
 		})
 		
