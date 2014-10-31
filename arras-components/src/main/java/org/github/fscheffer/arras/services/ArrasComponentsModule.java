@@ -30,7 +30,9 @@ public class ArrasComponentsModule {
         configuration.add(new LibraryMapping("arras", "org.github.fscheffer.arras"));
     }
 
-    public static void bind(ServiceBinder binder) {}
+    public static void bind(ServiceBinder binder) {
+        binder.bind(SubmissionProcessor.class, SubmissionProcessorImpl.class);
+    }
 
     public static void contributeFactoryDefaults(MappedConfiguration<String, String> conf) {
 

@@ -11,6 +11,8 @@ import org.github.fscheffer.arras.cms.ContentBlockContribution;
 import org.github.fscheffer.arras.cms.entities.PageContent;
 import org.github.fscheffer.arras.cms.pages.DefaultContentBlocks;
 import org.github.fscheffer.arras.services.ArrasComponentsModule;
+import org.github.fscheffer.arras.services.SubmissionProcessor;
+import org.github.fscheffer.arras.services.SubmissionProcessorImpl;
 
 @ImportModule(ArrasComponentsModule.class)
 public class ArrasCmsModule {
@@ -22,7 +24,6 @@ public class ArrasCmsModule {
     public static void bind(ServiceBinder binder) {
         binder.bind(PageContentDao.class, PageContentDaoImpl.class);
         binder.bind(ContentBlocks.class, ContentBlocksImpl.class);
-        binder.bind(SubmissionProcessor.class, SubmissionProcessorImpl.class);
     }
 
     @Contribute(JpaEntityPackageManager.class)
