@@ -2,10 +2,12 @@
 
 	<t:arras.ContentContainer t:id="container">
 		<div class="container">
-			<t:arras.Content t:id="h1" content="h1" toolbar="false" />
-			<t:arras.Content t:id="h2" content="h2" toolbar="false" />
-			<t:arras.Content t:id="subtitel" content="subtitel" toolbar="false" />
-			<t:arras.Content t:id="content" content="content" />
+			<t:arras.Content t:id="h1" toolbar="false" />
+			<t:arras.Content t:id="h2" toolbar="false" />
+			<t:arras.Content t:id="subtitel" toolbar="false" />
+			<t:arras.Content t:id="content" />
+
+			<t:arras.ContentSubmit class="btn btn-primary content-submit">Save content</t:arras.ContentSubmit>
 		</div>
 	</t:arras.ContentContainer>
 </html>
