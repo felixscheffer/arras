@@ -5,7 +5,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-sm-6">
-						<a:Image value="imageUrl" />
+						<a:Image t:id="imageUrl" />
 					</div>
 					<a:ContentBlock t:id="article" blockId="literal:article" contentId="literal:article1" howMany="1" sizeClass="col-sm-6" />
 				</div>
@@ -27,7 +27,7 @@
 				<a:Content t:id="moreFeatureH1" toolbar="false" />
 
 				<div class="row">
-					<a:ContentBlock t:id="moreFeatures" blockId="literal:feature" contentId="literal:moreFeatures" howMany="3" sizeClass="col-md-4 col-sm-6" />
+					<a:ContentBlock t:id="moreFeatures" blockId="literal:teaser" contentId="literal:moreFeatures" howMany="3" sizeClass="col-md-4 col-sm-6" />
 				</div>
 			</div>
 		</section>
