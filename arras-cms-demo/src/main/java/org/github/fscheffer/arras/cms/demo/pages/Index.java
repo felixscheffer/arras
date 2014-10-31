@@ -26,40 +26,36 @@ import org.apache.tapestry5.json.JSONObject;
 import org.github.fscheffer.arras.ArrasUtils;
 import org.github.fscheffer.arras.cms.ArrasCmsConstants;
 import org.github.fscheffer.arras.cms.services.PageContentDao;
-import org.github.fscheffer.arras.cms.services.PageContentIdSource;
 import org.github.fscheffer.arras.cms.services.PermissionManager;
 import org.slf4j.Logger;
 
 public class Index {
 
     @Inject
-    private AlertManager        alertManager;
+    private AlertManager       alertManager;
 
     @Inject
-    private ComponentResources  resources;
+    private ComponentResources resources;
 
     @Inject
-    private Logger              logger;
+    private Logger             logger;
 
     @Inject
-    private PermissionManager   permissionManager;
+    private PermissionManager  permissionManager;
 
     @Inject
-    private PageContentIdSource idSource;
-
-    @Inject
-    private PageContentDao      contentDao;
+    private PageContentDao     contentDao;
 
     @Inject
     @Path("photos/landscape/man_point-arena-stornetta.jpg")
-    private Asset               defaultImage;
+    private Asset              defaultImage;
 
-    private JSONObject          data;
+    private JSONObject         data;
 
     @OnEvent(EventConstants.ACTIVATE)
     void onActivate() {
 
-        JSONArray array = this.contentDao.getContent(this.idSource.create("toplevel"));
+        JSONArray array = this.contentDao.getContent("toplevel");
 
         this.data = array.length() == 0 ? new JSONObject() : array.getJSONObject(0);
     }
@@ -76,7 +72,7 @@ public class Index {
             return;
         }
 
-        this.contentDao.save(this.idSource.create("toplevel"), new JSONArray(this.data));
+        this.contentDao.save("toplevel", new JSONArray(this.data));
 
         this.logger.info("Changes saved using ajax!");
         this.alertManager.success("Changes saved using ajax!");
