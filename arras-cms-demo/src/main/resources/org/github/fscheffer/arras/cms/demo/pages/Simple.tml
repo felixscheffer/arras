@@ -2,13 +2,17 @@
 
 	<t:arras.ContentContainer t:id="container">
 		<div class="container">
-			<t:arras.Content t:id="h1" toolbar="false" />
-			<t:arras.Content t:id="h2" toolbar="false" />
+			<div id="contentH1">
+				<t:arras.Content t:id="h1" toolbar="false" />
+			</div>
+			<div id="contentH2">
+				<t:arras.Content t:id="h2" toolbar="false" />
+			</div>
 			<t:arras.Content t:id="subtitel" toolbar="false" />
 			<t:arras.Content t:id="content" />
 
 			<t:if test="editing">
-				<t:arras.ContentSubmit class="btn btn-primary content-submit">Save content</t:arras.ContentSubmit>
+				<t:arras.ContentSubmit class="btn btn-primary content-submit" t:mixins="renderClientId">Save content</t:arras.ContentSubmit>
 			</t:if>
 		</div>
 	</t:arras.ContentContainer>
