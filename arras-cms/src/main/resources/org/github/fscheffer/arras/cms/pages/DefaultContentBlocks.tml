@@ -12,7 +12,7 @@
 	</t:block>
 
 	<t:block t:id="teaser">
-		<div class="thumbnail">
+		<div class="teaser thumbnail">
 			<t:arras.Image t:id="image" />
 			<div class="caption">
 				<t:arras.Content t:id="teaserH3" value="h3" toolbar="false" />
