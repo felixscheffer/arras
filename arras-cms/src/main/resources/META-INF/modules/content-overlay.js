@@ -1,5 +1,5 @@
 (function() {
-	define(["t5/core/dom"], function(dom) {
+	define(["t5/core/dom", "content-events"], function(dom, events) {
 		
 		var removeSel = ".content-remove";
 		var moveSel = ".content-move";
@@ -58,7 +58,7 @@
 				
 				// include the sizer
 				blockToRemove.parent().remove();
-				blockToRemove.trigger("arras:removeHandler");
+				blockToRemove.trigger(events.removeHandler);
 			}
 		})
 		
