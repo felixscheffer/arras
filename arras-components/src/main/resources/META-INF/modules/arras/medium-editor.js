@@ -1,13 +1,10 @@
 (function() {
-	define(["t5/core/dom", "t5/core/events", "shim/medium-editor"], function(dom, events, MediumEditor) {
+	define(["t5/core/dom", "shim/medium-editor", "arras/events"], function(dom, MediumEditor, events) {
 		
-		var containerSel = "[data-container-type=medium-editor]";
-		var editorSel = "> div";
+		var CONTAINER_SEL = "[data-container-type=content-container]" + "," + "[data-component-type=content-block]";
 		
-		dom.scanner(containerSel, function(container) {
+		dom.scanner("[data-container-type=medium-editor]", function(editor) {
 			
-			var editor = container.findFirst(editorSel);
-		
 			var options = {};
 			
 			//data-disable-toolbar and data-disable-editing should work out of the box
@@ -18,7 +15,9 @@
 				options["buttonLabels"] = 'fontawesome';
 			}
 			
-			new MediumEditor(editor.element, options);			
+			new MediumEditor(editor.element, options);
+			
+			handleSubmit(editor);
 		});
 		
 		function addOption(options, attributeName, optionName) {
@@ -30,22 +29,23 @@
 			}
 		}
 		
-		dom.onDocument(events.form.prepareForSubmit, function() {
+		function handleSubmit(editor) {
 			
-			this.find(containerSel).forEach(function(container) {
-				
-				var hidden = container.findFirst("input[type=hidden]");
-				var editor = container.findFirst(editorSel);
-				var serialized = editor.element.innerHTML.trim();
-				
-				hidden.value(serialized);
+			var container = editor.findParent(CONTAINER_SEL);
+			
+			if(container == null) {
+				return;
+			}
+
+			container.on(events.submit, function(event, data) {
+
+				console.log("medium-editor: " + editor.attr("data-context"));
+
+				var context = editor.attr("data-context");
+				var content = editor.element.innerHTML.trim();
+
+				data[context] = content;
 			})
-		});
-		
-		/*
-		 * , {
-            buttonLabels: 'fontawesome'
-        }
-		 */
+		}
 	})
 }).call(this);
