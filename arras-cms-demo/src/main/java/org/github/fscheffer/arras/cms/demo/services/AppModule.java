@@ -12,13 +12,17 @@
 
 package org.github.fscheffer.arras.cms.demo.services;
 
+import java.io.File;
+import java.net.URISyntaxException;
+import java.net.URL;
+
 import org.apache.tapestry5.Asset;
 import org.apache.tapestry5.SymbolConstants;
-import org.apache.tapestry5.annotations.Path;
 import org.apache.tapestry5.ioc.MappedConfiguration;
 import org.apache.tapestry5.ioc.OrderedConfiguration;
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.ImportModule;
+import org.apache.tapestry5.services.AssetSource;
 import org.github.fscheffer.arras.cms.services.ArrasCmsModule;
 import org.github.fscheffer.arras.cms.services.AvailableImages;
 import org.github.fscheffer.arras.cms.services.AvailableImagesImpl;
@@ -39,19 +43,40 @@ public class AppModule {
         binder.bind(AvailableImages.class, AvailableImagesImpl.class);
     }
 
-    public static void contributeAvailableImages(OrderedConfiguration<String> conf,
-                                                 @Path("META-INF/assets/photos/landscape/bridge-over-river.jpg") Asset image1,
-                                                 @Path("META-INF/assets/photos/landscape/man_point-arena-stornetta.jpg") Asset image2,
-                                                 @Path("META-INF/assets/photos/landscape/pointarena_rockycliffs.jpg") Asset image3,
-                                                 @Path("META-INF/assets/photos/landscape/san-joaquin-river-view.jpg") Asset image4) {
-        conf.add("image1", image1.toClientURL());
-        conf.add("image2", image2.toClientURL());
-        conf.add("image3", image3.toClientURL());
-        conf.add("image4", image4.toClientURL());
+    public static void contributeAvailableImages(OrderedConfiguration<String> conf, AssetSource assetSource)
+        throws URISyntaxException {
 
-        conf.add("image5", image1.toClientURL());
-        conf.add("image6", image2.toClientURL());
-        conf.add("image7", image3.toClientURL());
-        conf.add("image8", image4.toClientURL());
+        addFolder(conf, assetSource, "META-INF/assets/photos/landscape/");
+        addFolder(conf, assetSource, "META-INF/assets/photos/paris/");
+    }
+
+    private static void addFolder(OrderedConfiguration<String> conf, AssetSource source, String path)
+        throws URISyntaxException {
+
+        URL baseUrl = Thread.currentThread().getContextClassLoader().getResource(path);
+
+        File folder = new File(baseUrl.toURI());
+
+        for (File file : folder.listFiles()) {
+
+            if (file.isDirectory()) {
+                continue;
+            }
+
+            String classpath = toClasspath(folder, file);
+
+            Asset asset = source.getClasspathAsset(classpath);
+
+            conf.add(file.getName(), asset.toClientURL());
+        }
+    }
+
+    private static String toClasspath(File folder, File file) {
+
+        String absolutePath = file.getAbsolutePath();
+
+        int idx = absolutePath.indexOf("/META-INF/");
+
+        return absolutePath.substring(idx + 1);
     }
 }
