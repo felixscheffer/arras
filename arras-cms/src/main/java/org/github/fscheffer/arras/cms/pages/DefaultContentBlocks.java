@@ -12,7 +12,11 @@
 
 package org.github.fscheffer.arras.cms.pages;
 
+import javax.inject.Inject;
+
+import org.apache.tapestry5.Asset;
 import org.apache.tapestry5.annotations.Environmental;
+import org.apache.tapestry5.annotations.Path;
 import org.github.fscheffer.arras.ArrasUtils;
 import org.github.fscheffer.arras.cms.BlockContext;
 
@@ -20,6 +24,10 @@ public class DefaultContentBlocks {
 
     @Environmental
     private BlockContext context;
+
+    @Inject
+    @Path("man_point-arena-stornetta.jpg")
+    private Asset        defaultImage;
 
     private String get(String property, String defaultValue) {
         return ArrasUtils.get(this.context.data, property, defaultValue);
@@ -69,5 +77,22 @@ public class DefaultContentBlocks {
 
     public void setFeatureContent(String value) {
         set("content", value);
+    }
+
+    public String getTeaserContent() {
+        return get("teaserContent",
+            "<p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>");
+    }
+
+    public void setTeaserContent(String value) {
+        set("teaserContent", value);
+    }
+
+    public String getImage() {
+        return get("image", this.defaultImage.toClientURL());
+    }
+
+    public void setImage(String value) {
+        set("image", value);
     }
 }

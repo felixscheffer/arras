@@ -8,7 +8,16 @@
 
 	<t:block t:id="feature">
 		<t:arras.Content t:id="h3" toolbar="false" />
-		<t:arras.Content t:id="featureContent"  />
+		<t:arras.Content t:id="featureContent" />
 	</t:block>
 
+	<t:block t:id="teaser">
+		<div class="thumbnail">
+			<t:arras.Image t:id="image" />
+			<div class="caption">
+				<t:arras.Content t:id="teaserH3" value="h3" toolbar="false" />
+				<t:arras.Content t:id="teaserContent" />
+			</div>
+		</div>
+	</t:block>
 </hmtl>
