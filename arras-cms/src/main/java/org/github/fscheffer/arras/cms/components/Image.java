@@ -17,7 +17,7 @@ import org.slf4j.Logger;
 
 public class Image {
 
-    @Parameter(required = true, allowNull = false)
+    @Parameter(required = true, allowNull = false, autoconnect = true)
     @Property(write = false)
     private String             value;
 
