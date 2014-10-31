@@ -2,6 +2,7 @@ package org.github.fscheffer.arras.cms.components;
 
 import javax.inject.Inject;
 
+import org.apache.tapestry5.Block;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.Link;
 import org.apache.tapestry5.MarkupWriter;
@@ -71,6 +72,10 @@ public class ContentContainer {
         JSONObject data = new JSONObject(parameter);
 
         this.submissionProcessor.process(data);
+    }
+
+    public Block getBody() {
+        return this.resources.getBody();
     }
 
     private boolean hasPermissionToEdit() {
