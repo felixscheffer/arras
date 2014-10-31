@@ -16,16 +16,24 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.apache.tapestry5.EventConstants;
+import org.apache.tapestry5.ComponentResources;
+import org.apache.tapestry5.Link;
 import org.apache.tapestry5.alerts.AlertManager;
+import org.apache.tapestry5.annotations.Import;
 import org.apache.tapestry5.annotations.OnEvent;
 import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
+import org.apache.tapestry5.annotations.RequestParameter;
 import org.apache.tapestry5.annotations.SetupRender;
 import org.apache.tapestry5.ioc.internal.util.CollectionFactory;
+import org.apache.tapestry5.json.JSONObject;
 import org.github.fscheffer.arras.demo.EditorContent;
+import org.github.fscheffer.arras.services.SubmissionProcessor;
 
+@Import(module = "mediumEditorDemo")
 public class MediumEditorDemo {
+
+    private static final String SUBMIT = "arrasSubmit";
 
     @Persist
     @Property
@@ -40,6 +48,12 @@ public class MediumEditorDemo {
 
     @Inject
     private AlertManager        alertManager;
+
+    @Inject
+    private ComponentResources  resources;
+
+    @Inject
+    private SubmissionProcessor processor;
 
     @SetupRender
     void setup() {
@@ -74,9 +88,17 @@ public class MediumEditorDemo {
         this.rows.add(new EditorContent("Row 4"));
     }
 
-    @OnEvent(value = EventConstants.SUCCESS)
-    void onSubmit() {
+    @OnEvent(value = SUBMIT)
+    void onSubmit(@RequestParameter("content") String content) {
+
+        JSONObject object = new JSONObject(content);
+
+        this.processor.process(object);
 
         this.alertManager.success("Saved changes!");
+    }
+
+    public Link getUrl() {
+        return this.resources.createEventLink(MediumEditorDemo.SUBMIT);
     }
 }

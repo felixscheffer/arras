@@ -62,6 +62,11 @@ public class MediumEditorIT extends ArrasTestCase {
         click(By.id("submit_0"));
 
         waitForPageToLoad();
+
+        // reload the page...just to be sure
+        open("/MediumEditorDemo");
+
+        waitForPageToLoad();
     }
 
 }
