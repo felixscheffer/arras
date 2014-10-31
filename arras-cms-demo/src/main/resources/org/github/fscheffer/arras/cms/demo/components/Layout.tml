@@ -27,11 +27,11 @@
 								<div class="form-group">
 									<t:PasswordField t:id="password" placeholder="Password" class="form-control" />
 								</div>
-								<t:submit class="btn btn-success" value="Sign in" />
+								<t:submit t:id="signIn" class="btn btn-success" value="Sign in" />
 							</t:form>
 							<p:else>
 								<t:arras.RemoteSubmit class="btn btn-default" selector=".content-submit">Save</t:arras.RemoteSubmit>
-								<t:eventlink t:event="logout" class="btn btn-success">Logout</t:eventlink>
+								<t:eventlink id="logout" t:event="logout" class="btn btn-success">Logout</t:eventlink>
 							</p:else>
 						</t:if>
 					</div>
