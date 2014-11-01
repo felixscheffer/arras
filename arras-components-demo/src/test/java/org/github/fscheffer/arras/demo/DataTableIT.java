@@ -57,7 +57,6 @@ public class DataTableIT extends ArrasTestCase {
     void before() {
 
         open(this.pagename);
-        waitForPageToLoad();
         waitUntilInvisible(By.cssSelector(".datatable_processing"));
     }
 

@@ -91,6 +91,8 @@ public abstract class ArrasTestCase {
 
         String completeUrl = ArrasTestUtils.appendPath(this.baseUrl, url);
         this.driver.get(completeUrl);
+
+        waitForPageToLoad();
     }
 
     protected final void click(By by) {
