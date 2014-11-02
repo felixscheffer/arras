@@ -28,6 +28,8 @@ public class SimpleIT extends ArrasTestCase {
         assertTextPresent("A great way to catch your reader's attention is to tell a story");
         assertTextPresent("But as the junior mates were hurrying to execute the order");
 
+        assertImage(By.cssSelector(".content-image > img"), "/photos/landscape/man_point-arena-stornetta.jpg");
+
         text(By.cssSelector("#username"), "admin");
         click(By.cssSelector("#signIn"));
 
@@ -39,6 +41,15 @@ public class SimpleIT extends ArrasTestCase {
         changeText("#contentH1 > .medium-editor", "An even better headline!");
         changeText("#contentH2 > .medium-editor", "And an amazing subtitle...");
 
+        hover(By.cssSelector(".content-image"));
+        click(By.cssSelector(".content-image [data-container-type=lightbox]"));
+
+        waitUntilLightboxIsOpen();
+
+        click(By.cssSelector("#cboxLoadedContent .row > div:nth-child(5) a"));
+
+        waitUntilLightboxIsClosed();
+
         click(By.cssSelector("#contentsubmit"));
 
         waitForAjaxRequestsToComplete();
@@ -47,6 +58,21 @@ public class SimpleIT extends ArrasTestCase {
 
         assertTextPresent(By.cssSelector("h1"), "An even better headline!");
         assertTextPresent(By.cssSelector("h2"), "And an amazing subtitle...");
+
+        assertImage(By.cssSelector(".content-image > img"), "/photos/paris/river-seine.jpg");
+    }
+
+    private void assertImage(By by, String expected) {
+        Assert.assertTrue(attr(by, "src").endsWith(expected));
+    }
+
+    private void waitUntilLightboxIsOpen() {
+        waitUntilPresent(By.cssSelector("#cboxLoadedContent"));
+        waitUntilVisible(By.cssSelector("#cboxLoadedContent"));
+    }
+
+    private void waitUntilLightboxIsClosed() {
+        waitUntilInvisible(By.cssSelector("#cboxOverlay"));
     }
 
     private void changeText(String selector, String value) {
