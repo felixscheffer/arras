@@ -1,0 +1,21 @@
+<html t:type="Layout" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd" xmlns:a="tapestry-library:arras">
+
+	<a:ContentContainer t:id="container">
+	
+		<div class="container" id="fixedNumber">
+			<h1>Fixed number of blocks</h1>
+			<div class="row">
+				<a:ContentBlock t:id="teasers" blockId="literal:teaser" contentId="literal:teasers" howMany="3" sizeClass="col-sm-4" />
+			</div>
+		</div>
+
+		<div class="container" id="variableNumber">
+			<h1>Variable number of blocks</h1>
+			<div class="row">
+				<a:ContentBlock t:id="features" blockId="literal:feature" contentId="literal:features" sizeClass="col-md-3 col-sm-6" />
+			</div>
+		</div>
+
+		<a:ContentSubmit class="btn btn-primary content-submit" style="display: none">Save content</a:ContentSubmit>
+	</a:ContentContainer>
+</html>

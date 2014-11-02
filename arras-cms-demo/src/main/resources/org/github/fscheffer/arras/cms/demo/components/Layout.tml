@@ -15,6 +15,9 @@
 						<li>
 							<t:pagelink page="simple">Simple</t:pagelink>
 						</li>
+						<li>
+							<t:pagelink page="blocks">Blocks</t:pagelink>
+						</li>
 					</ul>
 				</div>
 				<div class="navbar-collapse collapse">
@@ -42,7 +45,7 @@
 		<div class="container">
 			<t:alerts showDismissAll="false" />
 		</div>
-		
+
 		<t:body />
 	</body>
 </html>
