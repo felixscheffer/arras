@@ -20,7 +20,7 @@ Arras CMS provides simple content management functionality. It allows you to cha
 
 ![alt tag](https://github.com/fscheffer/arras/blob/master/arras-cms.png)
 
-Pleasae ckeck out the arras-cms-demo project for examples.
+Pleasae check out the arras-cms-demo project for examples.
 
 
 ## Name
