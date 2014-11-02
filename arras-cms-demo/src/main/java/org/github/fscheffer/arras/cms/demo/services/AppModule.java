@@ -12,9 +12,7 @@
 
 package org.github.fscheffer.arras.cms.demo.services;
 
-import java.io.File;
 import java.net.URISyntaxException;
-import java.net.URL;
 
 import org.apache.tapestry5.Asset;
 import org.apache.tapestry5.SymbolConstants;
@@ -27,9 +25,13 @@ import org.github.fscheffer.arras.cms.services.ArrasCmsModule;
 import org.github.fscheffer.arras.cms.services.AvailableImages;
 import org.github.fscheffer.arras.cms.services.AvailableImagesImpl;
 import org.github.fscheffer.arras.test.services.ArrasTestModule;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @ImportModule({ ArrasCmsModule.class, ArrasTestModule.class })
 public class AppModule {
+
+    private static Logger logger = LoggerFactory.getLogger(AppModule.class);
 
     public static void contributeApplicationDefaults(MappedConfiguration<String, Object> conf) {
 
@@ -45,39 +47,28 @@ public class AppModule {
     }
 
     public static void contributeAvailableImages(OrderedConfiguration<String> conf, AssetSource assetSource)
-                                                                                                            throws URISyntaxException {
+        throws URISyntaxException {
 
-        addFolder(conf, assetSource, "META-INF/assets/photos/landscape/");
-        addFolder(conf, assetSource, "META-INF/assets/photos/paris/");
+        addFile(conf, assetSource, "META-INF/assets/photos/landscape/", "bridge-over-river.jpg");
+        addFile(conf, assetSource, "META-INF/assets/photos/landscape/", "man_point-arena-stornetta.jpg");
+        addFile(conf, assetSource, "META-INF/assets/photos/landscape/", "pointarena_rockycliffs.jpg");
+        addFile(conf, assetSource, "META-INF/assets/photos/landscape/", "san-joaquin-river-view.jpg");
+
+        addFile(conf, assetSource, "META-INF/assets/photos/paris/", "eiffel-tower.jpg");
+        addFile(conf, assetSource, "META-INF/assets/photos/paris/", "musee-de-orsay.jpg");
+        addFile(conf, assetSource, "META-INF/assets/photos/paris/", "museum-clock.jpg");
+        addFile(conf, assetSource, "META-INF/assets/photos/paris/", "notre_dames-view.jpg");
+        addFile(conf, assetSource, "META-INF/assets/photos/paris/", "museum-clock.jpg");
+        addFile(conf, assetSource, "META-INF/assets/photos/paris/", "paris_night.jpg");
+        addFile(conf, assetSource, "META-INF/assets/photos/paris/", "river-seine.jpg");
+        addFile(conf, assetSource, "META-INF/assets/photos/paris/", "tricolour-flag.jpg");
     }
 
-    private static void addFolder(OrderedConfiguration<String> conf, AssetSource source, String path)
-                                                                                                     throws URISyntaxException {
+    private static void addFile(OrderedConfiguration<String> conf, AssetSource source, String folder, String filename) {
+        // TODO Auto-generated method stub
+        Asset asset = source.getClasspathAsset(folder + filename);
 
-        URL baseUrl = Thread.currentThread().getContextClassLoader().getResource(path);
+        conf.add(filename, asset.toClientURL());
 
-        File folder = new File(baseUrl.toURI());
-
-        for (File file : folder.listFiles()) {
-
-            if (file.isDirectory()) {
-                continue;
-            }
-
-            String classpath = toClasspath(folder, file);
-
-            Asset asset = source.getClasspathAsset(classpath);
-
-            conf.add(file.getName(), asset.toClientURL());
-        }
-    }
-
-    private static String toClasspath(File folder, File file) {
-
-        String absolutePath = file.getAbsolutePath();
-
-        int idx = absolutePath.indexOf("/META-INF/");
-
-        return absolutePath.substring(idx + 1);
     }
 }

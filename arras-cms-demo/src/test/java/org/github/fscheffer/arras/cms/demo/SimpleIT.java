@@ -59,7 +59,7 @@ public class SimpleIT extends ArrasTestCase {
         assertTextPresent(By.cssSelector("h1"), "An even better headline!");
         assertTextPresent(By.cssSelector("h2"), "And an amazing subtitle...");
 
-        assertImage(By.cssSelector(".content-image > img"), "/photos/paris/river-seine.jpg");
+        assertImage(By.cssSelector(".content-image > img"), "/photos/paris/eiffel-tower.jpg");
     }
 
     private void assertImage(By by, String expected) {
