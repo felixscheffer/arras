@@ -11,6 +11,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -200,6 +201,10 @@ public abstract class ArrasTestCase {
             reportAndThrowAssertionError("Element '" + element.getTagName() + "' contains '" + item
                                          + "' but it should not.");
         }
+    }
+
+    protected final void hover(By by) {
+        new Actions(this.driver).moveToElement(element(by)).perform();
     }
 
     protected final void assertFocused(By by) {
