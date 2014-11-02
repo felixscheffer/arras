@@ -2,7 +2,7 @@ Arras is a set of components for [Apache Tapestry 5.4](http://tapestry.apache.or
 
 [![Build Status](https://secure.travis-ci.org/fscheffer/arras.png)](http://travis-ci.org/fscheffer/arras)
 
-## Components
+## Arras Components
 
 * TabGroup
 * Dropdown
@@ -12,7 +12,16 @@ Arras is a set of components for [Apache Tapestry 5.4](http://tapestry.apache.or
 * RemoteSubmit (triggers form submission from the outside)
 * MediumEditor (based on [Medium-Editor](https://github.com/daviferreira/medium-editor))
 
-Please checkout the arras-components-demo project for examples.
+Please check out the arras-components-demo project for examples.
+
+## Arras CMS
+
+Arras CMS provides simple content management functionality. It allows you to change text and images without having to redeploy your website.
+
+![alt tag](https://github.com/fscheffer/arras/blob/master/arras-cms.png)
+
+Pleasae ckeck out the arras-cms-demo project for examples.
+
 
 ## Name
 Arras is [a city in France](http://en.wikipedia.org/wiki/Arras) which was specialized in fine wool tapestries in the 14th and 15th centuries. The term Arras is still used as a synonym for a rich tapestry. 
