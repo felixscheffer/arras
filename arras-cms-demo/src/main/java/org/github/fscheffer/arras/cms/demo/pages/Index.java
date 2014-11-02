@@ -14,17 +14,14 @@ package org.github.fscheffer.arras.cms.demo.pages;
 
 import javax.inject.Inject;
 
-import org.apache.tapestry5.Asset;
-import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.EventConstants;
 import org.apache.tapestry5.alerts.AlertManager;
 import org.apache.tapestry5.annotations.OnEvent;
-import org.apache.tapestry5.annotations.Path;
+import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.jpa.annotations.CommitAfter;
-import org.apache.tapestry5.json.JSONArray;
 import org.apache.tapestry5.json.JSONObject;
-import org.github.fscheffer.arras.ArrasUtils;
 import org.github.fscheffer.arras.cms.ArrasCmsConstants;
+import org.github.fscheffer.arras.cms.Content;
 import org.github.fscheffer.arras.cms.services.PageContentDao;
 import org.github.fscheffer.arras.cms.services.PermissionManager;
 import org.slf4j.Logger;
@@ -32,73 +29,50 @@ import org.slf4j.Logger;
 public class Index {
 
     @Inject
-    private AlertManager       alertManager;
+    private AlertManager      alertManager;
 
     @Inject
-    private ComponentResources resources;
+    private Logger            logger;
 
     @Inject
-    private Logger             logger;
+    private PermissionManager permissionManager;
 
     @Inject
-    private PermissionManager  permissionManager;
+    private PageContentDao    contentDao;
 
-    @Inject
-    private PageContentDao     contentDao;
+    @Property(write = false)
+    private JSONObject        data;
 
-    @Inject
-    @Path("photos/landscape/man_point-arena-stornetta.jpg")
-    private Asset              defaultImage;
+    @Content(value = "literal:<h1>Features</h1>")
+    @Property
+    private String            featureH1;
 
-    private JSONObject         data;
+    @Content(value = "literal:<h1>Teasers</h1>")
+    @Property
+    private String            moreFeatureH1;
+
+    @Content(value = "asset:photos/landscape/man_point-arena-stornetta.jpg")
+    @Property
+    private String            imageUrl;
 
     @OnEvent(EventConstants.ACTIVATE)
     void onActivate() {
-
-        JSONArray array = this.contentDao.getContent("toplevel");
-
-        this.data = array.length() == 0 ? new JSONObject() : array.getJSONObject(0);
+        this.data = this.contentDao.getContentAsObject("toplevel");
     }
 
     @CommitAfter
     @OnEvent(ArrasCmsConstants.SUBMIT_CONTENT)
     void onSubmitContent() {
 
-        String pageName = this.resources.getPageName();
-
         if (!this.permissionManager.hasPermissionToEdit()) {
 
-            this.logger.info("User has no permission to edit page '{}'!", pageName);
+            this.logger.info("User has no permission to edit page '{}'!", Index.class.getSimpleName());
             return;
         }
 
-        this.contentDao.save("toplevel", new JSONArray(this.data));
+        this.contentDao.save("toplevel", this.data);
 
         this.logger.info("Changes saved using ajax!");
         this.alertManager.success("Changes saved using ajax!");
-    }
-
-    public String getFeatureH1() {
-        return ArrasUtils.get(this.data, "featureH1", "<h1>Features</h1>");
-    }
-
-    public String getMoreFeatureH1() {
-        return ArrasUtils.get(this.data, "moreFeatureH1", "<h1>Teasers</h1>");
-    }
-
-    public void setFeatureH1(String value) {
-        this.data.put("featureH1", value);
-    }
-
-    public void setMoreFeatureH1(String value) {
-        this.data.put("moreFeatureH1", value);
-    }
-
-    public String getImageUrl() {
-        return ArrasUtils.get(this.data, "image", this.defaultImage.toClientURL());
-    }
-
-    public void setImageUrl(String value) {
-        this.data.put("image", value);
     }
 }

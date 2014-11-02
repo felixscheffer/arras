@@ -14,16 +14,15 @@ package org.github.fscheffer.arras.cms.demo.pages;
 
 import javax.inject.Inject;
 
+import org.apache.tapestry5.Asset;
 import org.apache.tapestry5.EventConstants;
 import org.apache.tapestry5.alerts.AlertManager;
-import org.apache.tapestry5.annotations.InjectComponent;
 import org.apache.tapestry5.annotations.OnEvent;
+import org.apache.tapestry5.annotations.Path;
 import org.apache.tapestry5.jpa.annotations.CommitAfter;
-import org.apache.tapestry5.json.JSONArray;
 import org.apache.tapestry5.json.JSONObject;
 import org.github.fscheffer.arras.ArrasUtils;
 import org.github.fscheffer.arras.cms.ArrasCmsConstants;
-import org.github.fscheffer.arras.cms.components.ContentContainer;
 import org.github.fscheffer.arras.cms.services.PageContentDao;
 import org.github.fscheffer.arras.cms.services.PermissionManager;
 import org.slf4j.Logger;
@@ -46,14 +45,8 @@ public class Simple {
 
     @OnEvent(EventConstants.ACTIVATE)
     void onActivate() {
-
-        JSONArray array = this.contentDao.getContent("toplevel");
-
-        this.data = array.length() == 0 ? new JSONObject() : array.getJSONObject(0);
+        this.data = this.contentDao.getContentAsObject("toplevel");
     }
-
-    @InjectComponent
-    private ContentContainer container;
 
     @CommitAfter
     @OnEvent(ArrasCmsConstants.SUBMIT_CONTENT)
@@ -64,9 +57,11 @@ public class Simple {
             this.logger.info("User has no permission to edit page '{}'!", Simple.class.getName());
 
             this.alerts.error("User has no permission to edit page '" + Simple.class.getName() + "'!");
+
+            return;
         }
 
-        this.contentDao.save("toplevel", new JSONArray(this.data));
+        this.contentDao.save("toplevel", this.data);
 
         this.logger.info("Changes saved using ajax!");
 
@@ -96,7 +91,7 @@ public class Simple {
     public String getSubtitel() {
         return ArrasUtils.get(this.data,
                               "subtitel",
-                              "<p>A great way to catch your reader's attention is to tell a story. Everything you consider writing can be told as a story.</p>");
+            "<p>A great way to catch your reader's attention is to tell a story. Everything you consider writing can be told as a story.</p>");
     }
 
     public void setSubtitel(String value) {
@@ -113,5 +108,17 @@ public class Simple {
 
     public void setContent(String value) {
         this.data.put("content", value);
+    }
+
+    @Inject
+    @Path("photos/landscape/man_point-arena-stornetta.jpg")
+    private Asset defaultImage;
+
+    public String getImage() {
+        return ArrasUtils.get(this.data, "image", this.defaultImage.toClientURL());
+    }
+
+    public void setImage(String newValue) {
+        this.data.put("image", newValue);
     }
 }
