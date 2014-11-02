@@ -2,17 +2,18 @@ package org.github.fscheffer.arras.cms.services;
 
 import org.apache.tapestry5.ioc.Configuration;
 import org.apache.tapestry5.ioc.MappedConfiguration;
+import org.apache.tapestry5.ioc.OrderedConfiguration;
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.Contribute;
 import org.apache.tapestry5.ioc.annotations.ImportModule;
+import org.apache.tapestry5.ioc.annotations.Primary;
 import org.apache.tapestry5.jpa.JpaEntityPackageManager;
 import org.apache.tapestry5.services.LibraryMapping;
+import org.apache.tapestry5.services.transform.ComponentClassTransformWorker2;
 import org.github.fscheffer.arras.cms.ContentBlockContribution;
 import org.github.fscheffer.arras.cms.entities.PageContent;
 import org.github.fscheffer.arras.cms.pages.DefaultContentBlocks;
 import org.github.fscheffer.arras.services.ArrasComponentsModule;
-import org.github.fscheffer.arras.services.SubmissionProcessor;
-import org.github.fscheffer.arras.services.SubmissionProcessorImpl;
 
 @ImportModule(ArrasComponentsModule.class)
 public class ArrasCmsModule {
@@ -39,5 +40,11 @@ public class ArrasCmsModule {
 
     private static ContentBlockContribution defaultBlocks(String blockId) {
         return new ContentBlockContribution("arras/" + DefaultContentBlocks.class.getSimpleName(), blockId);
+    }
+
+    @Contribute(ComponentClassTransformWorker2.class)
+    @Primary
+    public static void provideTransformWorkers(OrderedConfiguration<ComponentClassTransformWorker2> conf) {
+        conf.addInstance("Content", ContentWorker.class);
     }
 }
