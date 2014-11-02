@@ -10,6 +10,7 @@ import org.apache.tapestry5.ioc.services.PerThreadValue;
 import org.apache.tapestry5.ioc.services.PerthreadManager;
 import org.apache.tapestry5.ioc.services.ThreadLocale;
 import org.apache.tapestry5.json.JSONArray;
+import org.apache.tapestry5.json.JSONObject;
 import org.apache.tapestry5.services.RequestGlobals;
 import org.github.fscheffer.arras.cms.entities.PageContent;
 import org.github.fscheffer.arras.cms.entities.PageContentId;
@@ -35,6 +36,14 @@ public class PageContentDaoImpl implements PageContentDao {
     }
 
     @Override
+    public JSONObject getContentAsObject(String contentId) {
+
+        JSONArray array = getContent(contentId);
+
+        return array.length() == 0 ? new JSONObject() : array.getJSONObject(0);
+    }
+
+    @Override
     public JSONArray getContent(String contentId) {
 
         PageContentId id = createId(contentId);
@@ -50,6 +59,11 @@ public class PageContentDaoImpl implements PageContentDao {
         PageContent content = this.entityManager.find(PageContent.class, id);
 
         return content == null ? new JSONArray() : new JSONArray(content.getContent());
+    }
+
+    @Override
+    public void save(String contentId, JSONObject obj) {
+        save(contentId, new JSONArray(obj));
     }
 
     @Override
