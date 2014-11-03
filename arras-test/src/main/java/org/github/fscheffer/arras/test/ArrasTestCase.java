@@ -178,7 +178,8 @@ public abstract class ArrasTestCase {
                 continue;
             }
 
-            reportAndThrowAssertionError("Element '" + element.getTagName() + "' did not contain '" + item + "'.");
+            reportAndThrowAssertionError("Element '" + element.getTagName() + "' did not contain '" + item
+                                         + "'. The actual text was: \"" + content + "\"");
         }
     }
 
