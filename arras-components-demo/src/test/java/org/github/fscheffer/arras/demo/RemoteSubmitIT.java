@@ -42,11 +42,11 @@ public class RemoteSubmitIT extends ArrasTestCase {
 
         text(By.cssSelector("#invisibleExample input[type=text]"), "Hello Tapestry!");
 
+        sleep(100);
+
         click(By.cssSelector("#invisibleExample > button"));
 
         waitForPageToLoad();
-
-        sleep(800);
 
         assertTextPresent(By.cssSelector(".alert > span"),
             "Triggered form with invisible submit button! Form content was: \"Hello Tapestry!\"");

@@ -88,5 +88,8 @@ public class SimpleIT extends ArrasTestCase {
         }
 
         sendKeys(by, value);
+
+        // give the browser some time to deal with the input before we continue
+        sleep(100);
     }
 }
