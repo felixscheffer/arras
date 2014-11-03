@@ -58,7 +58,6 @@ public class AppModule {
         addFile(conf, assetSource, "META-INF/assets/photos/paris/", "musee-de-orsay.jpg");
         addFile(conf, assetSource, "META-INF/assets/photos/paris/", "museum-clock.jpg");
         addFile(conf, assetSource, "META-INF/assets/photos/paris/", "notre_dames-view.jpg");
-        addFile(conf, assetSource, "META-INF/assets/photos/paris/", "museum-clock.jpg");
         addFile(conf, assetSource, "META-INF/assets/photos/paris/", "paris_night.jpg");
         addFile(conf, assetSource, "META-INF/assets/photos/paris/", "river-seine.jpg");
         addFile(conf, assetSource, "META-INF/assets/photos/paris/", "tricolour-flag.jpg");
