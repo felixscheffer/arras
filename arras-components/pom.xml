@@ -8,9 +8,11 @@
 	</parent>
 
 	<artifactId>arras-components</artifactId>
+	
 	<name>Arras Components</name>
-	<description>Arras Componnts is an extension module that provides additional components for Apache Tapesty 5.</description>
-
+	<description>Arras Componnts is a module for Apache Tapestry 5.4 that provides additional components.</description>
+	<url>https://github.com/fscheffer/arras</url>
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.tapestry</groupId>

@@ -5,7 +5,12 @@
 		<artifactId>arras</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
+
 	<artifactId>arras-test</artifactId>
+
+	<name>Arras Test</name>
+	<description>Arras Test provides utilities for testing, sample data and better support for Selenium. </description>
+	<url>https://github.com/fscheffer/arras</url>
 
 	<dependencies>
 		<dependency>
@@ -13,7 +18,7 @@
 			<artifactId>slf4j-api</artifactId>
 			<version>1.7.7</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
@@ -31,7 +36,7 @@
 			<artifactId>selenium-java</artifactId>
 			<version>2.44.0</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.apache.tapestry</groupId>
 			<artifactId>tapestry-ioc</artifactId>

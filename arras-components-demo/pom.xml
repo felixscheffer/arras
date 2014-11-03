@@ -8,6 +8,10 @@
 	<artifactId>arras-components-demo</artifactId>
 	<packaging>war</packaging>
 
+	<name>Arras Components Demo</name>
+	<description>Arras components includes example that show how to use Arras components. It's also used for integration testing</description>
+	<url>https://github.com/fscheffer/arras</url>
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.github.fscheffer</groupId>
