@@ -38,6 +38,8 @@ public class MediumEditorIT extends ArrasTestCase {
 
         sendKeys(by, "foobar");
 
+        sleep(100);
+
         clickSave();
 
         assertTextPresent(by, "foobar");
