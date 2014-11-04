@@ -34,7 +34,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
-			<version>4.3.6.Final</version>
+			<version>4.3.7.Final</version>
 
 			<!-- 31.10.2014, fscheffer: conflicts with xml-apis from selenium -->
 			<exclusions>
