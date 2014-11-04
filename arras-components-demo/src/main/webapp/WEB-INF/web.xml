@@ -9,6 +9,6 @@
 	</filter-mapping>
 	<context-param>
 		<param-name>tapestry.app-package</param-name>
-		<param-value>org.github.fscheffer.arras.demo</param-value>
+		<param-value>com.github.fscheffer.arras.demo</param-value>
 	</context-param>
 </web-app>
