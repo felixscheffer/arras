@@ -27,7 +27,7 @@ import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 import com.github.fscheffer.arras.ArrasUtils;
 import com.github.fscheffer.arras.base.AbstractLightbox;
 
-public class LightboxContent extends AbstractLightbox implements ClientElement {
+public class LightboxBody extends AbstractLightbox implements ClientElement {
 
     @Parameter(defaultPrefix = BindingConstants.LITERAL)
     private boolean            open;

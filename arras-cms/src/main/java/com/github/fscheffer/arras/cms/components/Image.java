@@ -18,7 +18,7 @@ import org.slf4j.Logger;
 import com.github.fscheffer.arras.ArrasConstants;
 import com.github.fscheffer.arras.cms.services.AvailableImages;
 import com.github.fscheffer.arras.cms.services.PermissionManager;
-import com.github.fscheffer.arras.components.LightboxContent;
+import com.github.fscheffer.arras.components.LightboxBody;
 
 @SupportsInformalParameters
 public class Image {
@@ -43,7 +43,7 @@ public class Image {
     private AvailableImages    availableImages;
 
     @InjectComponent
-    private LightboxContent    imageSelection;
+    private LightboxBody    imageSelection;
 
     @Property
     private String             image;

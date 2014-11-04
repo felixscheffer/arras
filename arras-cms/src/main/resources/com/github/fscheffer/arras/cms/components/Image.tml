@@ -2,7 +2,7 @@
 
 	<t:if test="editing">
 		<div class="content-image-overlay">
-			<a:LightboxContent t:id="imageSelection">
+			<a:LightboxBody t:id="imageSelection">
 				<div class="container">
 					<div class="row">
 						<t:loop source="images" value="image">
@@ -16,11 +16,11 @@
 						</t:loop>
 					</div>
 				</div>
-			</a:LightboxContent>
+			</a:LightboxBody>
 
-			<a:LightboxTrigger href="prop:imageSelectionId" inline="true">
+			<a:Lightbox href="prop:imageSelectionId" inline="true">
 				<a:Icon icon="camera" class="btn btn-default btn-sm" />
-			</a:LightboxTrigger>
+			</a:Lightbox>
 		</div>
 	</t:if>
 

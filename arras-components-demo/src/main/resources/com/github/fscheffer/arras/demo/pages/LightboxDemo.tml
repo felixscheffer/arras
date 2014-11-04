@@ -3,46 +3,46 @@
 
 	<h3>Single photo</h3>
 	<p>
-		<t:arras.LightboxTrigger href="${asset:photos/landscape/bridge-over-river.jpg}">Bridge over river</t:arras.LightboxTrigger>
+		<t:arras.Lightbox href="${asset:photos/landscape/bridge-over-river.jpg}">Bridge over river</t:arras.Lightbox>
 	</p>
 
 	<h3>Group of photos (using rel attribute)</h3>
 	<p>
-		<t:arras.LightboxTrigger rel="group1" class="group1" href="${asset:photos/landscape/man_point-arena-stornetta.jpg}">Stornetta</t:arras.LightboxTrigger>
+		<t:arras.Lightbox rel="group1" class="group1" href="${asset:photos/landscape/man_point-arena-stornetta.jpg}">Stornetta</t:arras.Lightbox>
 	</p>
 	<p>
-		<t:arras.LightboxTrigger rel="group1" class="group1" href="${asset:photos/landscape/pointarena_rockycliffs.jpg}">Rocky cliffs</t:arras.LightboxTrigger>
+		<t:arras.Lightbox rel="group1" class="group1" href="${asset:photos/landscape/pointarena_rockycliffs.jpg}">Rocky cliffs</t:arras.Lightbox>
 	</p>
 	<p>
-		<t:arras.LightboxTrigger rel="group1" class="group1" href="${asset:photos/landscape/san-joaquin-river-view.jpg}">San Joaquin River</t:arras.LightboxTrigger>
+		<t:arras.Lightbox rel="group1" class="group1" href="${asset:photos/landscape/san-joaquin-river-view.jpg}">San Joaquin River</t:arras.Lightbox>
 	</p>
 
 	<h3>Fixed size</h3>
 	<p>
-		<t:arras.LightboxTrigger height="700px" width="500px" href="${asset:photos/landscape/san-joaquin-river-view.jpg}">San Joaquin River (Fixed size)</t:arras.LightboxTrigger>
+		<t:arras.Lightbox height="700px" width="500px" href="${asset:photos/landscape/san-joaquin-river-view.jpg}">San Joaquin River (Fixed size)</t:arras.Lightbox>
 	</p>
 
 	<h3>Iframe</h3>
 	<p>
-		<t:arras.LightboxTrigger iframe="true" innerWidth="640" innerHeight="390" href="http://www.youtube.com/embed/VOJyrQa_WR4?rel=0&amp;wmode=transparent">Business Cats</t:arras.LightboxTrigger>
+		<t:arras.Lightbox iframe="true" innerWidth="640" innerHeight="390" href="http://www.youtube.com/embed/VOJyrQa_WR4?rel=0&amp;wmode=transparent">Business Cats</t:arras.Lightbox>
 	</p>
 
 	<h3>Html content</h3>
-	<t:arras.LightboxContent t:id="content">
+	<t:arras.LightboxBody t:id="content">
 		<h3>Kafka</h3>
 		<p>One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked. "What's happened to me?" he thought. It wasn't a dream. His room, a proper human room although a little too small, lay peacefully between its four familiar walls. A collection of textile samples lay spread out on the table - Samsa was a travelling salesman - and above it there hung a picture that he had recently cut out of an illustrated magazine and housed in a nice, gilded frame. It showed a lady fitted out with a fur hat and fur boa who sat upright, raising a heavy fur muff that covered the whole of her lower arm
 			towards the viewer. Gregor then turned to look out the window at the dull weather.</p>
-	</t:arras.LightboxContent>
+	</t:arras.LightboxBody>
 	<p>
-		<t:arras.LightboxTrigger inline="true" width="30%" height="30%" href="${contentId}">Show Kafka!</t:arras.LightboxTrigger>
+		<t:arras.Lightbox inline="true" width="30%" height="30%" href="${contentId}">Show Kafka!</t:arras.Lightbox>
 	</p>
 
 	<h3>Trigger Lightbox on Zone update</h3>
-	<t:arras.LightboxContent t:id="contentWithZone" zone="sampleZone" width="640" height="390">
+	<t:arras.LightboxBody t:id="contentWithZone" zone="sampleZone" width="640" height="390">
 		<t:zone id="sampleZone">
 			Zone without content
 		</t:zone>
-	</t:arras.LightboxContent>
+	</t:arras.LightboxBody>
 
 	<p>
 		<t:eventlink t:event="someAjaxEvent" zone="sampleZone">Some ajax event</t:eventlink>
@@ -64,15 +64,15 @@
 
 	<t:block t:id="zoneContent">
 		<p>
-			<t:arras.LightboxTrigger rel="group2" class="group2" href="${asset:photos/landscape/man_point-arena-stornetta.jpg}">Stornetta in a Zone</t:arras.LightboxTrigger>
+			<t:arras.Lightbox rel="group2" class="group2" href="${asset:photos/landscape/man_point-arena-stornetta.jpg}">Stornetta in a Zone</t:arras.Lightbox>
 		</p>
-		<t:arras.LightboxContent t:id="contentWithinZone">
+		<t:arras.LightboxBody t:id="contentWithinZone">
 			<h3>Content loaded by Zone</h3>
 			<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth. Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar. The Big Oxmox advised her not to do so, because there were thousands of bad Commas, wild Question Marks and devious Semikoli, but the Little Blind Text didn’t listen. She packed her seven versalia, put her initial into the belt and made herself on the way. When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown
 				Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane.</p>
-		</t:arras.LightboxContent>
+		</t:arras.LightboxBody>
 		<p>
-			<t:arras.LightboxTrigger inline="true" width="50%" href="${contentWithinZoneId}">Show content with zone</t:arras.LightboxTrigger>
+			<t:arras.Lightbox inline="true" width="50%" href="${contentWithinZoneId}">Show content with zone</t:arras.Lightbox>
 		</p>
 	</t:block>
 </html>

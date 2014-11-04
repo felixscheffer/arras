@@ -112,7 +112,7 @@ public class LightboxIT extends ArrasTestCase {
         assertTextPresent(By.cssSelector("#lightboxZone"), "Stornetta in a Zone");
         assertTextPresent(By.cssSelector("#lightboxZone"), "Show content with zone");
 
-        // check LightboxTrigger
+        // check Lightbox
         openLightbox(By.linkText("Stornetta in a Zone"));
 
         assertUrlAttribute("#cboxLoadedContent > img", "src",
@@ -120,7 +120,7 @@ public class LightboxIT extends ArrasTestCase {
 
         closeLightbox();
 
-        // check LightboxContent
+        // check LightboxBody
         openLightbox(By.linkText("Show content with zone"));
 
         assertTextPresent(By.cssSelector("#cboxLoadedContent h3"), "Content loaded by Zone");

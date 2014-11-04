@@ -20,12 +20,12 @@ import org.apache.tapestry5.Block;
 import org.apache.tapestry5.annotations.InjectComponent;
 import org.apache.tapestry5.annotations.OnEvent;
 
-import com.github.fscheffer.arras.components.LightboxContent;
+import com.github.fscheffer.arras.components.LightboxBody;
 
 public class LightboxDemo {
 
     @InjectComponent
-    private LightboxContent content, contentWithinZone;
+    private LightboxBody content, contentWithinZone;
 
     @Inject
     private Block           lightboxContent, zoneContent;

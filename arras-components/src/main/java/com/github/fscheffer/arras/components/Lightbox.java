@@ -26,7 +26,7 @@ import com.github.fscheffer.arras.ArrasUtils;
 import com.github.fscheffer.arras.base.AbstractLightbox;
 
 @SupportsInformalParameters
-public class LightboxTrigger extends AbstractLightbox {
+public class Lightbox extends AbstractLightbox {
 
     /**
      * a id of an element or a path to a site which should be opened within the lightbox
