@@ -3,7 +3,7 @@
 
 	<h3>Single photo</h3>
 	<p>
-		<t:arras.Lightbox href="${asset:photos/landscape/bridge-over-river.jpg}">Bridge over river</t:arras.Lightbox>
+		<t:arras.Lightbox href="${asset:photos/landscape/bridge-over-river.jpg}" title="Bridge over river">Bridge over river</t:arras.Lightbox>
 	</p>
 
 	<h3>Group of photos (using rel attribute)</h3>

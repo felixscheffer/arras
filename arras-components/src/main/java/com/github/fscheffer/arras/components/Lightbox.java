@@ -21,6 +21,7 @@ import org.apache.tapestry5.annotations.AfterRender;
 import org.apache.tapestry5.annotations.BeginRender;
 import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.annotations.SupportsInformalParameters;
+import org.apache.tapestry5.ioc.internal.util.InternalUtils;
 
 import com.github.fscheffer.arras.ArrasUtils;
 import com.github.fscheffer.arras.base.AbstractLightbox;
@@ -48,6 +49,9 @@ public class Lightbox extends AbstractLightbox {
     @Parameter(defaultPrefix = BindingConstants.LITERAL)
     private boolean            iframe;
 
+    @Parameter(defaultPrefix = BindingConstants.LITERAL)
+    private String             title;
+
     @Parameter(required = false, defaultPrefix = BindingConstants.LITERAL, value = "literal:-1")
     private int                innerWidth;
 
@@ -72,8 +76,13 @@ public class Lightbox extends AbstractLightbox {
         if (this.innerWidth >= 0) {
             ArrasUtils.addDataAttribute(writer, "innerWidth", this.innerWidth);
         }
+
         if (this.innerHeight >= 0) {
             ArrasUtils.addDataAttribute(writer, "innerHeight", this.innerHeight);
+        }
+
+        if (InternalUtils.isNonBlank(this.title)) {
+            writer.attributes("title", this.title);
         }
     }
 

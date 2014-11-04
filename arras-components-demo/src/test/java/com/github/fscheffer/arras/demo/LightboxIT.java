@@ -35,6 +35,8 @@ public class LightboxIT extends ArrasTestCase {
         assertUrlAttribute("#cboxLoadedContent > img", "src",
                            "/arras/assets/meta/b9626ecd/photos/landscape/bridge-over-river.jpg");
 
+        assertTextPresent(By.cssSelector("#cboxTitle"), "Bridge over river");
+
         closeLightbox();
     }
 
