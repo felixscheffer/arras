@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>org.github.fscheffer</groupId>
 		<artifactId>arras</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
+		<version>1.0.0</version>
 	</parent>
 
 	<artifactId>arras-test</artifactId>
