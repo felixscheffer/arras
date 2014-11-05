@@ -38,8 +38,8 @@
 	</p>
 
 	<h3>Trigger Lightbox on Zone update</h3>
-	<t:arras.LightboxBody t:id="contentWithZone" zone="sampleZone" width="640" height="390">
-		<t:zone id="sampleZone">
+	<t:arras.LightboxBody t:id="contentWithZone" zone="prop:sampleZoneId" width="640" height="390">
+		<t:zone t:id="sampleZone">
 			Zone without content
 		</t:zone>
 	</t:arras.LightboxBody>

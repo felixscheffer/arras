@@ -29,9 +29,15 @@ import com.github.fscheffer.arras.base.AbstractLightbox;
 
 public class LightboxBody extends AbstractLightbox implements ClientElement {
 
+    /**
+     * If true, the lightbox will be shown on page load
+     */
     @Parameter(defaultPrefix = BindingConstants.LITERAL)
     private boolean            open;
 
+    /**
+     * The client of the zone (without the #)
+     */
     @Parameter(defaultPrefix = BindingConstants.LITERAL)
     private String             zone;
 
@@ -50,7 +56,12 @@ public class LightboxBody extends AbstractLightbox implements ClientElement {
 
         writer.element("div", "style", "display: none;");
         writer.element("div", "id", this.id, "data-container-type", "lightbox-content");
+    }
 
+    @AfterRender
+    void after(MarkupWriter writer) {
+
+        // render the body first before accessing the zone parameter in case the zone is part of the body
         if (this.open || InternalUtils.isNonBlank(this.zone)) {
 
             ArrasUtils.addOption(writer, "open", this.open);
@@ -58,10 +69,7 @@ public class LightboxBody extends AbstractLightbox implements ClientElement {
 
             super.addOptions(writer);
         }
-    }
 
-    @AfterRender
-    void after(MarkupWriter writer) {
         writer.end();
         writer.end();
     }

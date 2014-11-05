@@ -19,6 +19,7 @@ import javax.inject.Inject;
 import org.apache.tapestry5.Block;
 import org.apache.tapestry5.annotations.InjectComponent;
 import org.apache.tapestry5.annotations.OnEvent;
+import org.apache.tapestry5.corelib.components.Zone;
 
 import com.github.fscheffer.arras.components.LightboxBody;
 
@@ -28,7 +29,10 @@ public class LightboxDemo {
     private LightboxBody content, contentWithinZone;
 
     @Inject
-    private Block           lightboxContent, zoneContent;
+    private Block        lightboxContent, zoneContent;
+
+    @InjectComponent
+    private Zone         sampleZone;
 
     public String getContentId() {
         return "#" + this.content.getClientId();
@@ -40,6 +44,10 @@ public class LightboxDemo {
 
     public Date getDate() {
         return new Date();
+    }
+
+    public String getSampleZoneId() {
+        return this.sampleZone.getClientId();
     }
 
     @OnEvent("someAjaxEvent")
