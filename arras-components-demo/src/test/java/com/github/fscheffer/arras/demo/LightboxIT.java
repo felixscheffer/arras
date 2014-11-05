@@ -13,6 +13,7 @@
 package com.github.fscheffer.arras.demo;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
@@ -79,6 +80,20 @@ public class LightboxIT extends ArrasTestCase {
         Assert.assertEquals(wrapper.getCssValue("width"), "500px");
 
         closeLightbox();
+
+        Dimension viewport = viewport();
+
+        // fixed size in percent
+        openLightbox(By.linkText("Rocky cliffs (Fixed size in percent)"));
+
+        Assert.assertEquals(wrapper.getCssValue("width"), toPixel(viewport.width * 0.5));
+        Assert.assertEquals(wrapper.getCssValue("height"), toPixel(viewport.height * 0.75));
+
+        closeLightbox();
+    }
+
+    private String toPixel(double a) {
+        return (int) Math.ceil(a) + "px";
     }
 
     @Test

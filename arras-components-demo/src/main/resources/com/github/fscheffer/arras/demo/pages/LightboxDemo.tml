@@ -22,6 +22,10 @@
 		<t:arras.Lightbox height="700px" width="500px" href="${asset:photos/landscape/san-joaquin-river-view.jpg}">San Joaquin River (Fixed size)</t:arras.Lightbox>
 	</p>
 
+	<p>
+		<t:arras.Lightbox height="75%" width="50%" href="${asset:photos/landscape/pointarena_rockycliffs.jpg}">Rocky cliffs (Fixed size in percent)</t:arras.Lightbox>
+	</p>
+
 	<h3>Iframe</h3>
 	<p>
 		<t:arras.Lightbox iframe="true" innerWidth="640" innerHeight="390" href="http://www.youtube.com/embed/VOJyrQa_WR4?rel=0&amp;wmode=transparent">Business Cats</t:arras.Lightbox>
