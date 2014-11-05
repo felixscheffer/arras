@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -140,6 +142,16 @@ public abstract class ArrasTestCase {
 
     protected final String title() {
         return this.driver.getTitle();
+    }
+
+    protected final Dimension viewport() {
+
+        JavascriptExecutor executor = JavascriptExecutor.class.cast(this.driver);
+
+        Number clientWidth = (Number) executor.executeScript("return document.documentElement.clientWidth");
+        Number clientHeight = (Number) executor.executeScript("return document.documentElement.clientHeight");
+
+        return new Dimension(clientWidth.intValue(), clientHeight.intValue());
     }
 
     protected final boolean isDisplayed(By by) {
