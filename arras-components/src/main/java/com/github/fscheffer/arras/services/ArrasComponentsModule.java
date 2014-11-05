@@ -19,6 +19,7 @@ import org.apache.tapestry5.ioc.MappedConfiguration;
 import org.apache.tapestry5.ioc.Resource;
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.Contribute;
+import org.apache.tapestry5.services.BindingFactory;
 import org.apache.tapestry5.services.LibraryMapping;
 import org.apache.tapestry5.services.javascript.JavaScriptModuleConfiguration;
 import org.apache.tapestry5.services.javascript.ModuleManager;
@@ -48,5 +49,9 @@ public class ArrasComponentsModule {
 
         conf.add("shim/jquery.colorbox", new JavaScriptModuleConfiguration(colorbox).dependsOn("jquery"));
         conf.add("shim/medium-editor", new JavaScriptModuleConfiguration(mediumEditor).exports("MediumEditor"));
+    }
+
+    public static void contributeBindingSource(MappedConfiguration<String, BindingFactory> conf) {
+        conf.add("clientid", new ClientIdBindingFactory());
     }
 }
