@@ -6,6 +6,8 @@
 		<t:arras.Lightbox href="${asset:photos/landscape/bridge-over-river.jpg}" title="Bridge over river">Bridge over river</t:arras.Lightbox>
 	</p>
 
+
+
 	<h3>Group of photos (using rel attribute)</h3>
 	<p>
 		<t:arras.Lightbox rel="group1" class="group1" href="${asset:photos/landscape/man_point-arena-stornetta.jpg}">Stornetta</t:arras.Lightbox>
@@ -17,6 +19,8 @@
 		<t:arras.Lightbox rel="group1" class="group1" href="${asset:photos/landscape/san-joaquin-river-view.jpg}">San Joaquin River</t:arras.Lightbox>
 	</p>
 
+
+
 	<h3>Fixed size</h3>
 	<p>
 		<t:arras.Lightbox height="700px" width="500px" href="${asset:photos/landscape/san-joaquin-river-view.jpg}">San Joaquin River (Fixed size)</t:arras.Lightbox>
@@ -25,6 +29,8 @@
 	<p>
 		<t:arras.Lightbox height="75%" width="50%" href="${asset:photos/landscape/pointarena_rockycliffs.jpg}">Rocky cliffs (Fixed size in percent)</t:arras.Lightbox>
 	</p>
+
+
 
 	<h3>Iframe</h3>
 	<p>
@@ -41,13 +47,17 @@
 		<t:arras.Lightbox inline="true" width="30%" height="30%" href="${contentId}">Show Kafka!</t:arras.Lightbox>
 	</p>
 
+
+
 	<h3>Trigger Lightbox on Zone update</h3>
-	<t:arras.LightboxBody t:id="contentWithZone" zone="prop:sampleZoneId" width="640" height="390">
+	<t:arras.LightboxBody t:id="contentWithZone">
 		<t:zone t:id="sampleZone">
 			Zone without content
 		</t:zone>
 	</t:arras.LightboxBody>
 
+	<t:arras.Lightbox inline="true" href="#${clientid:contentWithZone}" zone="clientid:sampleZone" width="640" height="390" />
+	
 	<p>
 		<t:eventlink t:event="someAjaxEvent" zone="sampleZone">Some ajax event</t:eventlink>
 	</p>
@@ -58,7 +68,9 @@
 			Watch "Jeopardy!", Alex Trebek's fun TV quiz game. Woven silk pyjamas exchanged for blue quartz.</p>
 	</t:block>
 
-	<h3>Lightbox in Zone</h3>
+
+
+	<h3>Trigger Lightbox from within Zone</h3>
 
 	<p>
 		<t:eventlink event="triggerZone" zone="lightboxZone">Trigger zone</t:eventlink>

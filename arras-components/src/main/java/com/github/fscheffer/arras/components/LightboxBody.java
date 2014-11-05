@@ -1,74 +1,39 @@
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 package com.github.fscheffer.arras.components;
 
 import javax.inject.Inject;
 
-import org.apache.tapestry5.BindingConstants;
 import org.apache.tapestry5.ClientElement;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.MarkupWriter;
 import org.apache.tapestry5.annotations.AfterRender;
 import org.apache.tapestry5.annotations.BeginRender;
-import org.apache.tapestry5.annotations.Parameter;
-import org.apache.tapestry5.ioc.internal.util.InternalUtils;
+import org.apache.tapestry5.annotations.SupportsInformalParameters;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 
-import com.github.fscheffer.arras.ArrasUtils;
-import com.github.fscheffer.arras.base.AbstractLightbox;
-
-public class LightboxBody extends AbstractLightbox implements ClientElement {
-
-    /**
-     * If true, the lightbox will be shown on page load
-     */
-    @Parameter(defaultPrefix = BindingConstants.LITERAL)
-    private boolean            open;
-
-    /**
-     * The client of the zone (without the #)
-     */
-    @Parameter(defaultPrefix = BindingConstants.LITERAL)
-    private String             zone;
-
-    @Inject
-    private JavaScriptSupport  support;
+@SupportsInformalParameters
+public class LightboxBody implements ClientElement {
 
     @Inject
     private ComponentResources resources;
 
-    private String             id;
+    @Inject
+    private JavaScriptSupport  support;
+
+    private String             clientId;
 
     @BeginRender
     void begin(MarkupWriter writer) {
 
-        this.id = this.support.allocateClientId(this.resources);
+        this.clientId = this.support.allocateClientId(this.resources);
 
         writer.element("div", "style", "display: none;");
-        writer.element("div", "id", this.id, "data-container-type", "lightbox-content");
+        writer.element("div", "id", this.clientId);
     }
 
     @AfterRender
     void after(MarkupWriter writer) {
 
-        // render the body first before accessing the zone parameter in case the zone is part of the body
-        if (this.open || InternalUtils.isNonBlank(this.zone)) {
-
-            ArrasUtils.addOption(writer, "open", this.open);
-            ArrasUtils.addOption(writer, "zone", this.zone);
-
-            super.addOptions(writer);
-        }
+        this.resources.renderInformalParameters(writer);
 
         writer.end();
         writer.end();
@@ -76,7 +41,6 @@ public class LightboxBody extends AbstractLightbox implements ClientElement {
 
     @Override
     public String getClientId() {
-        return this.id;
+        return this.clientId;
     }
-
 }

@@ -19,33 +19,26 @@
 			
 			var $this = $(elementWrapper.element);
 			var options = readOptions($this, supportedOptions);
-			$this.colorbox(options);
-		});
-		
-		dom.scanner("[data-container-type=lightbox-content]", function(elementWrapper) {
-			
-			var $this = $(elementWrapper.element);
 			
 			var zone = $this.attr("data-zone");
 			var open = $this.attr("data-open");
 			
-			if(open === true || zone !== undefined) {
-				
-				var options = readOptions($this, supportedOptions);
-				options["inline"] = true;
-				options["href"] = "#" + $this.attr("id");
-				
-				// show the lightbox immediately
-				if(open === true) {
+			var href = $this.attr("href");
+			
+			options["href"] = href;
+			
+			// show the lightbox when the zone was updated
+			if(zone !== undefined) {
+				$("#"+zone).bind('t5:zone:did-update', function(){ 
 					$.colorbox(options);
-				}
-				
-				// show the lightbox when the zone was updated
-				if(zone !== undefined) {
-					$("#"+zone).bind('t5:zone:did-update', function(){ 
-						$.colorbox(options);
-					});
-				}				
+				});
+			}				
+			
+			$this.colorbox(options);
+			
+			// show the lightbox immediately
+			if(open === true) {
+				$.colorbox(options);
 			}
 		});
 		
