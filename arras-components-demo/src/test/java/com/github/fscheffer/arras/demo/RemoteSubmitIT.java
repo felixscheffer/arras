@@ -43,8 +43,8 @@ public class RemoteSubmitIT extends ArrasTestCase {
 
         text(By.cssSelector("#invisibleExample input[type=text]"), "Hello Tapestry!");
 
-        // TODO: a better solution than a stupid sleep() (1000ms was not enough)
-        sleep(1500);
+        // TODO: a better solution than a stupid sleep() (1500ms was not enough)
+        sleep(2000);
 
         click(By.cssSelector("#invisibleExample > button"));
 
