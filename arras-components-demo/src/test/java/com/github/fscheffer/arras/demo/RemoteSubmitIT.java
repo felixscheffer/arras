@@ -43,7 +43,7 @@ public class RemoteSubmitIT extends ArrasTestCase {
 
         text(By.cssSelector("#invisibleExample input[type=text]"), "Hello Tapestry!");
 
-        sleep(200);
+        sleep(500);
 
         click(By.cssSelector("#invisibleExample > button"));
 
