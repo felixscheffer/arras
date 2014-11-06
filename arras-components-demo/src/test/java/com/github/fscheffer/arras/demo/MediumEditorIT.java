@@ -38,7 +38,7 @@ public class MediumEditorIT extends ArrasTestCase {
 
         sendKeys(by, "foobar");
 
-        sleep(100);
+        sleep(500);
 
         clickSave();
 
