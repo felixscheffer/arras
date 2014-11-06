@@ -39,7 +39,7 @@ import com.github.fscheffer.arras.ArrasUtils;
 //       also supports AMD out of the box
 //       http://jakiestfu.github.io/Medium.js/docs/
 @Import(module = "arras/medium-editor", stylesheet = { "medium-editor/medium-editor.css",
-                                                      "medium-editor/themes/default.css" })
+"medium-editor/themes/default.css" })
 @SupportsInformalParameters
 public class MediumEditor implements ClientElement {
 
@@ -109,8 +109,7 @@ public class MediumEditor implements ClientElement {
 
         Object[] values = rawstring.split(",");
 
-        String s = new JSONArray(values).toCompactString();
-        return s.replace("\"", "'");
+        return new JSONArray(values).toCompactString();
     }
 
     @AfterRender

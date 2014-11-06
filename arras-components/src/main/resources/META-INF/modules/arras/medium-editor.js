@@ -25,7 +25,7 @@
 			var rawdata = this.attr(attributeName);
 			
 			if (rawdata) {				
-				options[optionName] = eval(rawdata);
+				options[optionName] = JSON.parse(rawdata);
 			}
 		}
 		
