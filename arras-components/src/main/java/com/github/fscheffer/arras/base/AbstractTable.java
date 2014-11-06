@@ -47,9 +47,6 @@ import org.apache.tapestry5.services.Request;
 import org.apache.tapestry5.services.TranslatorSource;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 
-/**
- * @tapestrydoc
- */
 @SupportsInformalParameters
 public class AbstractTable implements ClientElement {
 
@@ -204,9 +201,9 @@ public class AbstractTable implements ClientElement {
     public String getClientId() {
         if (InternalUtils.isBlank(this.clientId)) {
             this.clientId = InternalUtils.isNonBlank(this.resources.getInformalParameter("id", String.class))
-                                                                                                             ? this.resources.getInformalParameter("id",
-                                                                                                                                                   String.class)
-                                                                                                             : this.javaScriptSupport.allocateClientId(this.resources);
+                ? this.resources.getInformalParameter("id",
+                                                      String.class)
+                                                      : this.javaScriptSupport.allocateClientId(this.resources);
         }
         return this.clientId;
     }
@@ -455,7 +452,7 @@ public class AbstractTable implements ClientElement {
         if (!String.class.equals(getDataModel().get(this.cellModel).getClass())
             && !Number.class.isAssignableFrom(getDataModel().get(this.cellModel).getClass())) {
             Translator<Object> translator = this.translatorSource.findByType(getDataModel().get(this.cellModel)
-                                                                                           .getPropertyType());
+                                                                             .getPropertyType());
             if (translator != null) {
                 val = translator.toClient(val);
             }

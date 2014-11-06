@@ -40,7 +40,6 @@ import com.github.fscheffer.arras.TabGroupContext;
  * associated with a header. It servers as a container for {@link Tab} and
  * {@link TabDropdown} components.
  *
- * @tapestrydoc
  * @see Tab
  * @see TabDropdown
  * @see TabGroupContext
@@ -79,11 +78,11 @@ public class TabGroup implements ClientElement {
 
     private static RenderCommand RENDER_CLOSE_TAG = new RenderCommand() {
 
-        @Override
-        public void render(MarkupWriter writer, RenderQueue queue) {
-            writer.end();
-        }
-    };
+                                                      @Override
+                                                      public void render(MarkupWriter writer, RenderQueue queue) {
+                                                          writer.end();
+                                                      }
+                                                  };
 
     @BeginRender
     void begin(MarkupWriter writer) {
