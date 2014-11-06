@@ -87,8 +87,7 @@ public class SimpleIT extends ArrasTestCase {
         clear(by, length);
         sendKeys(by, value);
 
-        // give the browser some time to deal with the input before we continue
-        sleep(100);
+        waitUntilElementContainsText(by, value);
     }
 
     private void clear(By by, int length) {

@@ -38,7 +38,7 @@ public class MediumEditorIT extends ArrasTestCase {
 
         sendKeys(by, "foobar");
 
-        sleep(2000);
+        waitUntilElementContainsText(by, "foobar");
 
         clickSave();
 

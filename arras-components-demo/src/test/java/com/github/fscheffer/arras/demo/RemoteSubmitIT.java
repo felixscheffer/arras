@@ -28,7 +28,7 @@ public class RemoteSubmitIT extends ArrasTestCase {
     @Test
     void testVisibleSubmit() {
 
-        text(By.cssSelector("#visibleExample input[type=text]"), "Hello World!");
+        inputAndWait(By.cssSelector("#visibleExample input[type=text]"), "Hello World!");
 
         click(By.cssSelector("#visibleExample > button"));
 
@@ -41,10 +41,7 @@ public class RemoteSubmitIT extends ArrasTestCase {
     @Test
     void testInvisibleSubmit() {
 
-        text(By.cssSelector("#invisibleExample input[type=text]"), "Hello Tapestry!");
-
-        // TODO: a better solution than a stupid sleep() (1500ms was not enough)
-        sleep(2000);
+        inputAndWait(By.cssSelector("#invisibleExample input[type=text]"), "Hello Tapestry!");
 
         click(By.cssSelector("#invisibleExample > button"));
 
@@ -52,5 +49,12 @@ public class RemoteSubmitIT extends ArrasTestCase {
 
         assertTextPresent(By.cssSelector(".alert > span"),
                           "Triggered form with invisible submit button! Form content was: \"Hello Tapestry!\"");
+    }
+
+    private void inputAndWait(By by, String value) {
+
+        text(by, value);
+
+        waitUntilValueContainsText(by, value);
     }
 }
