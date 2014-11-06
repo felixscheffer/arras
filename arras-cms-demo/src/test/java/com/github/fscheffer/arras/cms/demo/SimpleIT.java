@@ -84,13 +84,21 @@ public class SimpleIT extends ArrasTestCase {
 
         click(by);
 
-        for (int i = 0; i < length; i++) {
-            sendKeys(by, Keys.DELETE);
-        }
-
+        clear(by, length);
         sendKeys(by, value);
 
         // give the browser some time to deal with the input before we continue
         sleep(100);
+    }
+
+    private void clear(By by, int length) {
+
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < length; i++) {
+            sb.append(Keys.DELETE);
+        }
+
+        sendKeys(by, sb.toString());
     }
 }
