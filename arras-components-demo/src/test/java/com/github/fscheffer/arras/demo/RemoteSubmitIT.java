@@ -41,7 +41,7 @@ public class RemoteSubmitIT extends ArrasTestCase {
         waitForPageToLoad();
 
         assertTextPresent(By.cssSelector(".alert > span"),
-            "Triggered form with visible submit button! Form content was: \"Hello World!\"");
+                          "Triggered form with visible submit button! Form content was: \"Hello World!\"");
     }
 
     @Test
@@ -50,7 +50,9 @@ public class RemoteSubmitIT extends ArrasTestCase {
         this.logger.info("Running testInvisibleSubmit()");
 
         // Note: sometimes selenium sends the keys to the textfield of the visible example above.
-        //       maybe that is a selector bug, so lets try a simpler selector
+        //       maybe the dom was not loaded..so try waiting.
+        sleep(500);
+
         inputAndWait(By.cssSelector("#invisibleExampleTextfield"), "Hello Tapestry!");
 
         click(By.cssSelector("#invisibleExample > button"));
@@ -58,7 +60,7 @@ public class RemoteSubmitIT extends ArrasTestCase {
         waitForPageToLoad();
 
         assertTextPresent(By.cssSelector(".alert > span"),
-                          "Triggered form with invisible submit button! Form content was: \"Hello Tapestry!\"");
+            "Triggered form with invisible submit button! Form content was: \"Hello Tapestry!\"");
     }
 
     private void inputAndWait(By by, String value) {
