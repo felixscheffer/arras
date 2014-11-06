@@ -243,8 +243,17 @@ public abstract class ArrasTestCase {
         waitUntil(ExpectedConditions.visibilityOfElementLocated(by));
     }
 
+    protected final void waitUntilElementContainsText(By by, String text) {
+        waitUntil(ExpectedConditions.textToBePresentInElementLocated(by, text));
+    }
+
+    protected final void waitUntilValueContainsText(By by, String text) {
+        waitUntil(ExpectedConditions.textToBePresentInElementValue(by, text));
+    }
+
     protected final <T> void waitUntil(ExpectedCondition<T> condition) {
-        new WebDriverWait(this.driver, 10).until(condition);
+        // Note: 10 sec is sometimes not enough
+        new WebDriverWait(this.driver, 15).until(condition);
     }
 
     /**
