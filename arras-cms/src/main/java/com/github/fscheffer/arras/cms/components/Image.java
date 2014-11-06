@@ -43,7 +43,7 @@ public class Image {
     private AvailableImages    availableImages;
 
     @InjectComponent
-    private LightboxBody    imageSelection;
+    private LightboxBody       imageSelection;
 
     @Property
     private String             image;
@@ -103,7 +103,7 @@ public class Image {
             throw new RuntimeException("You are not allowed to edit this page!");
         }
 
-        this.logger.info("Saving {}", newValue);
+        this.logger.debug("Saving {}", newValue);
 
         this.value = newValue;
 
