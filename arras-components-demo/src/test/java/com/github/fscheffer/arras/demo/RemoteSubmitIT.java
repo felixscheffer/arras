@@ -13,12 +13,16 @@
 package com.github.fscheffer.arras.demo;
 
 import org.openqa.selenium.By;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.github.fscheffer.arras.test.ArrasTestCase;
 
 public class RemoteSubmitIT extends ArrasTestCase {
+
+    private final Logger logger = LoggerFactory.getLogger(RemoteSubmitIT.class);
 
     @BeforeMethod
     void before() {
@@ -28,6 +32,8 @@ public class RemoteSubmitIT extends ArrasTestCase {
     @Test
     void testVisibleSubmit() {
 
+        this.logger.info("Running testVisibleSubmit()");
+
         inputAndWait(By.cssSelector("#visibleExample input[type=text]"), "Hello World!");
 
         click(By.cssSelector("#visibleExample > button"));
@@ -35,11 +41,13 @@ public class RemoteSubmitIT extends ArrasTestCase {
         waitForPageToLoad();
 
         assertTextPresent(By.cssSelector(".alert > span"),
-                          "Triggered form with visible submit button! Form content was: \"Hello World!\"");
+            "Triggered form with visible submit button! Form content was: \"Hello World!\"");
     }
 
     @Test
     void testInvisibleSubmit() {
+
+        this.logger.info("Running testInvisibleSubmit()");
 
         // Note: sometimes selenium sends the keys to the textfield of the visible example above.
         //       maybe that is a selector bug, so lets try a simpler selector
@@ -50,7 +58,7 @@ public class RemoteSubmitIT extends ArrasTestCase {
         waitForPageToLoad();
 
         assertTextPresent(By.cssSelector(".alert > span"),
-            "Triggered form with invisible submit button! Form content was: \"Hello Tapestry!\"");
+                          "Triggered form with invisible submit button! Form content was: \"Hello Tapestry!\"");
     }
 
     private void inputAndWait(By by, String value) {
