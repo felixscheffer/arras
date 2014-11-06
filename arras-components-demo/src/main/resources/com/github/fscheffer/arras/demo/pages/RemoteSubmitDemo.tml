@@ -27,7 +27,7 @@
 
 		<t:form t:id="formWithInvisibleButton">
 			<p>
-				<t:textfield t:value="dummy2" />
+				<t:textfield t:value="dummy2" t:id="invisibleExampleTextfield" />
 			</p>
 			<t:submit t:id="invisibleSubmit" value="submit" style="display: none;" />
 		</t:form>
