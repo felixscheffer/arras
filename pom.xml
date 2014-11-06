@@ -12,7 +12,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<arras-version>1.0.0</arras-version>
+		<arras-version>1.0.0-SNAPSHOT</arras-version>
 		<tapestry-version>5.4-beta-22</tapestry-version>
 	</properties>
 
