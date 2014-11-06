@@ -12,7 +12,6 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<arras-version>1.0.0-SNAPSHOT</arras-version>
 		<tapestry-version>5.4-beta-22</tapestry-version>
 	</properties>
 
@@ -42,7 +41,8 @@
 		<connection>scm:git:git@github.com:fscheffer/arras.git</connection>
 		<developerConnection>scm:git:git@github.com:fscheffer/arras.git</developerConnection>
 		<url>git@github.com:fscheffer/arras.git</url>
-	</scm>
+	  <tag>arras-1.0.0</tag>
+  </scm>
 
 	<build>
 		<plugins>
