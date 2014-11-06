@@ -41,8 +41,8 @@
 		<connection>scm:git:git@github.com:fscheffer/arras.git</connection>
 		<developerConnection>scm:git:git@github.com:fscheffer/arras.git</developerConnection>
 		<url>git@github.com:fscheffer/arras.git</url>
-	  <tag>arras-1.0.0</tag>
-  </scm>
+		<tag>arras-1.0.0</tag>
+	</scm>
 
 	<build>
 		<plugins>
@@ -78,21 +78,6 @@
 						<id>attach-javadocs</id>
 						<goals>
 							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-gpg-plugin</artifactId>
-				<version>1.5</version>
-				<executions>
-					<execution>
-						<id>sign-artifacts</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>sign</goal>
 						</goals>
 					</execution>
 				</executions>
@@ -150,4 +135,33 @@
 			</plugins>
 		</pluginManagement>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>release-sign-artifacts</id>
+			<activation>
+				<property>
+					<name>performRelease</name>
+					<value>true</value>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>
