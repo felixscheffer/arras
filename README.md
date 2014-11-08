@@ -3,7 +3,7 @@ Arras is a set of components for [Apache Tapestry 5.4](http://tapestry.apache.or
 [![Build Status](https://secure.travis-ci.org/fscheffer/arras.png)](http://travis-ci.org/fscheffer/arras)
 
 ## Download
-Releases are available on https://oss.sonatype.org/content/groups/public/com/github/fscheffer/
+Releases are available on [Maven Central](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.github.fscheffer%22).
 
 ```
 <dependency>
