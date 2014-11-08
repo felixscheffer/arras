@@ -70,10 +70,6 @@ public class Player implements ClientElement {
     @Path(ArrasConstants.PLAYER_CSS_PATH_VALUE)
     private Asset               cssFile;
 
-    @Inject
-    @Path("jplayer/Jplayer.swf")
-    private Asset               swfFile;
-
     private Element             tag;
 
     private String              uniqueId;
