@@ -31,8 +31,8 @@ Releases are available on [Maven Central](http://search.maven.org/#search%7Cga%7
 * RemoteSubmit (triggers form submission from the outside)
 * MediumEditor (based on [Medium-Editor](https://github.com/daviferreira/medium-editor))
 
-Planned:
-* VideoPlayer (requires jQuery - based on [jPlayer](https://github.com/happyworm/jplayer/))
+Work in progress:
+* VideoPlayer (based on [video.js](http://www.videojs.com/))
 
 Please check out the arras-components-demo project for examples.
 
