@@ -38,6 +38,7 @@ public class ArrasComponentsModule {
     public static void contributeFactoryDefaults(MappedConfiguration<String, String> conf) {
 
         conf.add(ArrasConstants.LIGHTBOX_CSS_PATH, "colorbox/example1/colorbox.css");
+        conf.add(ArrasConstants.PLAYER_CSS_PATH, "video-js/video-js.css");
     }
 
     @Contribute(ModuleManager.class)
