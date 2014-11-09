@@ -5,11 +5,11 @@
 	<p>
 		Media used in demo: © 2003 Miaow / Arnaud Laflaquiere - MiaowMusic.com
 	</p>
-	<t:arras.Player media="audio" class="vjs-has-started" video="false" height="30px" />
+	<t:arras.Player t:id="audio" class="vjs-has-started" video="false" height="30px" t:mixins="RenderClientId" />
 
 	<h3>Video Player</h3>
 	<p>
 		Media used in demo: © 2008 Blender Foundation - bigbuckbunny.org
 	</p>
-	<t:arras.Player media="video" class="vjs-big-play-centered" height="340px" poster="asset:Big_Buck_Bunny_Trailer_480x270.png" />
+	<t:arras.Player t:id="video" class="vjs-big-play-centered" height="340px" poster="asset:Big_Buck_Bunny_Trailer_480x270.png" t:mixins="RenderClientId"/>
 </html>
