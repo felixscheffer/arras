@@ -36,7 +36,7 @@ import com.github.fscheffer.arras.ArrasConstants;
 @Import(module = { "arras/player" })
 public class Player implements ClientElement {
 
-    @Parameter(required = true, allowNull = false)
+    @Parameter(required = true, allowNull = false, autoconnect = true)
     private Map<String, String> media;
 
     @Parameter(value = "true")
