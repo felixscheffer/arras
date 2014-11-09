@@ -12,8 +12,6 @@
 
 package com.github.fscheffer.arras.components;
 
-import java.util.Map;
-
 import javax.inject.Inject;
 
 import org.apache.tapestry5.Asset;
@@ -31,48 +29,49 @@ import org.apache.tapestry5.ioc.internal.util.InternalUtils;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 
 import com.github.fscheffer.arras.ArrasConstants;
+import com.github.fscheffer.arras.PlayerSource;
 
 @SupportsInformalParameters
 @Import(module = { "arras/player" })
 public class Player implements ClientElement {
 
     @Parameter(required = true, allowNull = false, autoconnect = true)
-    private Map<String, String> media;
+    private PlayerSource       source;
 
     @Parameter(value = "true")
-    private boolean             video;
+    private boolean            video;
 
     @Parameter
-    private String              poster;
+    private String             poster;
 
     @Parameter(value = "true")
-    private boolean             controls;
+    private boolean            controls;
 
     @Parameter
-    private boolean             autoplay;
+    private boolean            autoplay;
 
     @Parameter(value = "literal:auto")
-    private String              preload;
+    private String             preload;
 
     @Parameter
-    private boolean             repeat;
+    private boolean            repeat;
 
     @Parameter
-    private String              width;
+    private String             width;
 
     @Inject
-    private ComponentResources  resources;
+    private ComponentResources resources;
 
     @Inject
-    private JavaScriptSupport   support;
+    private JavaScriptSupport  support;
 
     @Inject
     @Path(ArrasConstants.PLAYER_CSS_PATH_VALUE)
-    private Asset               cssFile;
+    private Asset              cssFile;
 
-    private Element             tag;
+    private Element            tag;
 
-    private String              uniqueId;
+    private String             uniqueId;
 
     @BeginRender
     void begin(MarkupWriter writer) {
@@ -98,15 +97,7 @@ public class Player implements ClientElement {
 
         writer.attributes("preload", this.preload);
 
-        for (Map.Entry<String, String> entry : this.media.entrySet()) {
-
-            String type = entry.getKey();
-            String url = entry.getValue();
-
-            writer.element("source", "src", url, "type", toMimeType(type));
-            writer.end();
-        }
-
+        this.source.write(writer);
     }
 
     private void addOption(MarkupWriter writer, boolean condition, String value) {
@@ -123,17 +114,6 @@ public class Player implements ClientElement {
 
         writer.end(); // video or audio
         writer.end(); // data-component-type=player
-    }
-
-    private String toMimeType(String type) {
-
-        if (type.contains("/")) {
-            // trust the user
-            return type;
-        }
-
-        // TODO: match type instead of using the video parameter
-        return (this.video ? "video/" : "audio/") + type;
     }
 
     @Override

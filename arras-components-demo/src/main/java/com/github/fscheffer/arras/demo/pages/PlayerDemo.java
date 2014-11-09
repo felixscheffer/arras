@@ -12,13 +12,13 @@
 
 package com.github.fscheffer.arras.demo.pages;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import javax.inject.Inject;
 
 import org.apache.tapestry5.Asset;
 import org.apache.tapestry5.annotations.Path;
+
+import com.github.fscheffer.arras.PlayerSource;
+import com.github.fscheffer.arras.PlayerSourceImpl;
 
 public class PlayerDemo {
 
@@ -38,19 +38,19 @@ public class PlayerDemo {
     @Path("Big_Buck_Bunny_Trailer.ogv")
     private Asset bigBuckBunnyOgv;
 
-    public Map<String, String> getAudio() {
+    public PlayerSource getAudio() {
 
-        Map<String, String> map = new LinkedHashMap<>();
-        map.put("ogg", this.miaowOgg.toClientURL());
-        map.put("m4a", this.miaowM4a.toClientURL());
-        return map;
+        PlayerSource source = new PlayerSourceImpl();
+        source.add("audio/ogg", this.miaowOgg.toClientURL());
+        source.add("audio/m4a", this.miaowM4a.toClientURL());
+        return source;
     }
 
-    public Map<String, String> getVideo() {
+    public PlayerSource getVideo() {
 
-        Map<String, String> map = new LinkedHashMap<>();
-        map.put("m4v", this.bigBuckBunnyM4v.toClientURL());
-        map.put("ogg", this.bigBuckBunnyOgv.toClientURL());
-        return map;
+        PlayerSource source = new PlayerSourceImpl();
+        source.add("video/m4v", this.bigBuckBunnyM4v.toClientURL());
+        source.add("video/ogg", this.bigBuckBunnyOgv.toClientURL());
+        return source;
     }
 }
