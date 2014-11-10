@@ -86,13 +86,14 @@ public class SimpleIT extends ArrasTestCase {
 
         sleep(500);
 
-        clear(by, length);
-        sendKeys(by, value);
+        String keys = buildKeys(length, value);
+
+        sendKeys(by, keys);
 
         waitUntilElementContainsText(by, value);
     }
 
-    private void clear(By by, int length) {
+    private String buildKeys(int length, String value) {
 
         StringBuilder sb = new StringBuilder();
 
@@ -100,6 +101,8 @@ public class SimpleIT extends ArrasTestCase {
             sb.append(Keys.DELETE);
         }
 
-        sendKeys(by, sb.toString());
+        sb.append(value);
+
+        return sb.toString();
     }
 }
