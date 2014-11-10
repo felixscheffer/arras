@@ -33,8 +33,7 @@ public class LightboxIT extends ArrasTestCase {
 
         openLightbox(By.linkText("Bridge over river"));
 
-        assertUrlAttribute("#cboxLoadedContent > img", "src",
-                           "/arras/assets/meta/b9626ecd/photos/landscape/bridge-over-river.jpg");
+        assertImageInLightbox("/arras/assets/meta/b9626ecd/photos/landscape/bridge-over-river.jpg");
 
         assertTextPresent(By.cssSelector("#cboxTitle"), "Bridge over river");
 
@@ -47,23 +46,19 @@ public class LightboxIT extends ArrasTestCase {
         // group example
         openLightbox(By.linkText("Rocky cliffs"));
 
-        assertUrlAttribute("#cboxLoadedContent > img", "src",
-                           "/arras/assets/meta/d45fddff/photos/landscape/pointarena_rockycliffs.jpg");
+        assertImageInLightbox("/arras/assets/meta/d45fddff/photos/landscape/pointarena_rockycliffs.jpg");
 
         click(By.cssSelector("#cboxLoadedContent > img"));
 
-        assertUrlAttribute("#cboxLoadedContent > img", "src",
-                           "/arras/assets/meta/3aad432/photos/landscape/san-joaquin-river-view.jpg");
+        assertImageInLightbox("/arras/assets/meta/3aad432/photos/landscape/san-joaquin-river-view.jpg");
 
         click(By.cssSelector("#cboxLoadedContent > img"));
 
-        assertUrlAttribute("#cboxLoadedContent > img", "src",
-                           "/arras/assets/meta/dedf595e/photos/landscape/man_point-arena-stornetta.jpg");
+        assertImageInLightbox("/arras/assets/meta/dedf595e/photos/landscape/man_point-arena-stornetta.jpg");
 
         click(By.cssSelector("#cboxLoadedContent > img"));
 
-        assertUrlAttribute("#cboxLoadedContent > img", "src",
-                           "/arras/assets/meta/d45fddff/photos/landscape/pointarena_rockycliffs.jpg");
+        assertImageInLightbox("/arras/assets/meta/d45fddff/photos/landscape/pointarena_rockycliffs.jpg");
 
         closeLightbox();
     }
@@ -132,8 +127,7 @@ public class LightboxIT extends ArrasTestCase {
         // check Lightbox
         openLightbox(By.linkText("Stornetta in a Zone"));
 
-        assertUrlAttribute("#cboxLoadedContent > img", "src",
-            "/arras/assets/meta/dedf595e/photos/landscape/man_point-arena-stornetta.jpg");
+        assertImageInLightbox("/arras/assets/meta/dedf595e/photos/landscape/man_point-arena-stornetta.jpg");
 
         closeLightbox();
 
@@ -160,11 +154,16 @@ public class LightboxIT extends ArrasTestCase {
         waitUntilInvisible(By.cssSelector("#cboxOverlay"));
     }
 
-    void assertUrlAttribute(String cssSelector, String attribute, String expected) {
+    private void assertImageInLightbox(String expected) {
 
-        String attr = attr(By.cssSelector(cssSelector), attribute);
+        By by = By.cssSelector("#cboxLoadedContent > img");
+
+        waitUntilVisible(by);
+
+        String attr = attr(by, "src");
+
         // ignore base url
-        Assert.assertTrue(attr.endsWith(expected));
+        Assert.assertTrue(attr.endsWith(expected), "Expected \"" + expected + "\", but got \"" + attr + "\"");
     }
 
 }
