@@ -39,8 +39,6 @@ public class SimpleIT extends ArrasTestCase {
         Assert.assertTrue(isDisplayed(By.cssSelector("#logout")));
         Assert.assertTrue(isDisplayed(By.cssSelector("#contentsubmit")));
 
-        sleep(1000);
-
         changeText("#contentH1 > .medium-editor", "An even better headline!");
         changeText("#contentH2 > .medium-editor", "And an amazing subtitle...");
 
@@ -85,6 +83,8 @@ public class SimpleIT extends ArrasTestCase {
         int length = text(by).length();
 
         click(by);
+
+        sleep(500);
 
         clear(by, length);
         sendKeys(by, value);
