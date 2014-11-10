@@ -12,6 +12,8 @@
 
 package com.github.fscheffer.arras.components;
 
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import org.apache.tapestry5.Asset;
@@ -97,7 +99,10 @@ public class Player implements ClientElement {
 
         writer.attributes("preload", this.preload);
 
-        this.source.write(writer);
+        for (Map.Entry<String, String> source : this.source.get().entrySet()) {
+            writer.element("source", "type", source.getKey(), "src", source.getValue());
+            writer.end();
+        }
     }
 
     private void addOption(MarkupWriter writer, boolean condition, String value) {

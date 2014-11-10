@@ -1,10 +1,10 @@
 package com.github.fscheffer.arras;
 
-import org.apache.tapestry5.MarkupWriter;
+import java.util.Map;
 
 public interface PlayerSource {
 
     void add(String mimetype, String path);
 
-    void write(MarkupWriter writer);
+    Map<String, String> get();
 }

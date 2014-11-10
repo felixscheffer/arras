@@ -1,37 +1,20 @@
 package com.github.fscheffer.arras;
 
-import java.util.List;
-
-import org.apache.tapestry5.MarkupWriter;
-import org.apache.tapestry5.ioc.internal.util.CollectionFactory;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class PlayerSourceImpl implements PlayerSource {
 
-    private List<Source> sources = CollectionFactory.newList();
+    private Map<String, String> sources = new LinkedHashMap<>();
 
     @Override
     public void add(String mimetype, String path) {
-        this.sources.add(new Source(mimetype, path));
+        this.sources.put(mimetype, path);
     }
 
     @Override
-    public void write(MarkupWriter writer) {
-
-        for (Source source : this.sources) {
-            writer.element("source", "src", source.url, "type", source.mimetype);
-            writer.end();
-        }
-    }
-
-    private static class Source {
-
-        public final String mimetype;
-
-        public final String url;
-
-        public Source(String mimetype, String url) {
-            this.mimetype = mimetype;
-            this.url = url;
-        }
+    public Map<String, String> get() {
+        return Collections.unmodifiableMap(this.sources);
     }
 }
