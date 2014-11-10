@@ -382,10 +382,6 @@ public abstract class ArrasTestCase {
         throw new AssertionError(formatted);
     }
 
-    /**
-     * Delegates to {@link ErrorReporter#writeErrorReport(String)} to capture the current page markup in a
-     * file for later analysis.
-     */
     protected void writeErrorReport(String reportText) {
         logger.error(reportText);
     }
