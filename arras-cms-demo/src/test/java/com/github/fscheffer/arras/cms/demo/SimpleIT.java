@@ -39,7 +39,7 @@ public class SimpleIT extends ArrasTestCase {
         Assert.assertTrue(isDisplayed(By.cssSelector("#logout")));
         Assert.assertTrue(isDisplayed(By.cssSelector("#contentsubmit")));
 
-        sleep(500);
+        sleep(1000);
 
         changeText("#contentH1 > .medium-editor", "An even better headline!");
         changeText("#contentH2 > .medium-editor", "And an amazing subtitle...");
