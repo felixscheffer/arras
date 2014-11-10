@@ -34,6 +34,8 @@ public class PlayerIT extends ArrasTestCase {
 
         click(By.cssSelector("#audio .vjs-playing"));
 
+        sleep(500);
+
         assertTextPresent(By.cssSelector("#audio .vjs-duration-display"), "3:24");
     }
 }
