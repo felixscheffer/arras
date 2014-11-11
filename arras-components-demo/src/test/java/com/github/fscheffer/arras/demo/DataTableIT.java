@@ -17,7 +17,6 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
@@ -145,12 +144,7 @@ public class DataTableIT extends ArrasTestCase {
 
         text(FILTER, term);
 
-        // wait until DataTable has finished processing
-        waitUntilInvisible(By.cssSelector(".datatable_processing"));
-
-        // TODO: The datatable hides the ".datatable_processing" element after the request is completed but before the
-        //       data actually changes. We need a better solution, but I don't have one at the moment.
-        sleep(500);
+        waitUntilProcessingIsDone();
     }
 
     @Test
@@ -215,10 +209,19 @@ public class DataTableIT extends ArrasTestCase {
 
     private void assertPaginationInfo(int from, int to) {
 
-        // wait until DataTable has finished processing
-        waitUntil(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".datatable_processing")));
+        waitUntilProcessingIsDone();
 
         assertTextPresent(PAGINATION_INFO, "Showing " + from + " to " + to + " of 1,722 entries");
+    }
+
+    private void waitUntilProcessingIsDone() {
+
+        // wait until DataTable has finished processing
+        waitUntilInvisible(By.cssSelector(".datatable_processing"));
+
+        // TODO: The datatable hides the ".datatable_processing" element after the request is completed but before the
+        //       data actually changes. We need a better solution, but I don't have one at the moment.
+        sleep(500);
     }
 
     private By pagination(int i) {
