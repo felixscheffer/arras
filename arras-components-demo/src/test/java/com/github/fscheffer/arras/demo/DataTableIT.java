@@ -111,8 +111,6 @@ public class DataTableIT extends ArrasTestCase {
 
         setFilter("ghost");
 
-        sleep(500);
-
         assertRowCount(2);
         assertTextPresent(PAGINATION_INFO, "Showing 1 to 2 of 2 entries (filtered from 1,722 total entries)");
         assertRow(0, "Born as Ghosts", "The Battle of Los Angeles", "Rage Against The Machine", "Alternative Metal",
@@ -122,15 +120,11 @@ public class DataTableIT extends ArrasTestCase {
         // workaround: clearing the field is not enough. have to send a key
         setFilter(Keys.ENTER);
 
-        sleep(500);
-
         assertRowCount(25);
         assertRow(0, "(untitled hidden track)", "Fear Of Fours", "Lamb", "Downtempo", "2", "0");
 
         // try a filter with paging
         setFilter("Electronic");
-
-        sleep(500);
 
         assertRowCount(25);
         assertTextPresent(PAGINATION_INFO, "Showing 1 to 25 of 654 entries (filtered from 1,722 total entries)");
@@ -153,6 +147,10 @@ public class DataTableIT extends ArrasTestCase {
 
         // wait until DataTable has finished processing
         waitUntilInvisible(By.cssSelector(".datatable_processing"));
+
+        // TODO: The datatable hides the ".datatable_processing" element after the request is completed but before the
+        //       data actually changes. We need a better solution, but I don't have one at the moment.
+        sleep(500);
     }
 
     @Test
