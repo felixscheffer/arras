@@ -4,17 +4,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
 import com.github.fscheffer.arras.test.ArrasTestCase;
 
 public class SimpleIT extends ArrasTestCase {
-
-    @BeforeSuite
-    void beforeSuite() {
-        System.setProperty("testing.path", "/arras-cms");
-    }
 
     @BeforeMethod
     void before() {

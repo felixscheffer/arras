@@ -6,18 +6,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
 import com.github.fscheffer.arras.test.ArrasTestCase;
 
 public class BlocksIT extends ArrasTestCase {
-
-    @BeforeSuite
-    void beforeSuite() {
-        // TODO: find a better solution when running tests within eclipse
-        System.setProperty("testing.path", "/arras-cms");
-    }
 
     @BeforeMethod
     void before() {
