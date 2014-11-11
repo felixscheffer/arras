@@ -51,7 +51,7 @@ public abstract class ArrasTestCase {
 
         // Note: use explicit wait if you need to wait (see waitUntil)
         this.driver = buildDriverByName(driverName);
-        this.driver.manage().timeouts().implicitlyWait(400, TimeUnit.MILLISECONDS);
+        this.driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 
         setWebdriver(context, this.driver);
     }
