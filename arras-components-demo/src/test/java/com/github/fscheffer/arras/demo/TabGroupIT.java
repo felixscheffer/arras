@@ -68,12 +68,16 @@ public class TabGroupIT extends ArrasTestCase {
     @Test
     void testSubtabs() {
 
+        By by = By.cssSelector(".tab-content > .active .tab-content");
+
         // check subtabs
         click(By.xpath("//a[@href='#TabWithSubtabs']"));
-        assertTextPresent(By.cssSelector(".tab-content > .active .tab-content"), "foo");
+        waitUntilVisible(by);
+        assertTextPresent(by, "foo");
 
         click(By.xpath("//a[@href='#barTab']"));
-        assertTextPresent(By.cssSelector(".tab-content > .active .tab-content"), "bar");
+        waitUntilVisible(by);
+        assertTextPresent(by, "bar");
     }
 
     @Test
