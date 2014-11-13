@@ -53,12 +53,12 @@ public class ContentWorker implements ComponentClassTransformWorker2 {
         Flow<PlasticField> parametersFields = F.flow(plasticClass.getFieldsWithAnnotation(Content.class));
 
         for (PlasticField field : parametersFields) {
-            convertFieldIntoParameter(plasticClass, model, field);
+            convertField(plasticClass, model, field);
         }
 
     }
 
-    private void convertFieldIntoParameter(PlasticClass plasticClass, MutableComponentModel model, PlasticField field) {
+    private void convertField(PlasticClass plasticClass, MutableComponentModel model, PlasticField field) {
 
         Content annotation = field.getAnnotation(Content.class);
 
@@ -73,18 +73,14 @@ public class ContentWorker implements ComponentClassTransformWorker2 {
             contentId = fieldName;
         }
 
-        ComputedValue<FieldConduit<Object>> computedParameterConduit = createComputedParameterConduit(fieldName,
-                                                                                                      fieldType,
-                                                                                                      contentId,
-                                                                                                      annotation);
+        ComputedValue<FieldConduit<Object>> computedConduit = createComputedConduit(fieldName, fieldType, contentId,
+                                                                                    annotation);
 
-        field.setComputedConduit(computedParameterConduit);
+        field.setComputedConduit(computedConduit);
     }
 
-    private ComputedValue<FieldConduit<Object>> createComputedParameterConduit(final String fieldName,
-                                                                               final Class<?> fieldType,
-                                                                               final String contentId,
-                                                                               final Content annotation) {
+    private ComputedValue<FieldConduit<Object>> createComputedConduit(final String fieldName, final Class<?> fieldType,
+                                                                      final String contentId, final Content annotation) {
 
         return new ComputedValue<FieldConduit<Object>>() {
 
@@ -127,7 +123,7 @@ public class ContentWorker implements ComponentClassTransformWorker2 {
 
                         JSONObject json = JSONObject.class.cast(this.dataBinding.get());
 
-                        json.put(annotation.contentId(), newValue);
+                        json.put(contentId, newValue);
                     }
 
                     private Binding createDefaultValueBinding() {
