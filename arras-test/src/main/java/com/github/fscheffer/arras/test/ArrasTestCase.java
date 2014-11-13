@@ -270,7 +270,7 @@ public abstract class ArrasTestCase {
         // The t5/core/dom module tracks how many Ajax requests are active
         // and body[data-ajax-active] as appropriate.
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 20; i++) {
             if (i > 0) {
                 sleep(100);
             }
