@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.net.EphemeralPortRangeDetector;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -40,6 +39,9 @@ public class BlocksIT extends ArrasTestCase {
         addButton.click();
         addButton.click();
         addButton.click();
+
+        // TODO: far from perfect. this waits until the first content block is present, but there should be 4!
+        waitUntilPresent(By.cssSelector("#variableNumber .medium-editor"));
 
         click(By.cssSelector("[data-container-type=remote-submit]"));
 
