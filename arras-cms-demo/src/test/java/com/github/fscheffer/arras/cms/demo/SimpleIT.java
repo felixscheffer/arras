@@ -74,7 +74,7 @@ public class SimpleIT extends ArrasTestCase {
 
         click(by);
 
-        sleep(500);
+        sleep(1000);
 
         String keys = buildKeys(length, value);
 
