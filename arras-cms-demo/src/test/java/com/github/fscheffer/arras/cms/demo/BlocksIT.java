@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.net.EphemeralPortRangeDetector;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -32,6 +33,8 @@ public class BlocksIT extends ArrasTestCase {
         List<WebElement> noAddButton = elements(By.cssSelector("#fixedNumber [data-component-type=content-add]"));
         Assert.assertEquals(noAddButton.size(), 0);
 
+        changeImage(3);
+
         WebElement addButton = element(By.cssSelector("#variableNumber [data-component-type=content-add]"));
         addButton.click();
         addButton.click();
@@ -48,6 +51,8 @@ public class BlocksIT extends ArrasTestCase {
 
         Assert.assertEquals(numberOfContentBlocks("#fixedNumber"), 3);
         Assert.assertEquals(numberOfContentBlocks("#variableNumber"), 4);
+
+        assertImage(By.cssSelector(".content-image > img"), "/photos/landscape/pointarena_rockycliffs.jpg");
     }
 
     private int numberOfContentBlocks(String selector) {
@@ -55,5 +60,25 @@ public class BlocksIT extends ArrasTestCase {
         List<WebElement> blocks = elements(By.cssSelector(selector + " .content-block"));
 
         return blocks.size();
+    }
+
+    // TODO: move to ImageModule
+    // TODO: add a selector parameter
+    private void changeImage(int imageIdInLIghtbox) {
+        hover(By.cssSelector(".content-image"));
+        click(By.cssSelector(".content-image [data-container-type=lightbox]"));
+
+        waitUntilPresent(By.cssSelector("#cboxLoadedContent"));
+        waitUntilVisible(By.cssSelector("#cboxLoadedContent"));
+
+        click(By.cssSelector("#cboxLoadedContent .row > div:nth-child(" + imageIdInLIghtbox + ") a"));
+
+        waitUntilInvisible(By.cssSelector("#cboxOverlay"));
+    }
+
+    // TODO: move to ImageModule
+    private void assertImage(By by, String expected) {
+        String value = attr(by, "src");
+        Assert.assertTrue(value.endsWith(expected), "Expected \"" + expected + "\" but got \"" + value + "\"");
     }
 }
