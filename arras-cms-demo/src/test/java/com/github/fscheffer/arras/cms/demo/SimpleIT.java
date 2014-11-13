@@ -36,14 +36,7 @@ public class SimpleIT extends ArrasTestCase {
         changeText("#contentH1 > .medium-editor", "An even better headline!");
         changeText("#contentH2 > .medium-editor", "And an amazing subtitle...");
 
-        hover(By.cssSelector(".content-image"));
-        click(By.cssSelector(".content-image [data-container-type=lightbox]"));
-
-        waitUntilLightboxIsOpen();
-
-        click(By.cssSelector("#cboxLoadedContent .row > div:nth-child(5) a"));
-
-        waitUntilLightboxIsClosed();
+        changeImage(5);
 
         click(By.cssSelector("#contentsubmit"));
 
@@ -57,17 +50,20 @@ public class SimpleIT extends ArrasTestCase {
         assertImage(By.cssSelector(".content-image > img"), "/photos/paris/eiffel-tower.jpg");
     }
 
-    private void assertImage(By by, String expected) {
-        Assert.assertTrue(attr(by, "src").endsWith(expected));
-    }
+    private void changeImage(int imageIdInLIghtbox) {
+        hover(By.cssSelector(".content-image"));
+        click(By.cssSelector(".content-image [data-container-type=lightbox]"));
 
-    private void waitUntilLightboxIsOpen() {
         waitUntilPresent(By.cssSelector("#cboxLoadedContent"));
         waitUntilVisible(By.cssSelector("#cboxLoadedContent"));
+
+        click(By.cssSelector("#cboxLoadedContent .row > div:nth-child(" + imageIdInLIghtbox + ") a"));
+
+        waitUntilInvisible(By.cssSelector("#cboxOverlay"));
     }
 
-    private void waitUntilLightboxIsClosed() {
-        waitUntilInvisible(By.cssSelector("#cboxOverlay"));
+    private void assertImage(By by, String expected) {
+        Assert.assertTrue(attr(by, "src").endsWith(expected));
     }
 
     private void changeText(String selector, String value) {
