@@ -35,14 +35,17 @@ Releases are available on [Maven Central](http://search.maven.org/#search%7Cga%7
 Check out the demo:
 https://arras-components.herokuapp.com/
 
+
 ## Arras CMS
 
 Arras CMS provides simple content management functionality. It allows you to change text and images without having to redeploy your website.
 
 ![alt tag](https://github.com/fscheffer/arras/blob/master/arras-cms.png)
 
-Pleasae check out the arras-cms-demo project for examples.
+Check out the demo (resets every 24h)
+http://arras-cms.herokuapp.com/
 
+The war file is also available on Maven Central.
 
 ## Name
 Arras is [a city in France](http://en.wikipedia.org/wiki/Arras) which was specialized in fine wool tapestries in the 14th and 15th centuries. The term Arras is still used as a synonym for a rich tapestry. 
