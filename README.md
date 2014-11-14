@@ -9,7 +9,7 @@ Releases are available on [Maven Central](http://search.maven.org/#search%7Cga%7
 <dependency>
 	<groupId>com.github.fscheffer</groupId>
 	<artifactId>arras-components</artifactId>
-	<version>1.1.0</version>
+	<version>1.1.1</version>
 </dependency>
 ```
 
@@ -17,7 +17,7 @@ Releases are available on [Maven Central](http://search.maven.org/#search%7Cga%7
 <dependency>
 	<groupId>com.github.fscheffer</groupId>
 	<artifactId>arras-cms</artifactId>
-	<version>1.1.0</version>
+	<version>1.1.1</version>
 </dependency>
 ```
 
@@ -32,7 +32,8 @@ Releases are available on [Maven Central](http://search.maven.org/#search%7Cga%7
 * MediumEditor (based on [Medium-Editor](https://github.com/daviferreira/medium-editor))
 * Player (audio and video - based on [video.js](http://www.videojs.com/))
 
-Please check out the arras-components-demo project for examples.
+Check out the demo:
+https://arras-components.herokuapp.com/
 
 ## Arras CMS
 
@@ -47,6 +48,10 @@ Pleasae check out the arras-cms-demo project for examples.
 Arras is [a city in France](http://en.wikipedia.org/wiki/Arras) which was specialized in fine wool tapestries in the 14th and 15th centuries. The term Arras is still used as a synonym for a rich tapestry. 
 
 ## Release History
+* 1.1.1
+ - Date: 2014-11-14
+ - fixed Writing to a @Content property did not work when the contentId was not specified
+ 
 * 1.1.0
  - Date: 2014-11-10
  - added audio and video player (see Player component)
