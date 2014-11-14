@@ -20,6 +20,7 @@ Releases are available on [Maven Central](http://search.maven.org/#search%7Cga%7
 	<version>1.1.1</version>
 </dependency>
 ```
+Snapshots are available on https://oss.sonatype.org/content/groups/public/
 
 ## Arras Components
 
