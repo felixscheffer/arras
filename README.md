@@ -42,7 +42,7 @@ Arras CMS provides simple content management functionality. It allows you to cha
 
 ![alt tag](https://github.com/fscheffer/arras/blob/master/arras-cms.png)
 
-Check out the demo (resets every 24h)
+Check out the demo (resets every 24h):
 http://arras-cms.herokuapp.com/
 
 The war file is also available on Maven Central.
