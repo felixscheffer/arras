@@ -46,6 +46,8 @@ Arras CMS provides simple content management functionality. It allows you to cha
 Check out the demo (resets every 24h):
 http://arras-cms.herokuapp.com/
 
+To log in, just click on "sign in". You don't have to enter a username or a password. 
+
 The war file is also available on Maven Central.
 
 ## Name
