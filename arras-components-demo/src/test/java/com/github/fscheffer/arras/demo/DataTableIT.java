@@ -117,7 +117,7 @@ public class DataTableIT extends ArrasTestCase {
         assertRow(1, "Warboys", "Stolar Tracks Vol. 2", "Ghost Of An American Airman", "Alternative & Punk", "3", "0");
 
         // workaround: clearing the field is not enough. have to send a key
-        setFilter(Keys.ENTER);
+        setFilter(String.valueOf(Keys.ENTER));
 
         assertRowCount(25);
         assertRow(0, "(untitled hidden track)", "Fear Of Fours", "Lamb", "Downtempo", "2", "0");
@@ -140,7 +140,7 @@ public class DataTableIT extends ArrasTestCase {
         assertTextPresent(PAGINATION_INFO, "Showing 0 to 0 of 0 entries (filtered from 1,722 total entries)");
     }
 
-    private void setFilter(CharSequence term) {
+    private void setFilter(String term) {
 
         text(FILTER, term);
 
@@ -221,7 +221,7 @@ public class DataTableIT extends ArrasTestCase {
 
         // TODO: The datatable hides the ".datatable_processing" element after the request is completed but before the
         //       data actually changes. We need a better solution, but I don't have one at the moment.
-        sleep(500);
+        sleep(250);
     }
 
     private By pagination(int i) {
