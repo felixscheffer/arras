@@ -34,7 +34,7 @@ import com.github.fscheffer.arras.test.Track;
 import static java.lang.String.format;
 
 /**
- * Reads an iTunes music library file into a list of {@link org.github.fscheffer.arras.demo.integration.app1.data.Track} elements.
+ * Reads an iTunes music library file into a list of {@link Track} elements.
  */
 public class MusicLibraryParser {
 
