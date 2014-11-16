@@ -3,97 +3,42 @@ package com.github.fscheffer.arras.test;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.ITestContext;
 import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeClass;
 
 public abstract class ArrasTestCase {
 
-    private static final Logger logger = LoggerFactory.getLogger(ArrasTestCase.class);
+    private static final Logger logger        = LoggerFactory.getLogger(ArrasTestCase.class);
 
-    private WebDriver           driver;
-
-    private String              baseUrl;
-
-    @BeforeClass
-    public void configureWebdriver(ITestContext context) {
-
-        String host = System.getProperty("testing.hostname", "localhost");
-        String port = System.getProperty("testing.port", "8080");
-        String path = System.getProperty("testing.path", "/arras");
-
-        this.baseUrl = ArrasTestUtils.buildUrl(host, port, path);
-
-        this.driver = getWebdriver(context);
-        if (this.driver != null) {
-            return;
-        }
-
-        String driverName = System.getProperty("testing.driver", "firefox");
-
-        // Note: use explicit wait if you need to wait (see waitUntil)
-        this.driver = buildDriverByName(driverName);
-        this.driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
-
-        setWebdriver(context, this.driver);
-    }
-
-    private WebDriver buildDriverByName(String driverName) {
-
-        if ("chrome".equals(driverName)) {
-            return new ChromeDriver();
-        }
-
-        if ("safari".equals(driverName)) {
-            return new SafariDriver();
-        }
-
-        if ("ie".equals(driverName) || "internetexplorer".equals(driverName)) {
-            return new InternetExplorerDriver();
-        }
-
-        return new FirefoxDriver();
-    }
+    private SharedTestContext   sharedContext = new SharedTestContext();
 
     @AfterSuite(alwaysRun = true)
-    public void destroyWebdriver(ITestContext context) {
-
-        WebDriver wd = getWebdriver(context);
-        if (wd != null) {
-            wd.quit();
-        }
+    public void destroyWebdriver() {
+        this.sharedContext.destroy();
     }
 
-    private void setWebdriver(ITestContext context, WebDriver webdriver) {
-        context.setAttribute("webdriver", webdriver);
-    }
-
-    private WebDriver getWebdriver(ITestContext context) {
-        return (WebDriver) context.getAttribute("webdriver");
+    protected final WebDriver driver() {
+        return this.sharedContext.get().getDriver();
     }
 
     protected final void open(String url) {
 
-        String completeUrl = ArrasTestUtils.appendPath(this.baseUrl, url);
-        this.driver.get(completeUrl);
+        String baseUrl = this.sharedContext.get().getBaseUrl();
+
+        String completeUrl = ArrasTestUtils.appendPath(baseUrl, url);
+        driver().get(completeUrl);
 
         waitForPageToLoad();
     }
@@ -107,15 +52,18 @@ public abstract class ArrasTestCase {
     }
 
     protected final void sendKeys(CharSequence... keysToSend) {
-        this.driver.switchTo().activeElement().sendKeys(keysToSend);
+        driver().switchTo().activeElement().sendKeys(keysToSend);
     }
 
-    protected final void text(By by, CharSequence text) {
+    protected final void text(By by, String text) {
 
         WebElement element = element(by);
         element.click();
         element.clear();
         element.sendKeys(text);
+
+        // remove non printable characters
+        waitUntilValueContainsText(by, text.replaceAll("\\p{C}", ""));
     }
 
     protected final String text(By by) {
@@ -129,11 +77,11 @@ public abstract class ArrasTestCase {
     }
 
     protected final WebElement element(By by) {
-        return this.driver.findElement(by);
+        return driver().findElement(by);
     }
 
     protected final List<WebElement> elements(By by) {
-        return this.driver.findElements(by);
+        return driver().findElements(by);
     }
 
     protected final String attr(By by, String attribute) {
@@ -141,12 +89,12 @@ public abstract class ArrasTestCase {
     }
 
     protected final String title() {
-        return this.driver.getTitle();
+        return driver().getTitle();
     }
 
     protected final Dimension viewport() {
 
-        JavascriptExecutor executor = JavascriptExecutor.class.cast(this.driver);
+        JavascriptExecutor executor = JavascriptExecutor.class.cast(driver());
 
         Number clientWidth = (Number) executor.executeScript("return document.documentElement.clientWidth");
         Number clientHeight = (Number) executor.executeScript("return document.documentElement.clientHeight");
@@ -217,13 +165,13 @@ public abstract class ArrasTestCase {
     }
 
     protected final void hover(By by) {
-        new Actions(this.driver).moveToElement(element(by)).perform();
+        new Actions(driver()).moveToElement(element(by)).perform();
     }
 
     protected final void assertFocused(By by) {
 
         WebElement element = element(by);
-        WebElement focusedElement = this.driver.switchTo().activeElement();
+        WebElement focusedElement = driver().switchTo().activeElement();
 
         if (!element.equals(focusedElement)) {
             reportAndThrowAssertionError("Element '" + element + "' is not focused. '" + focusedElement
@@ -253,7 +201,7 @@ public abstract class ArrasTestCase {
 
     protected final <T> void waitUntil(ExpectedCondition<T> condition) {
         // Note: 10 sec is sometimes not enough
-        new WebDriverWait(this.driver, 15).until(condition);
+        new WebDriverWait(driver(), 15, 250).until(condition);
     }
 
     /**
@@ -289,7 +237,7 @@ public abstract class ArrasTestCase {
     }
 
     protected final Number getCssCount(String selector) {
-        return this.driver.findElements(By.cssSelector(selector)).size();
+        return driver().findElements(By.cssSelector(selector)).size();
     }
 
     /**
@@ -327,7 +275,7 @@ public abstract class ArrasTestCase {
     }
 
     protected final boolean isElementPresent(String locator) {
-        return this.driver.findElements(By.cssSelector(locator)).size() != 0;
+        return driver().findElements(By.cssSelector(locator)).size() != 0;
     }
 
     /**

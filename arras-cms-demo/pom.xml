@@ -68,11 +68,6 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-failsafe-plugin</artifactId>
-				<configuration>
-					<systemPropertyVariables>
-						<testing.path>/arras-cms</testing.path>
-					</systemPropertyVariables>
-				</configuration>
 			</plugin>
 
 			<plugin>
