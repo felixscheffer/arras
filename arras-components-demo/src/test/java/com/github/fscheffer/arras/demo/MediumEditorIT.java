@@ -23,8 +23,8 @@ public class MediumEditorIT extends ArrasTestCase {
     @BeforeMethod
     void before() {
         open("/MediumEditorDemo");
-        click(By.linkText("Reset demo"));
-        waitForPageToLoad();
+        element(By.linkText("Reset demo")).click();
+        waitUntil(pageHasLoaded());
     }
 
     // TODO: test the toolbar but I have absolutely no clue how to select a text using selenium webdriver api
@@ -32,47 +32,47 @@ public class MediumEditorIT extends ArrasTestCase {
     @Test
     void testNoToolbar() {
 
-        By by = By.id("noToolbar");
+        String selector = "#noToolbar";
 
-        click(by);
+        click(selector);
 
-        sleep(1000);
+        waitUntil(focused(selector));
 
-        sendKeys(by, " foobar");
+        sendKeys(selector, " foobar");
 
-        waitUntilElementContainsText(by, "foobar");
+        waitUntil(containsText(selector, "foobar"));
 
         clickSave();
 
-        assertTextPresent(by, "foobar");
+        waitUntil(containsText(selector, "foobar"));
     }
 
     @Test
     void testDisabled() {
 
-        By by = By.id("disabled");
+        String selector = "#disabled";
 
-        assertTextPresent(by, "Hello World!");
+        waitUntil(containsText(selector, "Hello World!"));
 
-        click(by);
+        click(selector);
 
-        sendKeys(by, " foobar");
+        sendKeys(selector, " foobar");
 
         clickSave();
 
-        assertTextNotPresent(by, "foobar");
+        waitUntil(notContainsText(selector, "foobar"));
     }
 
     private void clickSave() {
 
-        click(By.id("submit_0"));
+        click("#submit_0");
 
-        waitForPageToLoad();
+        waitUntil(pageHasLoaded());
 
         // reload the page...just to be sure
         open("/MediumEditorDemo");
 
-        waitForPageToLoad();
+        waitUntil(pageHasLoaded());
     }
 
 }

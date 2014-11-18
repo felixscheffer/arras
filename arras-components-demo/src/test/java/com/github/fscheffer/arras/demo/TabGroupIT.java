@@ -41,7 +41,7 @@ public class TabGroupIT extends ArrasTestCase {
         // check tab content
         assertTabContentPresent("This is just a normal tab.");
 
-        click(By.xpath("//a[@href='#tab2']"));
+        click("a[href='#tab2']");
 
         waitForAjaxRequestsToComplete();
 
@@ -51,13 +51,13 @@ public class TabGroupIT extends ArrasTestCase {
     @Test
     void testDropdownTabs() {
 
-        click(By.xpath("//ul[@role='tablist']/li/a[@data-toggle='dropdown']"));
+        element(By.xpath("//ul[@role='tablist']/li/a[@data-toggle='dropdown']")).click();
 
         // check dropdown tab names
         assertTabNamePresent("Tab3");
         assertTabNamePresent("Custom tab");
 
-        click(By.xpath("//a[@href='#tab3']"));
+        click("a[href='#tab3']");
 
         // wait until the transition is complete. probably not the best solution
         sleep(300);
@@ -68,37 +68,37 @@ public class TabGroupIT extends ArrasTestCase {
     @Test
     void testSubtabs() {
 
-        By by = By.cssSelector(".tab-content > .active .tab-content");
+        String selector = ".tab-content > .active .tab-content";
 
         // check subtabs
-        click(By.xpath("//a[@href='#TabWithSubtabs']"));
-        waitUntilVisible(by);
-        assertTextPresent(by, "foo");
+        click("a[href='#TabWithSubtabs']");
+        waitUntil(visible(selector));
+        waitUntil(containsText(selector, "foo"));
 
-        click(By.xpath("//a[@href='#barTab']"));
-        waitUntilVisible(by);
-        assertTextPresent(by, "bar");
+        click("a[href='#barTab']");
+        waitUntil(visible(selector));
+        waitUntil(containsText(selector, "bar"));
     }
 
     @Test
     void testTabInZone() {
 
-        click(By.linkText("trigger zone"));
+        element(By.linkText("trigger zone")).click();
 
         waitForAjaxRequestsToComplete();
 
-        assertTextPresent(By.cssSelector("#tabgroupZone"), "a tab in a zone");
+        waitUntil(containsText("#tabgroupZone", "a tab in a zone"));
 
-        click(By.linkText("Tab In Zone2"));
+        element(By.linkText("Tab In Zone2")).click();
 
-        assertTextPresent(By.cssSelector("#tabgroupZone"), "another tab in the same zone");
+        waitUntil(containsText("#tabgroupZone", "another tab in the same zone"));
     }
 
     private void assertTabContentPresent(String value) {
-        assertTextPresent(By.cssSelector(".tab-content > .active"), value);
+        waitUntil(containsText(".tab-content > .active", value));
     }
 
     private void assertTabNamePresent(String tabname) {
-        assertTextPresent(By.cssSelector(".nav-tabs"), tabname);
+        waitUntil(containsText(".nav-tabs", tabname));
     }
 }

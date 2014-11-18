@@ -30,87 +30,86 @@ public class DropdownIT extends ArrasTestCase {
     void testLabels() {
 
         // check labels
-        assertTextPresent(By.id("drop"), "Dropdown1");
-        assertTextPresent(By.id("drop_0"), "My dropdown");
-        assertTextPresent(By.id("drop_1"), "Custom label");
-
+        waitUntil(containsText("#drop", "Dropdown1"));
+        waitUntil(containsText("#drop_0", "My dropdown"));
+        waitUntil(containsText("#drop_1", "Custom label"));
         // check icons
-        assertClassPresent(By.cssSelector("#drop span"), "caret");
-        assertClassPresent(By.cssSelector("#drop_0 span"), "glyphicon", "glyphicon-plus");
-        assertClassPresent(By.cssSelector("#drop_1 span"), "glyphicon", "glyphicon-arrow-down");
+        waitUntil(classesPresent("#drop span", "caret"));
+        waitUntil(classesPresent("#drop_0 span", "glyphicon", "glyphicon-plus"));
+        waitUntil(classesPresent("#drop_1 span", "glyphicon", "glyphicon-arrow-down"));
     }
 
     @Test
     void testMouseInteraction() {
 
         // check mouse clicks
-        click(By.id("drop"));
+        click("#drop");
         // assert tag name is div and is open
-        assertClassPresent(By.cssSelector("div.dropdown"), "open");
-        assertTextPresent(By.cssSelector("#main-content"), "Index");
+        waitUntil(classesPresent("div.dropdown", "open"));
+        waitUntil(containsText("#main-content", "Index"));
 
-        click(By.id("drop"));
-        assertTextNotPresent(By.cssSelector("#main-content"), "Index");
+        click("#drop");
+        waitUntil(notContainsText("#main-content", "Index"));
 
-        click(By.id("drop_0"));
+        click("#drop_0");
         // assert tag name is li and is open
-        assertClassPresent(By.cssSelector("ul.nav.nav-pills > li:first-child"), "dropdown", "open");
-        assertTextPresent(By.cssSelector("#main-content"), "A dropdown item");
+        waitUntil(classesPresent("ul.nav.nav-pills > li:first-child", "dropdown", "open"));
+        waitUntil(containsText("#main-content", "A dropdown item"));
 
         // clicking outside of the dropdown should close the dropdown
-        click(By.cssSelector("h3"));
-        assertTextNotPresent(By.cssSelector("#main-content"), "A dropdown item");
+        click("h3");
+        waitUntil(notContainsText("#main-content", "A dropdown item"));
     }
 
     @Test
     void testKeyInteraction() {
 
         // check keys
-        click(By.id("drop_1"));
+        click("#drop_1");
         sendKeys(Keys.ARROW_DOWN);
-        assertFocused(dropdownItem(1));
+        waitUntil(focused(dropdownItem(1)));
 
         // cant move up. it's the first element. focus should stay on the first element
         sendKeys(Keys.ARROW_UP);
-        assertFocused(dropdownItem(1));
+        waitUntil(focused(dropdownItem(1)));
 
         sendKeys(Keys.ARROW_DOWN);
-        assertFocused(dropdownItem(2));
+        waitUntil(focused(dropdownItem(2)));
 
         // skip divider
         sendKeys(Keys.ARROW_DOWN);
-        assertFocused(dropdownItem(4));
+        waitUntil(focused(dropdownItem(4)));
 
         // cant move down. we are at the last element. focus should stay on the last element
         sendKeys(Keys.ARROW_DOWN);
-        assertFocused(dropdownItem(4));
+        waitUntil(focused(dropdownItem(4)));
 
         // skip divider
         sendKeys(Keys.ARROW_UP);
-        assertFocused(dropdownItem(2));
+        waitUntil(focused(dropdownItem(2)));
 
         sendKeys(Keys.ESCAPE);
-        assertTextNotPresent("Item 1");
-        assertFocused(By.cssSelector("ul.nav.nav-pills > li:nth-child(2) > a"));
+        waitUntil(notContainsText("BODY", "Item 1"));
+        waitUntil(focused("ul.nav.nav-pills > li:nth-child(2) > a"));
     }
 
     @Test
     void testDropdownInZone() {
 
-        click(By.linkText("trigger zone"));
+        element(By.linkText("trigger zone")).click();
 
         waitForAjaxRequestsToComplete();
 
-        assertTextPresent(By.cssSelector("#dropdownZone"), "Dropdown In Zone");
+        waitUntil(containsText("#dropdownZone", "Dropdown In Zone"));
 
-        click(By.linkText("Dropdown In Zone"));
+        element(By.linkText("Dropdown In Zone")).click();
 
-        assertTextPresent(dropdownItem(1), "Apache HTTP Server");
-        assertTextPresent(dropdownItem(2), "Apache Tapestry 5");
-        assertTextPresent(dropdownItem(3), "Apache Felix");
+        waitUntil(containsText(dropdownItem(1), "Apache HTTP Server"));
+        waitUntil(containsText(dropdownItem(2), "Apache Tapestry 5"));
+        waitUntil(containsText(dropdownItem(3), "Apache Felix"));
     }
 
-    private By dropdownItem(int n) {
-        return By.cssSelector(".dropdown.open > ul > li:nth-child(" + n + ") > a");
+    private String dropdownItem(int n) {
+        return ".dropdown.open > ul > li:nth-child(" + n + ") > a";
     }
 }

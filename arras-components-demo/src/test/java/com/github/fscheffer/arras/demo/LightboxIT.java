@@ -35,7 +35,7 @@ public class LightboxIT extends ArrasTestCase {
 
         assertImageInLightbox("/arras/assets/meta/b9626ecd/photos/landscape/bridge-over-river.jpg");
 
-        assertTextPresent(By.cssSelector("#cboxTitle"), "Bridge over river");
+        waitUntil(containsText("#cboxTitle", "Bridge over river"));
 
         closeLightbox();
     }
@@ -48,15 +48,15 @@ public class LightboxIT extends ArrasTestCase {
 
         assertImageInLightbox("/arras/assets/meta/d45fddff/photos/landscape/pointarena_rockycliffs.jpg");
 
-        click(By.cssSelector("#cboxLoadedContent > img"));
+        click("#cboxLoadedContent > img");
 
         assertImageInLightbox("/arras/assets/meta/3aad432/photos/landscape/san-joaquin-river-view.jpg");
 
-        click(By.cssSelector("#cboxLoadedContent > img"));
+        click("#cboxLoadedContent > img");
 
         assertImageInLightbox("/arras/assets/meta/dedf595e/photos/landscape/man_point-arena-stornetta.jpg");
 
-        click(By.cssSelector("#cboxLoadedContent > img"));
+        click("#cboxLoadedContent > img");
 
         assertImageInLightbox("/arras/assets/meta/d45fddff/photos/landscape/pointarena_rockycliffs.jpg");
 
@@ -97,7 +97,7 @@ public class LightboxIT extends ArrasTestCase {
         // inline
         openLightbox(By.linkText("Show Kafka!"));
 
-        assertTextPresent(By.cssSelector("#cboxLoadedContent h3"), "Kafka");
+        waitUntil(containsText("#cboxLoadedContent h3", "Kafka"));
 
         closeLightbox();
     }
@@ -107,9 +107,7 @@ public class LightboxIT extends ArrasTestCase {
 
         openLightbox(By.linkText("Some ajax event"));
 
-        waitUntilPresent(By.cssSelector("#cboxLoadedContent h3"));
-
-        assertTextPresent(By.cssSelector("#cboxLoadedContent h3"), "Updated zone at");
+        waitUntil(containsText("#cboxLoadedContent h3", "Updated zone at"));
 
         closeLightbox();
     }
@@ -117,12 +115,12 @@ public class LightboxIT extends ArrasTestCase {
     @Test
     void testLightboxInZone() {
 
-        click(By.linkText("Trigger zone"));
+        element(By.linkText("Trigger zone")).click();
 
         waitForAjaxRequestsToComplete();
 
-        assertTextPresent(By.cssSelector("#lightboxZone"), "Stornetta in a Zone");
-        assertTextPresent(By.cssSelector("#lightboxZone"), "Show content with zone");
+        waitUntil(containsText("#lightboxZone", "Stornetta in a Zone"));
+        waitUntil(containsText("#lightboxZone", "Show content with zone"));
 
         // check Lightbox
         openLightbox(By.linkText("Stornetta in a Zone"));
@@ -134,33 +132,32 @@ public class LightboxIT extends ArrasTestCase {
         // check LightboxBody
         openLightbox(By.linkText("Show content with zone"));
 
-        assertTextPresent(By.cssSelector("#cboxLoadedContent h3"), "Content loaded by Zone");
+        waitUntil(containsText("#cboxLoadedContent h3", "Content loaded by Zone"));
 
         closeLightbox();
     }
 
     private void openLightbox(By by) {
 
-        click(by);
+        element(by).click();
 
-        waitUntilPresent(By.cssSelector("#cboxLoadedContent"));
-        waitUntilVisible(By.cssSelector("#cboxLoadedContent"));
+        waitUntil(visible("#cboxLoadedContent"));
     }
 
     private void closeLightbox() {
 
-        click(By.cssSelector("#cboxClose"));
+        click("#cboxClose");
 
-        waitUntilInvisible(By.cssSelector("#cboxOverlay"));
+        waitUntil(invisible("#cboxOverlay"));
     }
 
     private void assertImageInLightbox(String expected) {
 
-        By by = By.cssSelector("#cboxLoadedContent > img");
+        String selector = "#cboxLoadedContent > img";
 
-        waitUntilVisible(by);
+        waitUntil(visible(selector));
 
-        String attr = attr(by, "src");
+        String attr = attr(selector, "src");
 
         // ignore base url
         Assert.assertTrue(attr.endsWith(expected), "Expected \"" + expected + "\", but got \"" + attr + "\"");

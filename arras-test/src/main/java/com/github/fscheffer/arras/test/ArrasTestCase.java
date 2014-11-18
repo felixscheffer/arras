@@ -1,12 +1,11 @@
 package com.github.fscheffer.arras.test;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -40,52 +39,61 @@ public abstract class ArrasTestCase {
         String completeUrl = ArrasTestUtils.appendPath(baseUrl, url);
         driver().get(completeUrl);
 
-        waitForPageToLoad();
+        waitUntil(pageHasLoaded());
     }
 
-    protected final void click(By by) {
-        element(by).click();
+    protected final void click(String cssSelector) {
+        element(cssSelector).click();
     }
 
-    protected final void sendKeys(By by, CharSequence... keysToSend) {
-        element(by).sendKeys(keysToSend);
+    protected final void sendKeys(String cssSelector, CharSequence... keysToSend) {
+        element(cssSelector).sendKeys(keysToSend);
     }
 
     protected final void sendKeys(CharSequence... keysToSend) {
         driver().switchTo().activeElement().sendKeys(keysToSend);
     }
 
-    protected final void text(By by, String text) {
+    protected final void text(String cssSelector, String text) {
 
-        WebElement element = element(by);
+        WebElement element = element(cssSelector);
+
         element.click();
+
+        // ensure that the right element is focused before we change the value
+        waitUntil(focused(cssSelector));
+
         element.clear();
         element.sendKeys(text);
 
         // remove non printable characters
-        waitUntilValueContainsText(by, text.replaceAll("\\p{C}", ""));
+        waitUntil(valueContainsText(cssSelector, text.replaceAll("\\p{C}", "")));
     }
 
-    protected final String text(By by) {
-        return element(by).getText();
+    protected final String text(String cssSelector) {
+        return element(cssSelector).getText();
     }
 
-    protected final void select(By by, String value) {
+    protected final void select(String cssSelector, String value) {
 
-        Select select = new Select(element(by));
+        Select select = new Select(element(cssSelector));
         select.selectByValue(value);
+    }
+
+    protected final WebElement element(String cssSelector) {
+        return element(By.cssSelector(cssSelector));
     }
 
     protected final WebElement element(By by) {
         return driver().findElement(by);
     }
 
-    protected final List<WebElement> elements(By by) {
-        return driver().findElements(by);
+    protected final List<WebElement> elements(String cssSelector) {
+        return driver().findElements(By.cssSelector(cssSelector));
     }
 
-    protected final String attr(By by, String attribute) {
-        return element(by).getAttribute(attribute);
+    protected final String attr(String cssSelector, String attribute) {
+        return element(cssSelector).getAttribute(attribute);
     }
 
     protected final String title() {
@@ -102,106 +110,51 @@ public abstract class ArrasTestCase {
         return new Dimension(clientWidth.intValue(), clientHeight.intValue());
     }
 
-    protected final boolean isDisplayed(By by) {
-        return element(by).isDisplayed();
+    protected final void hover(String cssSelector) {
+        new Actions(driver()).moveToElement(element(cssSelector)).perform();
     }
 
-    protected final void assertClassPresent(By by, String... classes) {
-
-        WebElement element = element(by);
-
-        String attr = element.getAttribute("class");
-
-        List<String> list = attr == null ? Collections.<String> emptyList() : Arrays.asList(attr.split(" "));
-
-        for (String clazz : classes) {
-
-            if (!list.contains(clazz)) {
-                reportAndThrowAssertionError("Element '" + element.getTagName() + "' is missing class '" + clazz + "'.");
-            }
-        }
+    protected static final ExpectedCondition<Boolean> pageHasLoaded() {
+        return ArrasConditions.pageHasLoaded();
     }
 
-    protected final void assertTextPresent(String... text) {
-        assertTextPresent(By.cssSelector("BODY"), text);
+    protected static final ExpectedCondition<WebElement> focused(String cssSelector) {
+        return ArrasConditions.focusOnElementLocated(By.cssSelector(cssSelector));
     }
 
-    protected final void assertTextPresent(By by, String... text) {
-
-        WebElement element = element(by);
-
-        String content = element.getText();
-
-        for (String item : text) {
-
-            if (content.contains(item)) {
-                continue;
-            }
-
-            reportAndThrowAssertionError("Element '" + element.getTagName() + "' did not contain '" + item
-                                         + "'. The actual text was: \"" + content + "\"");
-        }
+    protected static final ExpectedCondition<List<WebElement>> present(String cssSelector) {
+        return ArrasConditions.presenceOfElementsLocated(By.cssSelector(cssSelector));
     }
 
-    protected final void assertTextNotPresent(String... text) {
-        assertTextNotPresent(By.cssSelector("BODY"), text);
+    protected static final ExpectedCondition<List<WebElement>> visible(String cssSelector) {
+        return ArrasConditions.visibiltyOfElementsLocated(By.cssSelector(cssSelector));
     }
 
-    protected final void assertTextNotPresent(By by, String... text) {
-
-        WebElement element = element(by);
-
-        String content = element.getText();
-
-        for (String item : text) {
-
-            if (!content.contains(item)) {
-                continue;
-            }
-
-            reportAndThrowAssertionError("Element '" + element.getTagName() + "' contains '" + item
-                                         + "' but it should not.");
-        }
+    protected static final ExpectedCondition<Boolean> invisible(String cssSelector) {
+        return ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(cssSelector));
     }
 
-    protected final void hover(By by) {
-        new Actions(driver()).moveToElement(element(by)).perform();
+    protected static final ExpectedCondition<Boolean> containsText(String cssSelector, String text) {
+        return ExpectedConditions.textToBePresentInElementLocated(By.cssSelector(cssSelector), text);
     }
 
-    protected final void assertFocused(By by) {
-
-        WebElement element = element(by);
-        WebElement focusedElement = driver().switchTo().activeElement();
-
-        if (!element.equals(focusedElement)) {
-            reportAndThrowAssertionError("Element '" + element + "' is not focused. '" + focusedElement
-                                         + "' is currently focused.");
-        }
+    protected static final ExpectedCondition<Boolean> notContainsText(String cssSelector, String text) {
+        return ExpectedConditions.not(containsText(cssSelector, text));
     }
 
-    protected final void waitUntilPresent(By by) {
-        waitUntil(ExpectedConditions.presenceOfElementLocated(by));
+    protected ExpectedCondition<Boolean> valueContainsText(String cssSelector, String text) {
+        return ExpectedConditions.textToBePresentInElementValue(By.cssSelector(cssSelector), text);
     }
 
-    protected final void waitUntilInvisible(By by) {
-        waitUntil(ExpectedConditions.invisibilityOfElementLocated(by));
+    protected ExpectedCondition<Boolean> classesPresent(String cssSelector, String... classes) {
+        return ArrasConditions.presenceOfClasses(By.cssSelector(cssSelector), classes);
     }
 
-    protected final void waitUntilVisible(By by) {
-        waitUntil(ExpectedConditions.visibilityOfElementLocated(by));
-    }
-
-    protected final void waitUntilElementContainsText(By by, String text) {
-        waitUntil(ExpectedConditions.textToBePresentInElementLocated(by, text));
-    }
-
-    protected final void waitUntilValueContainsText(By by, String text) {
-        waitUntil(ExpectedConditions.textToBePresentInElementValue(by, text));
-    }
-
-    protected final <T> void waitUntil(ExpectedCondition<T> condition) {
+    protected final <T> T waitUntil(ExpectedCondition<T> condition) {
         // Note: 10 sec is sometimes not enough
-        new WebDriverWait(driver(), 15, 250).until(condition);
+        int timeOutInSeconds = 30;
+        int sleepInMillis = 200;
+        return new WebDriverWait(driver(), timeOutInSeconds, sleepInMillis).until(condition);
     }
 
     /**
@@ -218,70 +171,21 @@ public abstract class ArrasTestCase {
         // The t5/core/dom module tracks how many Ajax requests are active
         // and body[data-ajax-active] as appropriate.
 
-        for (int i = 0; i < 20; i++) {
-            if (i > 0) {
-                sleep(100);
-            }
-
+        try {
             // TODO: body[data-ajax-active=false] is broken in Prototype
             //       This was fixed in tapestry-5.4-beta-23 which is a non-public beta
             //       Once Tapesty releases a new beta change the selector to
             //
             //          body[data-ajax-active='0']
-            if (getCssCount("body[data-ajax-active=false]").equals(1)) {
-                return;
-            }
+            new WebDriverWait(driver(), 30, 250).until(present("body[data-ajax-active=false]"));
         }
-
-        reportAndThrowAssertionError("Body 'data-ajax-active' attribute never reverted to '0'.");
-    }
-
-    protected final Number getCssCount(String selector) {
-        return driver().findElements(By.cssSelector(selector)).size();
-    }
-
-    /**
-     * Waits for page  to load, then waits for initialization to finish, which is recognized by the {@code data-page-initialized} attribute
-     * being set to true on the body element. Polls at increasing intervals, for up-to 30 seconds (that's extraordinarily long, but helps sometimes
-     * when manually debugging a page that doesn't have the floating console enabled)..
-     */
-    protected final void waitForPageToLoad() {
-
-        // In a limited number of cases, a "page" is an container error page or raw HTML content
-        // that does not include the body element and data-page-initialized element. In those cases,
-        // there will never be page initialization in the Tapestry sense and we return immediately.
-
-        if (!isElementPresent("body[data-page-initialized]")) {
-            return;
+        catch (TimeoutException e) {
+            throw new AssertionError("Ajax request did not complete within 30 seconds.");
         }
-
-        final long pollingStartTime = System.currentTimeMillis();
-
-        long sleepTime = 20;
-
-        while (true) {
-            if (isElementPresent("body[data-page-initialized='true']")) {
-                return;
-            }
-
-            if (System.currentTimeMillis() - pollingStartTime > 30000) {
-                reportAndThrowAssertionError("Page did not finish initializing after 30 seconds.");
-            }
-
-            sleep(sleepTime);
-
-            sleepTime *= 2;
-        }
-    }
-
-    protected final boolean isElementPresent(String locator) {
-        return driver().findElements(By.cssSelector(locator)).size() != 0;
     }
 
     /**
      * Sleeps for the indicated number of seconds.
-     *
-     * @since 5.3
      */
     protected final void sleep(long millis) {
         try {

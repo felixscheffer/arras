@@ -16,33 +16,34 @@ public class PlayerIT extends ArrasTestCase {
     @Test
     void testVideoPlayer() {
 
-        click(By.cssSelector("#video .vjs-big-play-button"));
+        click("#video .vjs-big-play-button");
 
-        waitUntilVisible(By.cssSelector("#video .vjs-control-bar"));
+        waitUntil(visible("#video .vjs-control-bar"));
 
-        click(By.cssSelector("#video .vjs-playing"));
+        click("#video .vjs-playing");
 
         // FIXME: sometimes video.js thinks the file is a live stream. Not sure why. Probably another timing issue.
-        if (!isDisplayed(By.cssSelector(".vjs-live-display"))) {
-            assertTextPresent(By.cssSelector("#video .vjs-duration-display"), "0:33");
+        if (!isLive()) {
+            waitUntil(containsText("#video .vjs-duration-display", "0:33"));
         }
     }
 
     @Test
     void testAudioPlayer() {
 
-        click(By.cssSelector("#audio .vjs-play-control"));
+        click("#audio .vjs-play-control");
 
-        waitUntilVisible(By.cssSelector("#audio .vjs-playing"));
+        waitUntil(visible("#audio .vjs-playing"));
 
-        click(By.cssSelector("#audio .vjs-playing"));
-
-        sleep(500);
+        click("#audio .vjs-playing");
 
         // FIXME: sometimes video.js thinks the file is a live stream. Not sure why. Probably another timing issue.
-        if (!isDisplayed(By.cssSelector(".vjs-live-display"))) {
-            assertTextPresent(By.cssSelector("#audio .vjs-duration-display"), "3:24");
+        if (!isLive()) {
+            waitUntil(containsText("#audio .vjs-duration-display", "3:24"));
         }
+    }
 
+    protected boolean isLive() {
+        return element(By.cssSelector(".vjs-live-display")).isDisplayed();
     }
 }

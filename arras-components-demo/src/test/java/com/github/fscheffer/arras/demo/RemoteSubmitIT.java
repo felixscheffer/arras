@@ -12,7 +12,6 @@
 
 package com.github.fscheffer.arras.demo;
 
-import org.openqa.selenium.By;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeMethod;
@@ -34,14 +33,13 @@ public class RemoteSubmitIT extends ArrasTestCase {
 
         this.logger.info("Running testVisibleSubmit()");
 
-        inputAndWait(By.cssSelector("#visibleExample input[type=text]"), "Hello World!");
+        text("#visibleExample input[type=text]", "Hello World!");
 
-        click(By.cssSelector("#visibleExample > button"));
+        click("#visibleExample > button");
 
-        waitForPageToLoad();
+        waitUntil(pageHasLoaded());
 
-        assertTextPresent(By.cssSelector(".alert > span"),
-                          "Triggered form with visible submit button! Form content was: \"Hello World!\"");
+        waitUntil(containsText(".alert > span", "Triggered form with visible submit button! Form content was: \"Hello World!\""));
     }
 
     @Test
@@ -53,20 +51,12 @@ public class RemoteSubmitIT extends ArrasTestCase {
         //       maybe the dom was not loaded..so try waiting.
         sleep(500);
 
-        inputAndWait(By.cssSelector("#invisibleExampleTextfield"), "Hello Tapestry!");
+        text("#invisibleExampleTextfield", "Hello Tapestry!");
 
-        click(By.cssSelector("#invisibleExample > button"));
+        click("#invisibleExample > button");
 
-        waitForPageToLoad();
+        waitUntil(pageHasLoaded());
 
-        assertTextPresent(By.cssSelector(".alert > span"),
-            "Triggered form with invisible submit button! Form content was: \"Hello Tapestry!\"");
-    }
-
-    private void inputAndWait(By by, String value) {
-
-        text(by, value);
-
-        waitUntilValueContainsText(by, value);
+        waitUntil(containsText(".alert > span", "Triggered form with invisible submit button! Form content was: \"Hello Tapestry!\""));
     }
 }

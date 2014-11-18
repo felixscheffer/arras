@@ -32,11 +32,11 @@ public class IconIT extends ArrasTestCase {
     @Test
     void testIcons() {
 
-        Assert.assertTrue(isDisplayed(By.id("simple")));
+        waitUntil(visible("#simple"));
 
         int baseSize = 14;
 
-        List<WebElement> sizes = elements(By.cssSelector("#sizes > i"));
+        List<WebElement> sizes = elements("#sizes > i");
         assertFontSize(sizes.get(0), baseSize);
         assertFontSize(sizes.get(1), baseSize * 2);
         assertFontSize(sizes.get(2), baseSize * 3);
