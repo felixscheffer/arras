@@ -53,14 +53,13 @@ public class DataTableIT extends ArrasTestCase {
     }
 
     @BeforeMethod
-    void before() {
-
+    public void before() {
         open(this.pagename);
         waitUntil(invisible(".datatable_processing"));
     }
 
     @Test
-    void testRowsPerPage() {
+    public void testRowsPerPage() {
 
         assertRowsPerPage(25);
 
@@ -102,7 +101,7 @@ public class DataTableIT extends ArrasTestCase {
     }
 
     @Test
-    void testSearch() {
+    public void testSearch() {
 
         text(FILTER, "ghost");
         assertRowCount(2, "Showing 1 to 2 of 2 entries (filtered from 1,722 total entries)");
@@ -132,7 +131,7 @@ public class DataTableIT extends ArrasTestCase {
     }
 
     @Test
-    void testSorting() {
+    public void testSorting() {
 
         // assume first column is sorted ascending by default
         assertRowCount(25, paginationInfo(1, 25));

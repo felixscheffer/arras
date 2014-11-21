@@ -27,7 +27,7 @@ public class DropdownIT extends ArrasTestCase {
     }
 
     @Test
-    void testLabels() {
+    public void testLabels() {
 
         // check labels
         waitUntil(containsText("#drop", "Dropdown1"));
@@ -40,7 +40,7 @@ public class DropdownIT extends ArrasTestCase {
     }
 
     @Test
-    void testMouseInteraction() {
+    public void testMouseInteraction() {
 
         // check mouse clicks
         click("#drop");
@@ -62,7 +62,7 @@ public class DropdownIT extends ArrasTestCase {
     }
 
     @Test
-    void testKeyInteraction() {
+    public void testKeyInteraction() {
 
         // check keys
         click("#drop_1");
@@ -94,7 +94,7 @@ public class DropdownIT extends ArrasTestCase {
     }
 
     @Test
-    void testDropdownInZone() {
+    public void testDropdownInZone() {
 
         element(By.linkText("trigger zone")).click();
 

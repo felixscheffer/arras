@@ -21,12 +21,12 @@ import com.github.fscheffer.arras.test.ArrasTestCase;
 public class TabGroupIT extends ArrasTestCase {
 
     @BeforeMethod
-    void before() {
+    public void before() {
         open("/TabGroupDemo");
     }
 
     @Test
-    void testTabNames() {
+    public void testTabNames() {
 
         // check tab names
         assertTabNamePresent("Simple tab");
@@ -36,7 +36,7 @@ public class TabGroupIT extends ArrasTestCase {
     }
 
     @Test
-    void testTabContent() {
+    public void testTabContent() {
 
         // check tab content
         assertTabContentPresent("This is just a normal tab.");
@@ -49,7 +49,7 @@ public class TabGroupIT extends ArrasTestCase {
     }
 
     @Test
-    void testDropdownTabs() {
+    public void testDropdownTabs() {
 
         element(By.xpath("//ul[@role='tablist']/li/a[@data-toggle='dropdown']")).click();
 
@@ -66,7 +66,7 @@ public class TabGroupIT extends ArrasTestCase {
     }
 
     @Test
-    void testSubtabs() {
+    public void testSubtabs() {
 
         String selector = ".tab-content > .active .tab-content";
 
@@ -81,7 +81,7 @@ public class TabGroupIT extends ArrasTestCase {
     }
 
     @Test
-    void testTabInZone() {
+    public void testTabInZone() {
 
         element(By.linkText("trigger zone")).click();
 

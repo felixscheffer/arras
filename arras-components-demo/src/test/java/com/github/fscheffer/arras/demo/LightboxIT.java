@@ -24,12 +24,12 @@ import com.github.fscheffer.arras.test.ArrasTestCase;
 public class LightboxIT extends ArrasTestCase {
 
     @BeforeMethod
-    void before() {
+    public void before() {
         open("/LightboxDemo");
     }
 
     @Test
-    void testBasic() {
+    public void testBasic() {
 
         openLightbox(By.linkText("Bridge over river"));
 
@@ -41,7 +41,7 @@ public class LightboxIT extends ArrasTestCase {
     }
 
     @Test
-    void testGroup() {
+    public void testGroup() {
 
         // group example
         openLightbox(By.linkText("Rocky cliffs"));
@@ -64,7 +64,7 @@ public class LightboxIT extends ArrasTestCase {
     }
 
     @Test
-    void testFixedSize() {
+    public void testFixedSize() {
 
         // fixed size
         openLightbox(By.linkText("San Joaquin River (Fixed size)"));
@@ -92,7 +92,7 @@ public class LightboxIT extends ArrasTestCase {
     }
 
     @Test
-    void testInlined() {
+    public void testInlined() {
 
         // inline
         openLightbox(By.linkText("Show Kafka!"));
@@ -103,7 +103,7 @@ public class LightboxIT extends ArrasTestCase {
     }
 
     @Test
-    void testZoneUpdate() {
+    public void testZoneUpdate() {
 
         openLightbox(By.linkText("Some ajax event"));
 
@@ -113,7 +113,7 @@ public class LightboxIT extends ArrasTestCase {
     }
 
     @Test
-    void testLightboxInZone() {
+    public void testLightboxInZone() {
 
         element(By.linkText("Trigger zone")).click();
 

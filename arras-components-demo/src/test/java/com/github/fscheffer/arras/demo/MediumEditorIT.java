@@ -21,7 +21,7 @@ import com.github.fscheffer.arras.test.ArrasTestCase;
 public class MediumEditorIT extends ArrasTestCase {
 
     @BeforeMethod
-    void before() {
+    public void before() {
         open("/MediumEditorDemo");
         element(By.linkText("Reset demo")).click();
         waitUntil(pageHasLoaded());
@@ -30,7 +30,7 @@ public class MediumEditorIT extends ArrasTestCase {
     // TODO: test the toolbar but I have absolutely no clue how to select a text using selenium webdriver api
 
     @Test
-    void testNoToolbar() {
+    public void testNoToolbar() {
 
         String selector = "#noToolbar";
 
@@ -48,7 +48,7 @@ public class MediumEditorIT extends ArrasTestCase {
     }
 
     @Test
-    void testDisabled() {
+    public void testDisabled() {
 
         String selector = "#disabled";
 

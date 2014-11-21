@@ -14,12 +14,12 @@ public class BlocksIT extends ArrasTestCase {
     private ImageComponentModule module = new ImageComponentModule();
 
     @BeforeMethod
-    void before() {
+    public void before() {
         open("/Blocks");
     }
 
     @Test
-    void test() {
+    public void test() {
 
         Assert.assertEquals(numberOfContentBlocks("#fixedNumber"), 3);
         Assert.assertEquals(numberOfContentBlocks("#variableNumber"), 0);

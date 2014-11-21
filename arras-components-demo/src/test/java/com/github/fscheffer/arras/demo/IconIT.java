@@ -30,7 +30,7 @@ public class IconIT extends ArrasTestCase {
     }
 
     @Test
-    void testIcons() {
+    public void testIcons() {
 
         waitUntil(visible("#simple"));
 

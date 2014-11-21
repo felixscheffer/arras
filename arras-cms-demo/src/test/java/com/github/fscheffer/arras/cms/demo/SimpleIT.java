@@ -11,12 +11,12 @@ public class SimpleIT extends ArrasTestCase {
     private ImageComponentModule module = new ImageComponentModule();
 
     @BeforeMethod
-    void before() {
+    public void before() {
         open("/Simple");
     }
 
     @Test
-    void test() {
+    public void test() {
 
         waitUntil(containsText("h1", "A Great Headline"));
         waitUntil(containsText("h2", "A good subtitle"));

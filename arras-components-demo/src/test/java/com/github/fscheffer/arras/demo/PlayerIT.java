@@ -9,12 +9,12 @@ import com.github.fscheffer.arras.test.ArrasTestCase;
 public class PlayerIT extends ArrasTestCase {
 
     @BeforeMethod
-    void before() {
+    public void before() {
         open("/PlayerDemo");
     }
 
     @Test
-    void testVideoPlayer() {
+    public void testVideoPlayer() {
 
         click("#video .vjs-big-play-button");
 
@@ -29,7 +29,7 @@ public class PlayerIT extends ArrasTestCase {
     }
 
     @Test
-    void testAudioPlayer() {
+    public void testAudioPlayer() {
 
         click("#audio .vjs-play-control");
 

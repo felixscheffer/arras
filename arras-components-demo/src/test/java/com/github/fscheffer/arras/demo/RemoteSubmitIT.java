@@ -29,7 +29,7 @@ public class RemoteSubmitIT extends ArrasTestCase {
     }
 
     @Test
-    void testVisibleSubmit() {
+    public void testVisibleSubmit() {
 
         this.logger.info("Running testVisibleSubmit()");
 
@@ -39,11 +39,12 @@ public class RemoteSubmitIT extends ArrasTestCase {
 
         waitUntil(pageHasLoaded());
 
-        waitUntil(containsText(".alert > span", "Triggered form with visible submit button! Form content was: \"Hello World!\""));
+        waitUntil(containsText(".alert > span",
+            "Triggered form with visible submit button! Form content was: \"Hello World!\""));
     }
 
     @Test
-    void testInvisibleSubmit() {
+    public void testInvisibleSubmit() {
 
         this.logger.info("Running testInvisibleSubmit()");
 
@@ -57,6 +58,7 @@ public class RemoteSubmitIT extends ArrasTestCase {
 
         waitUntil(pageHasLoaded());
 
-        waitUntil(containsText(".alert > span", "Triggered form with invisible submit button! Form content was: \"Hello Tapestry!\""));
+        waitUntil(containsText(".alert > span",
+            "Triggered form with invisible submit button! Form content was: \"Hello Tapestry!\""));
     }
 }
