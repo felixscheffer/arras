@@ -15,26 +15,50 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeMethod;
 
 public abstract class ArrasTestCase {
 
-    private static final Logger logger        = LoggerFactory.getLogger(ArrasTestCase.class);
+    private static final Logger          logger        = LoggerFactory.getLogger(ArrasTestCase.class);
 
-    private SharedTestContext   sharedContext = new SharedTestContext();
+    private static final TestContextPool pool          = new TestContextPool();
+
+    private PerThreadTestContext         threadContext = new PerThreadTestContext();
+
+    @BeforeMethod
+    protected void setup() {
+
+        // Note: sometimes the order of execution is weird and testng calls @BeforeClass more than once before calling
+        //       @AfterClass, so let's keep the context if we already have one.
+        if (this.threadContext.get() == null) {
+            this.threadContext.set(pool.aquire());
+        }
+    }
+
+    @AfterMethod(alwaysRun = true)
+    protected void cleanup() {
+
+        TestContext context = this.threadContext.get();
+        if (context != null) {
+            pool.release(context);
+            this.threadContext.set(null);
+        }
+    }
 
     @AfterSuite(alwaysRun = true)
-    public void destroyWebdriver() {
-        this.sharedContext.destroy();
+    protected void terminate() {
+        pool.terminate();
     }
 
     protected final WebDriver driver() {
-        return this.sharedContext.get().getDriver();
+        return this.threadContext.get().getDriver();
     }
 
     protected final void open(String url) {
 
-        String baseUrl = this.sharedContext.get().getBaseUrl();
+        String baseUrl = this.threadContext.get().getBaseUrl();
 
         String completeUrl = ArrasTestUtils.appendPath(baseUrl, url);
         driver().get(completeUrl);
