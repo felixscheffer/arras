@@ -11,7 +11,7 @@
 	<name>Arras Components Demo</name>
 	<description>Arras components demo includes example that show how to use Arras components. It's also used for integration testing.</description>
 	<url>https://github.com/fscheffer/arras</url>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>com.github.fscheffer</groupId>
@@ -42,6 +42,10 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-failsafe-plugin</artifactId>
+				<configuration>
+					<parallel>classes</parallel>
+					<threadCount>2</threadCount>
+				</configuration>
 			</plugin>
 
 			<plugin>
