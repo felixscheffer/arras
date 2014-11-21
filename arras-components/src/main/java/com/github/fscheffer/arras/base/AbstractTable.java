@@ -77,7 +77,7 @@ public class AbstractTable implements ClientElement {
      * explicitly provided one.
      */
     @Parameter
-    private BeanModel          model;
+    private BeanModel<?>       model;
 
     /**
      * The number of rows of data displayed on each page. If there are more rows
@@ -120,7 +120,6 @@ public class AbstractTable implements ClientElement {
      * are case-insensitive. This parameter is only used when a default model is
      * created automatically.
      */
-    @SuppressWarnings("unused")
     @Parameter(defaultPrefix = BindingConstants.LITERAL)
     private String             include;
 
@@ -146,7 +145,6 @@ public class AbstractTable implements ClientElement {
     /**
      * The current value, set before the component renders its body.
      */
-    @SuppressWarnings("unused")
     @Parameter
     private Object             value;
 
@@ -163,7 +161,7 @@ public class AbstractTable implements ClientElement {
      * The model parameter after modification due to the add, include, exclude
      * and reorder parameters.
      */
-    private BeanModel          dataModel;
+    private BeanModel<?>       dataModel;
 
     @Inject
     private JavaScriptSupport  javaScriptSupport;
@@ -201,9 +199,9 @@ public class AbstractTable implements ClientElement {
     public String getClientId() {
         if (InternalUtils.isBlank(this.clientId)) {
             this.clientId = InternalUtils.isNonBlank(this.resources.getInformalParameter("id", String.class))
-                ? this.resources.getInformalParameter("id",
-                                                      String.class)
-                                                      : this.javaScriptSupport.allocateClientId(this.resources);
+                                                                                                             ? this.resources.getInformalParameter("id",
+                                                                                                                                                   String.class)
+                                                                                                             : this.javaScriptSupport.allocateClientId(this.resources);
         }
         return this.clientId;
     }
@@ -224,11 +222,11 @@ public class AbstractTable implements ClientElement {
         this.sortAscending = sortAscending;
     }
 
-    public BeanModel getModel() {
+    public BeanModel<?> getModel() {
         return this.model;
     }
 
-    public BeanModel getDataModel() {
+    public BeanModel<?> getDataModel() {
         if (this.dataModel == null) {
             this.dataModel = getModel();
 
@@ -320,7 +318,7 @@ public class AbstractTable implements ClientElement {
 
                 GridDataSource gridDataSource = (GridDataSource) AbstractTable.this.getSource();
 
-                Class rowType = gridDataSource.getRowType();
+                Class<?> rowType = gridDataSource.getRowType();
 
                 if (rowType == null) {
                     throw new RuntimeException(
@@ -385,7 +383,7 @@ public class AbstractTable implements ClientElement {
         }
 
         @Override
-        public Class getRowType() {
+        public Class<?> getRowType() {
             return this.delegate.getRowType();
         }
 
@@ -441,7 +439,7 @@ public class AbstractTable implements ClientElement {
 
         PropertyConduit conduit = getDataModel().get(this.cellModel).getConduit();
 
-        Class type = conduit.getPropertyType();
+        Class<?> type = conduit.getPropertyType();
 
         Object val = conduit.get(obj);
 
@@ -449,10 +447,11 @@ public class AbstractTable implements ClientElement {
             return "";
         }
 
-        if (!String.class.equals(getDataModel().get(this.cellModel).getClass())
-            && !Number.class.isAssignableFrom(getDataModel().get(this.cellModel).getClass())) {
-            Translator<Object> translator = this.translatorSource.findByType(getDataModel().get(this.cellModel)
-                                                                             .getPropertyType());
+        PropertyModel m = getDataModel().get(this.cellModel);
+
+        if (!String.class.equals(m.getClass()) && !Number.class.isAssignableFrom(m.getClass())) {
+
+            Translator<Object> translator = this.translatorSource.findByType(m.getPropertyType());
             if (translator != null) {
                 val = translator.toClient(val);
             }
