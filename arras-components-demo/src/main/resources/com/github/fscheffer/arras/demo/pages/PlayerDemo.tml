@@ -1,5 +1,7 @@
 <html t:type="Layout" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd">
 	<h1>Player Demo</h1>
+	
+	<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Configuring_servers_for_Ogg_media">https://developer.mozilla.org/en-US/docs/Web/HTTP/Configuring_servers_for_Ogg_media</a>
 
 	<h3>Audio Player</h3>
 	<p>
