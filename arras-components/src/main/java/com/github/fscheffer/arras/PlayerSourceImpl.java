@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class PlayerSourceImpl implements PlayerSource {
 
-    private Map<String, String> sources = new LinkedHashMap<>();
+    private Map<String, String> sources = new LinkedHashMap<String, String>();
 
     @Override
     public void add(String mimetype, String path) {

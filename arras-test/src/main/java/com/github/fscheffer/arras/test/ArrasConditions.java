@@ -34,7 +34,10 @@ public class ArrasConditions {
                     return elements.size() > 0 ? elements : null;
                 }
                 // consider non existing elements invisible
-                catch (StaleElementReferenceException | NoSuchElementException e) {
+                catch (StaleElementReferenceException e) {
+                    return null;
+                }
+                catch (NoSuchElementException e) {
                     return null;
                 }
             }
@@ -56,7 +59,10 @@ public class ArrasConditions {
                     return elements.size() > 0 ? elements : null;
                 }
                 // dont throw, wait instead
-                catch (StaleElementReferenceException | NoSuchElementException e) {
+                catch (StaleElementReferenceException e) {
+                    return null;
+                }
+                catch (NoSuchElementException e) {
                     return null;
                 }
             }
