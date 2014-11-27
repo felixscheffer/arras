@@ -54,16 +54,19 @@ The war file is also available on Maven Central.
 Arras is [a city in France](http://en.wikipedia.org/wiki/Arras) which was specialized in fine wool tapestries in the 14th and 15th centuries. The term Arras is still used as a synonym for a rich tapestry. 
 
 ## Release History
-* 1.1.1
- - Date: 2014-11-14
+* 1.1.2 (2014-11-27)
+ - improved reliability of selenium tests
+ - switched to Java 6 (instead of Java 7)
+ - support for fontawesome 3.x icon css classes
+ 
+* 1.1.1 (2014-11-14)
  - fixed Writing to a @Content property did not work when the contentId was not specified
  
-* 1.1.0
- - Date: 2014-11-10
+* 1.1.0 (2014-11-10)
  - added audio and video player (see Player component)
   
-* 1.0.0
- - Date: 2014-11-07
+* 1.0.0 (2014-11-07)
+ - first release
  
 ## Roadmap
 - replace medium-editor with medium.js
