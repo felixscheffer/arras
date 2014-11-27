@@ -50,6 +50,7 @@
 	      initialize(parent, ul)
 	      initialize(target, target.parent())
 	      
+	      return false;
 	  });
 	      
 	  function initialize(element, container) {
