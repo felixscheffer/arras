@@ -129,7 +129,7 @@ public class DataTable extends AbstractTable {
 
         private int determineTotalRecords(GridDataSource source) {
             return source instanceof FilteringDataSource ? ((FilteringDataSource) source).getTotalRows()
-                                                        : source.getAvailableRows();
+                                                         : source.getAvailableRows();
         }
 
         @Override
@@ -251,11 +251,11 @@ public class DataTable extends AbstractTable {
     private JSONObject                  options;
 
     @Component(parameters = { "index=inherit:columnIndex", "lean=inherit:lean", "overrides=overrides",
-        "model=dataModel", "mode=true" })
+                              "model=dataModel", "mode=true" })
     private GridColumns                 headers;
 
     @Component(parameters = { "index=inherit:columnIndex", "lean=inherit:lean", "overrides=overrides",
-        "model=dataModel", "mode=false" })
+                              "model=dataModel", "mode=false" })
     private GridColumns                 footers;
 
     /**
@@ -263,10 +263,16 @@ public class DataTable extends AbstractTable {
      * element.
      */
     @Parameter(name = "class", defaultPrefix = BindingConstants.LITERAL, value = BindingConstants.SYMBOL
-                                                                                 + ":"
-                                                                                 + ComponentParameterConstants.GRID_TABLE_CSS_CLASS)
+        + ":"
+        + ComponentParameterConstants.GRID_TABLE_CSS_CLASS)
     @Property(write = false)
     private String                      tableClass;
+
+    @Parameter(value = "literal:lfrtpi", defaultPrefix = BindingConstants.LITERAL)
+    private String                      dom;
+
+    @Parameter(defaultPrefix = BindingConstants.LITERAL)
+    private String                      placeholder;
 
     @Property
     private int                         columnIndex;
@@ -406,11 +412,12 @@ public class DataTable extends AbstractTable {
 
         int rowsPerPage = getRowsPerPage();
 
+        dataTableParams.put("sDom", this.dom + "<\"clear\">");
         dataTableParams.put("iDisplayLength", rowsPerPage);
         dataTableParams.put("aLengthMenu", new JSONLiteral("[[" + rowsPerPage + "," + rowsPerPage * 2 + ","
-                                                           + rowsPerPage * 4 + "," + rowsPerPage * 8 + "],["
-                                                           + rowsPerPage + "," + rowsPerPage * 2 + "," + rowsPerPage
-                                                           * 4 + "," + rowsPerPage * 8 + "]]"));
+            + rowsPerPage * 4 + "," + rowsPerPage * 8 + "],["
+            + rowsPerPage + "," + rowsPerPage * 2 + "," + rowsPerPage
+            * 4 + "," + rowsPerPage * 8 + "]]"));
 
         //We set the bSortable parameters for each column. Cf : http://www.datatables.net/usage/columns
         //We set also the mDataProp parameters to handle ColReorder plugin. Cf : http://datatables.net/release-datatables/extras/ColReorder/server_side.html
@@ -454,8 +461,15 @@ public class DataTable extends AbstractTable {
         language.put("sInfoEmpty", this.messages.get("datatable.sInfoEmpty"));
         language.put("sInfoFiltered", this.messages.get("datatable.sInfoFiltered"));
         language.put("sInfoPostFix", this.messages.get("datatable.sInfoPostFix"));
-        language.put("sSearch", this.messages.get("datatable.sSearch"));
         language.put("sUrl", this.messages.get("datatable.sUrl"));
+
+        if (this.placeholder == null) {
+            language.put("sSearch", this.messages.get("datatable.sSearch"));
+        }
+        else {
+            language.put("sSearch", "_INPUT_");
+            language.put("sPlaceholder", this.placeholder);
+        }
 
         //JSONObject classes = new JSONObject();
         //        classes.put("sSortable", "ui-state-default sorting");

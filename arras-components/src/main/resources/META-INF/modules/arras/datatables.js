@@ -11,14 +11,13 @@
 // limitations under the License.
 
 (function() {
-	define(["jquery", "t5/core/pageinit", "./original/jquery.dataTables"], function($, pi, datatable) {
+	define(["jquery", "t5/core/pageinit", "t5/core/events", "./original/jquery.dataTables"], function($, pi, events, datatable) {
 		
 		return {
 			init: function(specs) {
 				
 				var defaults = {
 					
-					sDom: "TC<\"clear\">Rlfrtpi",
 					bJQueryUI:  true,
 					bAutoWidth: false,
 					
@@ -26,8 +25,6 @@
 					bStateSave: false,
 
 					sPaginationType: "full_numbers",
-					
-
 					
 		    		/**
 	    			 * For ajax mode, we need to call Tapestry.loadScriptsInReply in a callback to take into account
@@ -65,8 +62,14 @@
 				
 				specs.params = $.extend({}, defaults, specs.params);
 				
-				$("#" + specs.id).dataTable(specs.params);
+				var element = $("#" + specs.id);
 				
+				element.dataTable(specs.params);
+				
+				if(specs.params.oLanguage.sPlaceholder !== undefined) {
+					var filter = element.closest(".dataTables_wrapper").find("> .dataTables_filter input");
+					filter.attr("placeholder", specs.params.oLanguage.sPlaceholder);
+				}
 			}
 		};
 	});
