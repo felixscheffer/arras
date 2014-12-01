@@ -1,0 +1,40 @@
+.loading-zone {
+	position: relative;
+}
+
+@-webkit-keyframes fade-in {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.loading-overlay {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	bottom: 0px;
+	right: 0px;
+	
+	z-index: 99999;
+	
+	background-color: rgba(0,0,0, 0.3);
+	text-align: center;
+	
+	font-size: 2em;
+	color: white;
+}
+
+.loading-overlay:before {
+  	content: '';
+  	display: inline-block;
+  	height: 100%;
+  	vertical-align: middle;
+}
+
+.loading-icon {
+	display: inline-block;
+  	vertical-align: middle;
+}
+
+.fa {
+  	vertical-align: middle;
+}

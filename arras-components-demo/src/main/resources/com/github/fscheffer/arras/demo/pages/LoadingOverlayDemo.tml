@@ -1,0 +1,14 @@
+<html t:type="Layout" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd" xmlns:a="tapestry-library:arras">
+	<h1>Loading overlay</h1>
+
+	<t:zone t:id="zone" t:mixins="arras/LoadingOverlay">
+		<br />
+		<p>
+			Current date: ${date}
+		</p>
+		<br />
+	</t:zone>
+
+	<t:eventlink event="trigger" zone="zone">Trigger zone</t:eventlink>
+
+</html>

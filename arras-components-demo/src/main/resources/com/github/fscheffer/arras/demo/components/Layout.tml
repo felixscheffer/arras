@@ -42,6 +42,9 @@
 						<li>
 							<t:pagelink page="playerDemo">Player</t:pagelink>
 						</li>
+						<li>
+							<t:pagelink page="loadingOverlayDemo">Loading overlay</t:pagelink>
+						</li>
 					</ul>
 				</div>
 			</div>
