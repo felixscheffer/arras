@@ -54,6 +54,10 @@ The war file is also available on Maven Central.
 Arras is [a city in France](http://en.wikipedia.org/wiki/Arras) which was specialized in fine wool tapestries in the 14th and 15th centuries. The term Arras is still used as a synonym for a rich tapestry. 
 
 ## Release History
+* 1.2.0 (unreleased)
+ - added "dom" and "placeholder" parameters to DataTable
+ - added LoadingOverlay mixin
+ 
 * 1.1.2 (2014-11-27)
  - improved reliability of selenium tests
  - switched to Java 6 (instead of Java 7)
