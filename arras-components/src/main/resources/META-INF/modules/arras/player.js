@@ -7,8 +7,9 @@
 				dom.scanner("[data-component-type=player]", function(player) {
 
 					var tag = player.findFirst("video, audio");
+					var options = JSON.parse(player.attr("data-options"));
 					
-					videojs(tag.element, {});
+					videojs(tag.element, options);
 				})
 			})
 }).call(this);
