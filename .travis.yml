@@ -1,4 +1,4 @@
 language: java
 jdk:
   - openjdk7
-script: mvn clean test
+script: mvn verify
