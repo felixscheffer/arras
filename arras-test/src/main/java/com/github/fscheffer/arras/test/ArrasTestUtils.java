@@ -14,8 +14,12 @@ import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ArrasTestUtils {
+
+    private static Logger log = LoggerFactory.getLogger(ArrasTestUtils.class);
 
     public static boolean isBlank(String input) {
         return input == null || input.length() == 0 || input.trim().length() == 0;
@@ -57,7 +61,7 @@ public class ArrasTestUtils {
 
         WebDriver driver = remoteUrl != null ? ArrasTestUtils.createRemoteWebDriver(remoteUrl, browserName, version,
                                                                                     platform)
-                                            : ArrasTestUtils.createLocalWebDriver(browserName);
+                                                                                    : ArrasTestUtils.createLocalWebDriver(browserName);
 
         // Note: use explicit wait if you need to wait (see waitUntil)
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
@@ -66,6 +70,9 @@ public class ArrasTestUtils {
     }
 
     protected static WebDriver createLocalWebDriver(String driverName) {
+
+        log.info("Creating local webdriver for {}", driverName);
+
         if (BrowserType.CHROME.equals(driverName)) {
             return new ChromeDriver();
         }
@@ -90,6 +97,8 @@ public class ArrasTestUtils {
         if (InternalUtils.isNonBlank(travisJobNumber)) {
             desiredCapabilities.setCapability("tunnel-identifier", travisJobNumber);
         }
+
+        log.info("Creating remote webdriver with {}", desiredCapabilities);
 
         return new RemoteWebDriver(remoteAddress, desiredCapabilities);
     }
