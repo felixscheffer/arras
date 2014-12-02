@@ -1,10 +1,16 @@
 language: java
 jdk:
   - openjdk7
+
+env:
+  global:
+    - testing.remote=http://fscheffer:634bce7e-ddfd-4ae4-8ea2-c3bac682f796@ondemand.saucelabs.com:80/wd/hub
+
 addons:
   sauce_connect:
     username: "fscheffer"
     access_key:
       secure: "634bce7e-ddfd-4ae4-8ea2-c3bac682f796"
+
 
 script: mvn verify
