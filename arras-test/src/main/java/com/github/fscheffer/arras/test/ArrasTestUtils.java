@@ -57,7 +57,7 @@ public class ArrasTestUtils {
 
         WebDriver driver = remoteUrl != null ? ArrasTestUtils.createRemoteWebDriver(remoteUrl, browserName, version,
                                                                                     platform)
-                                             : ArrasTestUtils.createLocalWebDriver(browserName);
+                                            : ArrasTestUtils.createLocalWebDriver(browserName);
 
         // Note: use explicit wait if you need to wait (see waitUntil)
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
@@ -86,7 +86,11 @@ public class ArrasTestUtils {
 
         DesiredCapabilities desiredCapabilities = new DesiredCapabilities(browserName, version, platform);
 
+        String travisJobNumber = System.getProperty("TRAVIS_JOB_NUMBER");
+        if (InternalUtils.isNonBlank(travisJobNumber)) {
+            desiredCapabilities.setCapability("tunnel-identifier", travisJobNumber);
+        }
+
         return new RemoteWebDriver(remoteAddress, desiredCapabilities);
     }
-
 }
