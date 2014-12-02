@@ -1,7 +1,10 @@
 language: java
 jdk:
   - openjdk7
-before_script:
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
+addons:
+  sauce_connect:
+    username: "fscheffer"
+    access_key:
+      secure: "634bce7e-ddfd-4ae4-8ea2-c3bac682f796"
+
 script: mvn verify
