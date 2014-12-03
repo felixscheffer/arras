@@ -1,6 +1,7 @@
 Arras is a set of open-source components for [Apache Tapestry 5.4](http://tapestry.apache.org).
 
 [![Build Status](https://secure.travis-ci.org/fscheffer/arras.png)](http://travis-ci.org/fscheffer/arras)
+[![Sauce Test Status](https://saucelabs.com/buildstatus/fscheffer)](https://saucelabs.com/u/fscheffer)
 
 ## Download
 Releases are available on [Maven Central](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.github.fscheffer%22).
