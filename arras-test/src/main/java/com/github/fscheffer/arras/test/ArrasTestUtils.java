@@ -103,10 +103,10 @@ public class ArrasTestUtils {
 
     public static WebDriver createWebDrive(Capabilities capabilities) {
 
-        URL remoteUrl = toUrl(System.getProperty(TestConstants.REMOTE_URL, null));
+        URL remoteUrl = toUrl(ArrasTestUtils.getConfiguration(TestConstants.REMOTE_URL));
 
         WebDriver driver = remoteUrl != null ? ArrasTestUtils.createRemoteWebDriver(remoteUrl, capabilities)
-                                            : ArrasTestUtils.createLocalWebDriver(capabilities);
+                                             : ArrasTestUtils.createLocalWebDriver(capabilities);
 
         // Note: use explicit wait if you need to wait (see waitUntil)
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
