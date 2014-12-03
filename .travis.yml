@@ -8,7 +8,7 @@ env:
   matrix:
     - BROWSER=firefox VERSION=33
     - BROWSER=chrome VERSION=36
-    - BROWSER="internet\ explorer" VERSION=11
+    - BROWSER="internet explorer" VERSION=11
     - BROWSER=safari
 
 addons:
@@ -18,4 +18,4 @@ addons:
       secure: "634bce7e-ddfd-4ae4-8ea2-c3bac682f796"
 
 
-script: mvn verify -Dtest.remoteUrl=$REMOTE_URL -Dtest.browser=$BROWSER -Dtest.browserVersion=$VERSION
+script: mvn verify -Dtest.remoteUrl=$REMOTE_URL -Dtest.browser="$BROWSER" -Dtest.browserVersion=$VERSION
