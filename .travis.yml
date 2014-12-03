@@ -3,7 +3,11 @@ jdk:
   - openjdk7
 
 env:
-  - "test.remote-url=http://fscheffer:634bce7e-ddfd-4ae4-8ea2-c3bac682f796@ondemand.saucelabs.com:80/wd/hub"
+  global:
+    - "test.remote-url=http://fscheffer:634bce7e-ddfd-4ae4-8ea2-c3bac682f796@ondemand.saucelabs.com:80/wd/hub"
+  matrix:
+    - "test.browser=firefox"
+    - "test.browser=chrome"
 
 addons:
   sauce_connect:
