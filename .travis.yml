@@ -12,4 +12,4 @@ addons:
       secure: "634bce7e-ddfd-4ae4-8ea2-c3bac682f796"
 
 
-script: mvn verify
+script: mvn verify -Dtesting.remote-url=http://fscheffer:634bce7e-ddfd-4ae4-8ea2-c3bac682f796@ondemand.saucelabs.com:80/wd/hub
