@@ -8,7 +8,7 @@ env:
   matrix:
     - BROWSER=firefox
     - BROWSER=chrome VERSION=36
-    - BROWSER="internet explorer" VERSION=11
+    - BROWSER="internet\ explorer" VERSION=11
     - BROWSER=safari
 
 addons:
