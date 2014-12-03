@@ -21,6 +21,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.github.fscheffer.arras.test.ArrasTestCase;
+import com.github.fscheffer.arras.test.CssMatrix;
 
 public class IconIT extends ArrasTestCase {
 
@@ -61,6 +62,9 @@ public class IconIT extends ArrasTestCase {
     private void assertTransformation(By by, String expected) {
 
         String transform = element(by).getCssValue("transform");
-        Assert.assertEquals(transform, expected);
+
+        if (!expected.equals(transform)) {
+            Assert.assertEquals(CssMatrix.fromString(transform), CssMatrix.fromString(expected));
+        }
     }
 }
