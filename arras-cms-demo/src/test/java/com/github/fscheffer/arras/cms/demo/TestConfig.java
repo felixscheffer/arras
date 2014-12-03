@@ -16,12 +16,11 @@ public class TestConfig implements TestContextFactory {
 
         DesiredCapabilities capabilities = new DesiredCapabilities(original);
 
-        String travisJobNumber = System.getProperty("TRAVIS_JOB_NUMBER");
+        String travisJobNumber = System.getenv("TRAVIS_JOB_NUMBER");
         if (InternalUtils.isNonBlank(travisJobNumber)) {
             capabilities.setCapability("tunnel-identifier", travisJobNumber);
         }
 
-        return new DefaultTestContext(ArrasTestUtils.createWebDrive(capabilities), "localhost:8080/arras-cms",
-                                      capabilities);
+        return new DefaultTestContext(ArrasTestUtils.createWebDrive(capabilities), "localhost:8080/arras-cms", original);
     }
 }
