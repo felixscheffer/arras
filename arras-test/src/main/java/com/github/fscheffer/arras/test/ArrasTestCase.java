@@ -1,7 +1,9 @@
 package com.github.fscheffer.arras.test;
 
 import java.util.List;
+import java.util.Map;
 
+import org.apache.tapestry5.ioc.internal.util.CollectionFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Dimension;
@@ -24,11 +26,22 @@ import org.testng.annotations.BeforeMethod;
 
 public abstract class ArrasTestCase {
 
-    private static final Logger          logger        = LoggerFactory.getLogger(ArrasTestCase.class);
+    private static final Map<String, Map<String, String>> cssFallbacks  = CollectionFactory.newMap();
 
-    private static final TestContextPool pool          = new TestContextPool();
+    {
+        // TODO: support browser versions
+        // TODO: support more properties
+        Map<String, String> safari = CollectionFactory.newMap();
+        safari.put("transform", "-webkit-transform");
 
-    private PerThreadTestContext         threadContext = new PerThreadTestContext();
+        cssFallbacks.put("safari", safari);
+    }
+
+    private static final Logger                           logger        = LoggerFactory.getLogger(ArrasTestCase.class);
+
+    private static final TestContextPool                  pool          = new TestContextPool();
+
+    private PerThreadTestContext                          threadContext = new PerThreadTestContext();
 
     @BeforeMethod
     protected void setup() {
@@ -147,6 +160,33 @@ public abstract class ArrasTestCase {
 
     protected final void hover(String cssSelector) {
         new Actions(driver()).moveToElement(element(cssSelector)).perform();
+    }
+
+    protected final String css(String cssSelector, String property) {
+
+        WebElement element = element(cssSelector);
+
+        String mappedProperty = findBrowserSpecificProperty(property);
+
+        return element.getCssValue(mappedProperty);
+    }
+
+    private String findBrowserSpecificProperty(String property) {
+
+        String browserName = this.threadContext.get().getCapabilities().getBrowserName();
+
+        Map<String, String> fallbacks = cssFallbacks.get(browserName);
+
+        if (fallbacks != null) {
+
+            String fallback = fallbacks.get(property);
+
+            if (fallback != null) {
+                return fallback;
+            }
+        }
+
+        return property;
     }
 
     protected static final ExpectedCondition<Boolean> pageHasLoaded() {

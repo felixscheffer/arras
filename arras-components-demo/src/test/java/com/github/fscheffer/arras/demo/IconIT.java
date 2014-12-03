@@ -14,7 +14,6 @@ package com.github.fscheffer.arras.demo;
 
 import java.util.List;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
@@ -45,13 +44,13 @@ public class IconIT extends ArrasTestCase {
         assertFontSize(sizes.get(4), baseSize * 5);
 
         // effects
-        assertTransformation(By.cssSelector("#normal > i"), "none");
-        assertTransformation(By.cssSelector("#rotate90 > i"), "matrix(0, 1, -1, 0, 0, 0)");
-        assertTransformation(By.cssSelector("#rotate180 > i"), "matrix(-1, 0, 0, -1, 0, 0)");
-        assertTransformation(By.cssSelector("#rotate270 > i"), "matrix(0, -1, 1, 0, 0, 0)");
+        assertTransformation("#normal > i", "none");
+        assertTransformation("#rotate90 > i", "matrix(0, 1, -1, 0, 0, 0)");
+        assertTransformation("#rotate180 > i", "matrix(-1, 0, 0, -1, 0, 0)");
+        assertTransformation("#rotate270 > i", "matrix(0, -1, 1, 0, 0, 0)");
 
-        assertTransformation(By.cssSelector("#flipHorizontal > i"), "matrix(-1, 0, 0, 1, 0, 0)");
-        assertTransformation(By.cssSelector("#flipVertical > i"), "matrix(1, 0, 0, -1, 0, 0)");
+        assertTransformation("#flipHorizontal > i", "matrix(-1, 0, 0, 1, 0, 0)");
+        assertTransformation("#flipVertical > i", "matrix(1, 0, 0, -1, 0, 0)");
 
     }
 
@@ -59,9 +58,9 @@ public class IconIT extends ArrasTestCase {
         Assert.assertEquals(element.getCssValue("font-size"), expected.toString() + "px");
     }
 
-    private void assertTransformation(By by, String expected) {
+    private void assertTransformation(String cssSelector, String expected) {
 
-        String transform = element(by).getCssValue("transform");
+        String transform = css(cssSelector, "transform");
 
         if (!expected.equals(transform)) {
             Assert.assertEquals(CssMatrix.fromString(transform), CssMatrix.fromString(expected));
