@@ -21,8 +21,6 @@ import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Optional;
-import org.testng.annotations.Parameters;
 
 public abstract class ArrasTestCase {
 
@@ -32,16 +30,19 @@ public abstract class ArrasTestCase {
 
     private PerThreadTestContext         threadContext = new PerThreadTestContext();
 
-    @Parameters({ "browser", "version", "platform" })
     @BeforeMethod
-    protected void setup(@Optional("firefox") String browser, @Optional("") String version,
-                         @Optional("ANY") Platform platform) {
+    protected void setup() {
 
         if (this.threadContext.get() != null) {
             throw new IllegalStateException();
         }
 
+        String browser = ArrasTestUtils.getConfiguration(TestConstants.BROWSER, "firefox");
+        String version = ArrasTestUtils.getConfiguration(TestConstants.VERSION, "");
+        Platform platform = Platform.valueOf(ArrasTestUtils.getConfiguration(TestConstants.PLATFORM, "ANY"));
+
         Capabilities capabilities = new DesiredCapabilities(browser, version, platform);
+
         this.threadContext.set(pool.aquire(capabilities));
     }
 
