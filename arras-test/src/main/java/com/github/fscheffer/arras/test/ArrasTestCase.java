@@ -3,12 +3,15 @@ package com.github.fscheffer.arras.test;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -18,6 +21,8 @@ import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Optional;
+import org.testng.annotations.Parameters;
 
 public abstract class ArrasTestCase {
 
@@ -27,24 +32,29 @@ public abstract class ArrasTestCase {
 
     private PerThreadTestContext         threadContext = new PerThreadTestContext();
 
+    @Parameters({ "browser", "version", "platform" })
     @BeforeMethod
-    protected void setup() {
+    protected void setup(@Optional("firefox") String browser, @Optional("") String version,
+                         @Optional("ANY") Platform platform) {
 
-        // Note: sometimes the order of execution is weird and testng calls @BeforeClass more than once before calling
-        //       @AfterClass, so let's keep the context if we already have one.
-        if (this.threadContext.get() == null) {
-            this.threadContext.set(pool.aquire());
+        if (this.threadContext.get() != null) {
+            throw new IllegalStateException();
         }
+
+        Capabilities capabilities = new DesiredCapabilities(browser, version, platform);
+        this.threadContext.set(pool.aquire(capabilities));
     }
 
     @AfterMethod(alwaysRun = true)
     protected void cleanup() {
 
         TestContext context = this.threadContext.get();
-        if (context != null) {
-            pool.release(context);
-            this.threadContext.set(null);
+        if (context == null) {
+            throw new IllegalStateException();
         }
+
+        pool.release(context);
+        this.threadContext.set(null);
     }
 
     @AfterSuite(alwaysRun = true)

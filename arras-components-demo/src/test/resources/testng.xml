@@ -1,0 +1,15 @@
+<suite name="suite">
+	<test name="Firefox tests">
+		<parameter name="browser" value="firefox" />
+		<packages>
+			<package name="com.github.fscheffer.arras.demo" />
+		</packages>
+	</test>
+
+	<test name="Chrome tests">
+		<parameter name="browser" value="chrome" />
+		<packages>
+			<package name="com.github.fscheffer.arras.demo" />
+		</packages>
+	</test>
+</suite>

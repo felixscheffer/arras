@@ -5,15 +5,17 @@ import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.tapestry5.ioc.internal.util.InternalUtils;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.BrowserType;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
+import org.openqa.selenium.safari.SafariOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,54 +54,46 @@ public class ArrasTestUtils {
         return Platform.valueOf(platform);
     }
 
-    public static WebDriver createWebDriverFromSystemProperties() {
+    protected static WebDriver createLocalWebDriver(Capabilities capabilities) {
+
+        log.info("Creating local webdriver with {}", capabilities);
+
+        String driverName = capabilities.getBrowserName();
+
+        if (BrowserType.CHROME.equals(driverName)) {
+            // capabilities.setCapability(ChromeOptions.CAPABILITY, (Object) new ChromeOptions());
+            return new ChromeDriver();
+        }
+
+        if (BrowserType.SAFARI.equals(driverName)) {
+            return new SafariDriver(SafariOptions.fromCapabilities(capabilities));
+        }
+
+        if (BrowserType.IE.equals(driverName) || BrowserType.IEXPLORE.equals(driverName)) {
+            // capabilities.setCapability(CapabilityType.ForSeleniumServer.ENSURING_CLEAN_SESSION, true);
+            return new InternetExplorerDriver();
+        }
+
+        return new FirefoxDriver(new FirefoxBinary(), null, capabilities);
+    }
+
+    protected static WebDriver createRemoteWebDriver(URL remoteAddress, Capabilities capabilities) {
+
+        log.info("Creating remote webdriver with {}", capabilities);
+
+        return new RemoteWebDriver(remoteAddress, capabilities);
+    }
+
+    public static WebDriver createWebDrive(Capabilities capabilities) {
 
         URL remoteUrl = toUrl(System.getProperty(TestingConstants.REMOTE_URL, null));
-        String browserName = System.getProperty(TestingConstants.BROWSER, BrowserType.FIREFOX);
-        String version = System.getProperty(TestingConstants.VERSION, "");
-        Platform platform = toPlatform(System.getProperty(TestingConstants.PLATFORM, null));
 
-        WebDriver driver = remoteUrl != null ? ArrasTestUtils.createRemoteWebDriver(remoteUrl, browserName, version,
-                                                                                    platform)
-                                                                                    : ArrasTestUtils.createLocalWebDriver(browserName);
+        WebDriver driver = remoteUrl != null ? ArrasTestUtils.createRemoteWebDriver(remoteUrl, capabilities)
+                                             : ArrasTestUtils.createLocalWebDriver(capabilities);
 
         // Note: use explicit wait if you need to wait (see waitUntil)
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 
         return driver;
-    }
-
-    protected static WebDriver createLocalWebDriver(String driverName) {
-
-        log.info("Creating local webdriver for {}", driverName);
-
-        if (BrowserType.CHROME.equals(driverName)) {
-            return new ChromeDriver();
-        }
-
-        if (BrowserType.SAFARI.equals(driverName)) {
-            return new SafariDriver();
-        }
-
-        if (BrowserType.IE.equals(driverName) || BrowserType.IEXPLORE.equals(driverName)) {
-            return new InternetExplorerDriver();
-        }
-
-        return new FirefoxDriver();
-    }
-
-    protected static WebDriver createRemoteWebDriver(URL remoteAddress, String browserName, String version,
-                                                     Platform platform) {
-
-        DesiredCapabilities desiredCapabilities = new DesiredCapabilities(browserName, version, platform);
-
-        String travisJobNumber = System.getProperty("TRAVIS_JOB_NUMBER");
-        if (InternalUtils.isNonBlank(travisJobNumber)) {
-            desiredCapabilities.setCapability("tunnel-identifier", travisJobNumber);
-        }
-
-        log.info("Creating remote webdriver with {}", desiredCapabilities);
-
-        return new RemoteWebDriver(remoteAddress, desiredCapabilities);
     }
 }

@@ -1,9 +1,12 @@
 package com.github.fscheffer.arras.test;
 
 import java.util.List;
+import java.util.Map;
 import java.util.ServiceLoader;
 
 import org.apache.tapestry5.ioc.internal.util.CollectionFactory;
+import org.apache.tapestry5.ioc.internal.util.InternalUtils;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.UnreachableBrowserException;
 import org.slf4j.Logger;
@@ -11,9 +14,9 @@ import org.slf4j.LoggerFactory;
 
 public class TestContextPool {
 
-    private Logger            logger = LoggerFactory.getLogger(TestContextPool.class);
+    private Logger                               logger = LoggerFactory.getLogger(TestContextPool.class);
 
-    private List<TestContext> pool   = CollectionFactory.newList();
+    private Map<Capabilities, List<TestContext>> pool   = CollectionFactory.newMap();
 
     public TestContextPool() {
         Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
@@ -28,56 +31,63 @@ public class TestContextPool {
         }));
     }
 
-    public TestContext aquire() {
+    public TestContext aquire(Capabilities capabilities) {
 
-        int size = this.pool.size();
+        List<TestContext> available = this.pool.get(capabilities);
 
-        if (size > 0) {
+        if (available != null && !available.isEmpty()) {
 
             synchronized (this.pool) {
 
-                size = this.pool.size();
+                int size = available.size();
                 if (size > 0) {
-                    return this.pool.remove(size - 1);
+                    return available.remove(size - 1);
                 }
             }
         }
 
-        return createTestContext();
+        return createTestContext(capabilities);
     }
 
     public void release(TestContext context) {
+
+        Capabilities key = context.getCapabilities();
+
         synchronized (this.pool) {
-            this.pool.add(context);
+            InternalUtils.addToMapList(this.pool, key, context);
         }
     }
 
-    private TestContext createTestContext() {
-        ServiceLoader<TestContext> loader = ServiceLoader.load(TestContext.class);
+    private TestContext createTestContext(Capabilities capabilities) {
 
-        for (TestContext context : loader) {
-            return context;
+        ServiceLoader<TestContextFactory> factories = ServiceLoader.load(TestContextFactory.class);
+
+        for (TestContextFactory factory : factories) {
+            return factory.build(capabilities);
         }
 
         LoggerFactory.getLogger(PerThreadTestContext.class)
-                     .warn("No implementation of TestConfig was found. Falling back to DefaultTestContext!");
+        .debug("No implementation of TestConfig was found. Falling back to DefaultTestContext!");
 
-        return new DefaultTestContext();
+        return new DefaultTestContext(capabilities);
     }
 
     protected void terminate() {
 
         synchronized (this.pool) {
 
-            for (TestContext context : this.pool) {
+            for (List<TestContext> list : this.pool.values()) {
 
-                WebDriver driver = context.getDriver();
+                for (TestContext context : list) {
 
-                try {
-                    driver.quit();
-                }
-                catch (UnreachableBrowserException e) {
-                    // ignore (see above)
+                    WebDriver driver = context.getDriver();
+
+                    try {
+                        driver.quit();
+                    }
+                    catch (UnreachableBrowserException e) {
+                        // ignore (see above)
+                    }
                 }
             }
             this.pool.clear();
