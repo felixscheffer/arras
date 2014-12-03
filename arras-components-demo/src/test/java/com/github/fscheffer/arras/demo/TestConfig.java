@@ -4,6 +4,7 @@ import org.apache.tapestry5.ioc.internal.util.InternalUtils;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
+import com.github.fscheffer.arras.test.ArrasTestUtils;
 import com.github.fscheffer.arras.test.DefaultTestContext;
 import com.github.fscheffer.arras.test.TestContext;
 import com.github.fscheffer.arras.test.TestContextFactory;
@@ -20,6 +21,6 @@ public class TestConfig implements TestContextFactory {
             capabilities.setCapability("tunnel-identifier", travisJobNumber);
         }
 
-        return new DefaultTestContext("localhost:8080/arras", capabilities);
+        return new DefaultTestContext(ArrasTestUtils.createWebDrive(capabilities), "localhost:8080/arras", original);
     }
 }

@@ -17,14 +17,6 @@ public class DefaultTestContext implements TestContext {
         this.capabilities = capabilities;
     }
 
-    public DefaultTestContext(String baseUrl, Capabilities capabilities) {
-        this(ArrasTestUtils.createWebDrive(capabilities), baseUrl, capabilities);
-    }
-
-    public DefaultTestContext(Capabilities capabilities) {
-        this(System.getProperty(TestingConstants.BASE_URL, "localhost:8080"), capabilities);
-    }
-
     @Override
     public WebDriver getDriver() {
         return this.driver;
