@@ -3,7 +3,7 @@ jdk:
   - openjdk7
 
 env:
-  - "testing.remote-url=http://fscheffer:634bce7e-ddfd-4ae4-8ea2-c3bac682f796@ondemand.saucelabs.com:80/wd/hub"
+  - "test.remote-url=http://fscheffer:634bce7e-ddfd-4ae4-8ea2-c3bac682f796@ondemand.saucelabs.com:80/wd/hub"
 
 addons:
   sauce_connect:
@@ -12,4 +12,4 @@ addons:
       secure: "634bce7e-ddfd-4ae4-8ea2-c3bac682f796"
 
 
-script: mvn verify -Dtesting.remote-url=http://fscheffer:634bce7e-ddfd-4ae4-8ea2-c3bac682f796@ondemand.saucelabs.com:80/wd/hub
+script: mvn verify
