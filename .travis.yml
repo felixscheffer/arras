@@ -7,7 +7,9 @@ env:
     - REMOTE_URL=http://fscheffer:634bce7e-ddfd-4ae4-8ea2-c3bac682f796@ondemand.saucelabs.com:80/wd/hub
   matrix:
     - BROWSER=firefox
-    - BROWSER=chrome
+    - BROWSER=chrome VERSION=36
+    - BROWSER=iexplorer
+    - BROWSER=safari
 
 addons:
   sauce_connect:
@@ -16,4 +18,4 @@ addons:
       secure: "634bce7e-ddfd-4ae4-8ea2-c3bac682f796"
 
 
-script: mvn verify -Dtest.remoteUrl=$REMOTE_URL -Dtest.browser=$BROWSER
+script: mvn verify -Dtest.remoteUrl=$REMOTE_URL -Dtest.browser=$BROWSER -Dtest.version=$VERSION
