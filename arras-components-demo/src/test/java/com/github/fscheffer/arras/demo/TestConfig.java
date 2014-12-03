@@ -15,7 +15,7 @@ public class TestConfig implements TestContextFactory {
 
         DesiredCapabilities capabilities = new DesiredCapabilities(original);
 
-        String travisJobNumber = System.getProperty("TRAVIS_JOB_NUMBER");
+        String travisJobNumber = System.getenv("TRAVIS_JOB_NUMBER");
         if (InternalUtils.isNonBlank(travisJobNumber)) {
             capabilities.setCapability("tunnel-identifier", travisJobNumber);
         }
