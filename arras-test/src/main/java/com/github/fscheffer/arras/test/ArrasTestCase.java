@@ -85,7 +85,7 @@ public abstract class ArrasTestCase {
         element(cssSelector).sendKeys(keysToSend);
     }
 
-    protected final void sendKeys(CharSequence... keysToSend) {
+    protected final void sendKeys(CharSequence keysToSend) {
         driver().switchTo().activeElement().sendKeys(keysToSend);
     }
 
