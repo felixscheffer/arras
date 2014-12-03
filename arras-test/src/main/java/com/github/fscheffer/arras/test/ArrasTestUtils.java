@@ -31,6 +31,23 @@ public class ArrasTestUtils {
         return path.startsWith("/") ? baseUrl + path : baseUrl + "/" + path;
     }
 
+    public static String getConfiguration(String key) {
+        return getConfiguration(key, null);
+    }
+
+    public static final String getConfiguration(String key, String defaultValue) {
+
+        String value = System.getProperty(key);
+
+        if (value != null) {
+            return value;
+        }
+
+        value = System.getenv(key);
+
+        return value != null ? value : defaultValue;
+    }
+
     public static URL toUrl(String rawUrl) {
 
         if (rawUrl == null) {
@@ -86,10 +103,10 @@ public class ArrasTestUtils {
 
     public static WebDriver createWebDrive(Capabilities capabilities) {
 
-        URL remoteUrl = toUrl(System.getProperty(TestingConstants.REMOTE_URL, null));
+        URL remoteUrl = toUrl(System.getProperty(TestConstants.REMOTE_URL, null));
 
         WebDriver driver = remoteUrl != null ? ArrasTestUtils.createRemoteWebDriver(remoteUrl, capabilities)
-                                             : ArrasTestUtils.createLocalWebDriver(capabilities);
+                                            : ArrasTestUtils.createLocalWebDriver(capabilities);
 
         // Note: use explicit wait if you need to wait (see waitUntil)
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
