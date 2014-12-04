@@ -45,6 +45,13 @@
 				<configuration>
 					<parallel>classes</parallel>
 					<threadCount>2</threadCount>
+
+					<properties>
+						<property>
+							<name>listener</name>
+							<value>com.github.fscheffer.arras.test.SauceLabsListener</value>
+						</property>
+					</properties>
 				</configuration>
 			</plugin>
 

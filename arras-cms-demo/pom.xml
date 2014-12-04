@@ -68,6 +68,15 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-failsafe-plugin</artifactId>
+
+				<configuration>
+					<properties>
+						<property>
+							<name>listener</name>
+							<value>com.github.fscheffer.arras.test.SauceLabsListener</value>
+						</property>
+					</properties>
+				</configuration>
 			</plugin>
 
 			<plugin>
