@@ -7,6 +7,7 @@ import java.util.ServiceLoader;
 import org.apache.tapestry5.ioc.internal.util.CollectionFactory;
 import org.apache.tapestry5.ioc.internal.util.InternalUtils;
 import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.UnsupportedCommandException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.UnreachableBrowserException;
 import org.slf4j.Logger;
@@ -87,6 +88,11 @@ public class TestContextPool {
                     }
                     catch (UnreachableBrowserException e) {
                         // ignore (see above)
+                        this.logger.debug("Ignoring exception: ", e);
+                    }
+                    catch (UnsupportedCommandException e) {
+                        // sometimes the connection to the RemoteWebDriver times out
+                        this.logger.debug("Ignoring exception: ", e);
                     }
                 }
             }
