@@ -13,6 +13,7 @@ import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.BrowserType;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.safari.SafariOptions;
@@ -106,11 +107,23 @@ public class ArrasTestUtils {
         URL remoteUrl = toUrl(ArrasTestUtils.getConfiguration(TestConstants.REMOTE_URL));
 
         WebDriver driver = remoteUrl != null ? ArrasTestUtils.createRemoteWebDriver(remoteUrl, capabilities)
-                                             : ArrasTestUtils.createLocalWebDriver(capabilities);
+                                            : ArrasTestUtils.createLocalWebDriver(capabilities);
 
         // Note: use explicit wait if you need to wait (see waitUntil)
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 
         return driver;
+    }
+
+    public static void setCapabilityFromConfiguration(DesiredCapabilities capabilities, String capability,
+                                                      String configKey) {
+
+        String value = ArrasTestUtils.getConfiguration(configKey);
+
+        if (InternalUtils.isNonBlank(value)) {
+
+            capabilities.setCapability(capability, value);
+        }
+
     }
 }
