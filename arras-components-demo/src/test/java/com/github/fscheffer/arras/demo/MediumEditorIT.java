@@ -13,6 +13,8 @@
 package com.github.fscheffer.arras.demo;
 
 import org.openqa.selenium.By;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -47,6 +49,8 @@ public class MediumEditorIT extends ArrasTestCase {
         waitUntil(containsText(selector, "foobar"));
     }
 
+    private static Logger log = LoggerFactory.getLogger(MediumEditorIT.class);
+
     @Test
     public void testDisabled() {
 
@@ -56,7 +60,12 @@ public class MediumEditorIT extends ArrasTestCase {
 
         click(selector);
 
-        sendKeys(selector, " foobar");
+        try {
+            sendKeys(selector, " foobar");
+        }
+        catch (Throwable t) {
+            log.error("SendKeys Exception: ", t);
+        }
 
         clickSave();
 
