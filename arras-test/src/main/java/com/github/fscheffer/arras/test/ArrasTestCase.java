@@ -46,29 +46,39 @@ public abstract class ArrasTestCase {
     @BeforeMethod
     protected void setup() {
 
-        if (this.threadContext.get() != null) {
-            throw new IllegalStateException();
+        try {
+            if (this.threadContext.get() != null) {
+                throw new IllegalStateException();
+            }
+
+            String browser = ArrasTestUtils.getConfiguration(TestConstants.BROWSER, "firefox");
+            String version = ArrasTestUtils.getConfiguration(TestConstants.VERSION, "");
+            Platform platform = Platform.valueOf(ArrasTestUtils.getConfiguration(TestConstants.PLATFORM, "ANY"));
+
+            Capabilities capabilities = new DesiredCapabilities(browser, version, platform);
+
+            this.threadContext.set(pool.aquire(capabilities));
         }
-
-        String browser = ArrasTestUtils.getConfiguration(TestConstants.BROWSER, "firefox");
-        String version = ArrasTestUtils.getConfiguration(TestConstants.VERSION, "");
-        Platform platform = Platform.valueOf(ArrasTestUtils.getConfiguration(TestConstants.PLATFORM, "ANY"));
-
-        Capabilities capabilities = new DesiredCapabilities(browser, version, platform);
-
-        this.threadContext.set(pool.aquire(capabilities));
+        catch (Exception e) {
+            logger.error("Exception: ", e);
+        }
     }
 
     @AfterMethod(alwaysRun = true)
     protected void cleanup() {
 
-        TestContext context = this.threadContext.get();
-        if (context == null) {
-            throw new IllegalStateException();
-        }
+        try {
+            TestContext context = this.threadContext.get();
+            if (context == null) {
+                throw new IllegalStateException();
+            }
 
-        pool.release(context);
-        this.threadContext.set(null);
+            pool.release(context);
+            this.threadContext.set(null);
+        }
+        catch (Exception e) {
+            logger.error("Exception: ", e);
+        }
     }
 
     @AfterSuite(alwaysRun = true)
