@@ -38,6 +38,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>com.saucelabs</groupId>
+			<artifactId>saucerest</artifactId>
+			<version>1.0.22</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.apache.tapestry</groupId>
 			<artifactId>tapestry-ioc</artifactId>
 			<version>${tapestry-version}</version>
