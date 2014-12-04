@@ -13,6 +13,7 @@
 package com.github.fscheffer.arras.demo;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriverException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeMethod;
@@ -63,8 +64,8 @@ public class MediumEditorIT extends ArrasTestCase {
         try {
             sendKeys(selector, " foobar");
         }
-        catch (Throwable t) {
-            log.error("SendKeys Exception: ", t);
+        catch (WebDriverException e) {
+            log.debug("Ignoring expected exception: ", e);
         }
 
         clickSave();
