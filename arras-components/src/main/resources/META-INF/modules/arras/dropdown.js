@@ -51,6 +51,8 @@
 		
 		function keydown(e) {
 			
+			console.log("keydow: " + e.nativeEvent.keyCode);
+			
 		    if (!/(38|40|27)/.test(e.nativeEvent.keyCode)) return
 
 		    var $this = this.closest(toggle + ', [role=menu], [role=listbox]')
