@@ -39,7 +39,7 @@ public class PlayerIT extends ArrasTestCase {
 
         // FIXME: sometimes video.js thinks the file is a live stream. Not sure why. Probably another timing issue.
         if (!isLive()) {
-            waitUntil(containsText("#audio .vjs-duration-display", "3:24"));
+            waitUntil(containsText("#audio .vjs-duration-display", "3:29"));
         }
     }
 
