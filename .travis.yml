@@ -6,7 +6,7 @@ env:
   global:
     - REMOTE_URL=http://fscheffer:634bce7e-ddfd-4ae4-8ea2-c3bac682f796@ondemand.saucelabs.com:80/wd/hub
   matrix:
-    - BROWSER=firefox VERSION=33
+    - BROWSER=firefox VERSION=34
     - BROWSER=chrome VERSION=36
     - BROWSER="internet explorer" VERSION=11
     - BROWSER=safari
