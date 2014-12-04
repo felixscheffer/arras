@@ -65,7 +65,7 @@ public class SauceLabsListener implements ITestListener {
                 this.sauceREST.jobFailed(remoteDriver.getSessionId().toString());
 
                 try {
-                    remoteDriver.close();
+                    remoteDriver.quit();
                 }
                 catch (Exception e) {
                     log.debug("Ignoring exception: ", e);
