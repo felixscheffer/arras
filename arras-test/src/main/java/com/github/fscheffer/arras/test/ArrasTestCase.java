@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -112,7 +113,7 @@ public abstract class ArrasTestCase {
         waitUntil(focused(cssSelector));
 
         element.clear();
-        element.sendKeys(text);
+        element.sendKeys(text.replace(" ", Keys.SPACE));
 
         // remove non printable characters
         waitUntil(valueContainsText(cssSelector, text.replaceAll("\\p{C}", "")));
