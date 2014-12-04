@@ -42,7 +42,7 @@ public class PlayerDemo {
 
         PlayerSource source = new PlayerSourceImpl();
         source.add("audio/ogg", this.miaowOgg.toClientURL());
-        source.add("audio/m4a", this.miaowM4a.toClientURL());
+        source.add("audio/mp4", this.miaowM4a.toClientURL());
         return source;
     }
 
