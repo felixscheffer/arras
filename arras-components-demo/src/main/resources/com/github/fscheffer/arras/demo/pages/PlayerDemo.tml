@@ -1,7 +1,12 @@
 <html t:type="Layout" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd">
 	<h1>Player Demo</h1>
-	
-	<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Configuring_servers_for_Ogg_media">https://developer.mozilla.org/en-US/docs/Web/HTTP/Configuring_servers_for_Ogg_media</a>
+
+	<p>
+		<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Configuring_servers_for_Ogg_media">https://developer.mozilla.org/en-US/docs/Web/HTTP/Configuring_servers_for_Ogg_media</a>
+	</p>
+	<p>
+		<a herf="https://developer.mozilla.org/en-US/docs/Web/HTML/Supported_media_formats">Supported_media_formats</a>
+	</p>
 
 	<h3>Audio Player</h3>
 	<p>
@@ -13,5 +18,5 @@
 	<p>
 		Media used in demo: © 2008 Blender Foundation - bigbuckbunny.org
 	</p>
-	<t:arras.Player t:id="video" class="vjs-big-play-centered" height="340px" poster="asset:Big_Buck_Bunny_Trailer_480x270.png" t:mixins="RenderClientId"/>
+	<t:arras.Player t:id="video" class="vjs-big-play-centered" height="340px" poster="asset:Big_Buck_Bunny_Trailer_480x270.png" t:mixins="RenderClientId" />
 </html>
