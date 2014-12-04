@@ -53,4 +53,22 @@ public class ArrasComponentsModule {
     public static void contributeBindingSource(MappedConfiguration<String, BindingFactory> conf) {
         conf.add("clientid", new ClientIdBindingFactory());
     }
+
+    public static void contributeContentTypeAnalyzer(MappedConfiguration<String, String> conf) {
+        conf.add("m4a", "audio/mp4");
+        conf.add("acc", "audio/acc");
+        conf.add("mp3", "audio/mpeg");
+        conf.add("oga", "audio/ogg");
+        conf.add("wav", "audio/wav");
+        conf.add("m4v", "video/mp4");
+        conf.add("ogv", "video/ogg");
+        conf.add("ogg", "application/ogg");
+    }
+
+    public static void contributeCompressionAnalyzer(MappedConfiguration<String, Boolean> conf) {
+        // compressing compressed files is waste of cpu power
+        conf.add("audio/*", false);
+        conf.add("video/*", false);
+        conf.add("application/ogg", false);
+    }
 }
