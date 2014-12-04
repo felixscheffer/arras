@@ -21,6 +21,8 @@ public class TestConfig implements TestContextFactory {
             capabilities.setCapability("tunnel-identifier", travisJobNumber);
         }
 
+        capabilities.setCapability("name", "arras-cms");
+
         return new DefaultTestContext(ArrasTestUtils.createWebDrive(capabilities), "http://127.0.0.1:8080/arras-cms",
                                       original);
     }
