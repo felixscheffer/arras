@@ -1,6 +1,5 @@
 package com.github.fscheffer.arras.cms.demo;
 
-import org.apache.tapestry5.ioc.internal.util.InternalUtils;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -16,12 +15,10 @@ public class TestConfig implements TestContextFactory {
 
         DesiredCapabilities capabilities = new DesiredCapabilities(original);
 
-        String travisJobNumber = ArrasTestUtils.getConfiguration("TRAVIS_JOB_NUMBER");
-        if (InternalUtils.isNonBlank(travisJobNumber)) {
-            capabilities.setCapability("tunnel-identifier", travisJobNumber);
-        }
-
         capabilities.setCapability("name", "arras-cms");
+
+        ArrasTestUtils.setCapabilityFromConfiguration(capabilities, "tunnel-identifier", "TRAVIS_JOB_NUMBER");
+        ArrasTestUtils.setCapabilityFromConfiguration(capabilities, "build", "TRAVIS_BUILD_NUMBER");
 
         return new DefaultTestContext(ArrasTestUtils.createWebDrive(capabilities), "http://127.0.0.1:8080/arras-cms",
                                       original);
