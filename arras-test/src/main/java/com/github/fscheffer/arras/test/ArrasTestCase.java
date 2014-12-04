@@ -46,6 +46,8 @@ public abstract class ArrasTestCase {
     @BeforeMethod
     protected void setup() {
 
+        logger.debug("Setting up");
+
         try {
             if (this.threadContext.get() != null) {
                 throw new IllegalStateException();
@@ -67,12 +69,15 @@ public abstract class ArrasTestCase {
     @AfterMethod(alwaysRun = true)
     protected void cleanup() {
 
-        try {
-            TestContext context = this.threadContext.get();
-            if (context == null) {
-                throw new IllegalStateException();
-            }
+        logger.debug("Cleaning up");
 
+        TestContext context = this.threadContext.get();
+        if (context == null) {
+            // looks like a listener killed the driver, so nothing to do for us.
+            return;
+        }
+
+        try {
             pool.release(context);
             this.threadContext.set(null);
         }
