@@ -8,8 +8,8 @@ env:
   matrix:
     - BROWSER=firefox VERSION=34
     - BROWSER=firefox VERSION=23
+    - BROWSER=chrome VERSION=39
     - BROWSER=chrome VERSION=36
-    - BROWSER=chrome VERSION=35
     - BROWSER="internet explorer" VERSION=11
     - BROWSER="internet explorer" VERSION=10
 
