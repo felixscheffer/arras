@@ -51,8 +51,6 @@
 		
 		function keydown(e) {
 			
-			console.log("keydow: " + e.nativeEvent.keyCode);
-			
 		    if (!/(38|40|27)/.test(e.nativeEvent.keyCode)) return
 
 		    var $this = this.closest(toggle + ', [role=menu], [role=listbox]')
@@ -68,6 +66,9 @@
 		    	
 		    	if (e.nativeEvent.which == 27)
 		    		$parent.findFirst(toggle).focus()
+		    	
+		    	console.log("$this.element: " + $this.element);
+		    	console.log("$this.element.click: " + $this.element.click);
 		    	
 		    	return $this.element.click()
 		    }
