@@ -1,11 +1,10 @@
 package com.github.fscheffer.arras.test;
 
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.tapestry5.ioc.internal.util.CollectionFactory;
@@ -19,15 +18,61 @@ import org.slf4j.LoggerFactory;
 
 public class TestContextPool {
 
-    private Logger                               logger    = LoggerFactory.getLogger(TestContextPool.class);
+    private Logger                             logger        = LoggerFactory.getLogger(TestContextPool.class);
 
-    private Map<Capabilities, List<TestContext>> pool      = CollectionFactory.newMap();
+    private Map<Capabilities, List<PoolEntry>> pool          = CollectionFactory.newMap();
 
-    private ExecutorService                      executors = Executors.newFixedThreadPool(1);
+    private Thread                             cleanupThread = new CleanupThread();
 
-    private Future<?>                            supplier;
+    private class CleanupThread extends Thread {
+
+        @Override
+        public void run() {
+
+            long timeoutInMillis = TimeUnit.SECONDS.toMillis(10);
+
+            while (true) {
+
+                if (isInterrupted()) {
+                    return;
+                }
+
+                synchronized (TestContextPool.this.pool) {
+
+                    for (List<PoolEntry> entries : TestContextPool.this.pool.values()) {
+
+                        for (Iterator<PoolEntry> iter = entries.iterator(); iter.hasNext();) {
+
+                            PoolEntry entry = iter.next();
+
+                            if (entry.isOutdated(timeoutInMillis)) {
+
+                                TestContextPool.this.logger.info("Context timed out after {} ms without usage!",
+                                                                 timeoutInMillis);
+
+                                iter.remove();
+
+                                terminateContext(entry.getContext());
+                            }
+                        }
+                    }
+                }
+
+                try {
+                    sleep(timeoutInMillis / 2);
+                }
+                catch (InterruptedException e) {
+                    TestContextPool.this.logger.debug("CleanupThread was interrupted!");
+                    return;
+                }
+            }
+        }
+    };
 
     public TestContextPool() {
+
+        this.cleanupThread.start();
+
         Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
 
             @Override
@@ -42,45 +87,7 @@ public class TestContextPool {
 
     public TestContext aquire(final Capabilities capabilities) {
 
-        // 250 ms * 1200 = 300sec / 5min
-        for (int i = 0; i < 1200; i++) {
-
-            TestContext context = poll(capabilities);
-            if (context != null) {
-                return context;
-            }
-
-            synchronized (this) {
-
-                if (this.supplier == null || this.supplier.isDone()) {
-
-                    this.supplier = this.executors.submit(new Runnable() {
-
-                        @Override
-                        public void run() {
-
-                            TestContext context = createTestContext(capabilities);
-
-                            release(context);
-                        }
-                    });
-                }
-            }
-
-            try {
-                Thread.sleep(250);
-            }
-            catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        throw new RuntimeException("TIMEOUT: Failed to create web driver for " + capabilities.toString());
-    }
-
-    private TestContext poll(Capabilities capabilities) {
-
-        List<TestContext> available = this.pool.get(capabilities);
+        List<PoolEntry> available = this.pool.get(capabilities);
 
         if (available != null && !available.isEmpty()) {
 
@@ -88,12 +95,12 @@ public class TestContextPool {
 
                 int size = available.size();
                 if (size > 0) {
-                    return available.remove(size - 1);
+                    return available.remove(size - 1).getContext();
                 }
             }
         }
 
-        return null;
+        return createTestContext(capabilities);
     }
 
     public void release(TestContext context) {
@@ -101,7 +108,7 @@ public class TestContextPool {
         Capabilities key = context.getCapabilities();
 
         synchronized (this.pool) {
-            InternalUtils.addToMapList(this.pool, key, context);
+            InternalUtils.addToMapList(this.pool, key, new PoolEntry(context));
         }
     }
 
@@ -120,48 +127,63 @@ public class TestContextPool {
 
     protected void terminate() {
 
-        this.logger.info("Terminating TestContextPool!");
+        this.logger.debug("Terminating TestContextPool!");
 
         // terminate contexts asap to prevent timeout errors for remote drivers.
         terminatePool();
-
-        try {
-            this.executors.shutdown();
-            // this may take some time
-            this.executors.awaitTermination(60, TimeUnit.SECONDS);
-        }
-        catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        finally {
-            // terminate all the drivers that are late.
-            terminatePool();
-        }
     }
 
     private void terminatePool() {
+
+        this.cleanupThread.interrupt();
+
         synchronized (this.pool) {
 
-            for (List<TestContext> list : this.pool.values()) {
+            for (List<PoolEntry> list : this.pool.values()) {
 
-                for (TestContext context : list) {
+                for (PoolEntry entry : list) {
 
-                    WebDriver driver = context.getDriver();
-
-                    try {
-                        driver.quit();
-                    }
-                    catch (UnreachableBrowserException e) {
-                        // ignore (see above)
-                        this.logger.debug("Ignoring exception: ", e);
-                    }
-                    catch (UnsupportedCommandException e) {
-                        // sometimes the connection to the RemoteWebDriver times out
-                        this.logger.debug("Ignoring exception: ", e);
-                    }
+                    terminateContext(entry.getContext());
                 }
             }
             this.pool.clear();
+        }
+    }
+
+    private void terminateContext(TestContext context) {
+
+        WebDriver driver = context.getDriver();
+
+        try {
+            driver.quit();
+        }
+        catch (UnreachableBrowserException e) {
+            // ignore (see above)
+            this.logger.debug("Ignoring exception: ", e);
+        }
+        catch (UnsupportedCommandException e) {
+            // sometimes the connection to the RemoteWebDriver times out
+            this.logger.debug("Ignoring exception: ", e);
+        }
+    }
+
+    private static class PoolEntry {
+
+        private final long        lastUsedInMillis;
+
+        private final TestContext context;
+
+        public PoolEntry(TestContext context) {
+            this.lastUsedInMillis = new Date().getTime();
+            this.context = context;
+        }
+
+        public boolean isOutdated(long timeoutInMillis) {
+            return this.lastUsedInMillis + timeoutInMillis < new Date().getTime();
+        }
+
+        public TestContext getContext() {
+            return this.context;
         }
     }
 }
