@@ -33,7 +33,7 @@ public class BlocksIT extends ArrasTestCase {
         List<WebElement> noAddButton = elements("#fixedNumber [data-component-type=content-add]");
         Assert.assertEquals(noAddButton.size(), 0);
 
-        this.module.changeImage(3);
+        this.module.changeImage("#fixedNumber .ui-sortable-handle:nth-child(1)", 3);
 
         WebElement addButton = element("#variableNumber [data-component-type=content-add]");
         addButton.click();

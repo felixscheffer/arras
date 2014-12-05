@@ -6,13 +6,13 @@ import com.github.fscheffer.arras.test.ArrasTestCase;
 
 public class ImageComponentModule extends ArrasTestCase {
 
-    public void changeImage(int imageIdInLIghtbox) {
+    public void changeImage(String selector, int imageIdInLIghtbox) {
 
-        hover(".content-image");
+        hover(selector + " .content-image");
 
-        waitUntil(visible(".content-image [data-container-type=lightbox]"));
+        waitUntil(visible(selector + " .content-image [data-container-type=lightbox]"));
 
-        click(".content-image [data-container-type=lightbox]");
+        click(selector + " .content-image [data-container-type=lightbox]");
 
         waitUntil(visible("#cboxLoadedContent"));
 

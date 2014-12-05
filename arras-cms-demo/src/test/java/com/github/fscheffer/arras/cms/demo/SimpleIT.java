@@ -36,7 +36,7 @@ public class SimpleIT extends ArrasTestCase {
         changeText("#contentH1 > .medium-editor", "An even better headline!");
         changeText("#contentH2 > .medium-editor", "And an amazing subtitle...");
 
-        this.module.changeImage(5);
+        this.module.changeImage("", 5);
 
         click("#contentsubmit");
 
