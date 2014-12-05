@@ -1,9 +1,7 @@
 package com.github.fscheffer.arras.test;
 
 import java.util.List;
-import java.util.Map;
 
-import org.apache.tapestry5.ioc.internal.util.CollectionFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Dimension;
@@ -12,6 +10,7 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -24,22 +23,11 @@ import org.testng.annotations.BeforeMethod;
 
 public abstract class ArrasTestCase {
 
-    private static final Map<String, Map<String, String>> cssFallbacks  = CollectionFactory.newMap();
+    private static final Logger          logger        = LoggerFactory.getLogger(ArrasTestCase.class);
 
-    {
-        // TODO: support browser versions
-        // TODO: support more properties
-        Map<String, String> safari = CollectionFactory.newMap();
-        safari.put("transform", "-webkit-transform");
+    private static final TestContextPool pool          = new TestContextPool();
 
-        cssFallbacks.put("safari", safari);
-    }
-
-    private static final Logger                           logger        = LoggerFactory.getLogger(ArrasTestCase.class);
-
-    private static final TestContextPool                  pool          = new TestContextPool();
-
-    private PerThreadTestContext                          threadContext = new PerThreadTestContext();
+    private PerThreadTestContext         threadContext = new PerThreadTestContext();
 
     @BeforeMethod
     protected void setup() {
@@ -175,27 +163,34 @@ public abstract class ArrasTestCase {
 
         WebElement element = element(cssSelector);
 
-        String mappedProperty = findBrowserSpecificProperty(property);
-
-        return element.getCssValue(mappedProperty);
+        try {
+            return element.getCssValue(property);
+        }
+        catch (Exception e) {
+            logger.info("DEBUG: ", e);
+            String browserPrefix = findBrowserPrefix();
+            return element.getCssValue(browserPrefix + property);
+        }
     }
 
-    private String findBrowserSpecificProperty(String property) {
+    private String findBrowserPrefix() {
 
         String browserName = this.threadContext.get().getCapabilities().getBrowserName();
 
-        Map<String, String> fallbacks = cssFallbacks.get(browserName);
-
-        if (fallbacks != null) {
-
-            String fallback = fallbacks.get(property);
-
-            if (fallback != null) {
-                return fallback;
-            }
+        if (BrowserType.CHROME.equals(browserName) || BrowserType.GOOGLECHROME.equals(browserName)
+            || BrowserType.SAFARI.equals(browserName)) {
+            return "-webkit-";
         }
 
-        return property;
+        if (BrowserType.FIREFOX.equals(browserName)) {
+            return "-moz-";
+        }
+
+        if (BrowserType.IE.equals(browserName) || BrowserType.IEXPLORE.equals(browserName)) {
+            return "-ms-";
+        }
+
+        throw new IllegalStateException("No css prefix for unknown browser " + browserName + "!");
     }
 
     protected static final ExpectedCondition<Boolean> pageHasLoaded() {
