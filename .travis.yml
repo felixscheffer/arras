@@ -9,7 +9,9 @@ env:
     - BROWSER=firefox VERSION=34
     - BROWSER=firefox VERSION=22
     - BROWSER=chrome VERSION=36
+    - BROWSER=chrome VERSION=35
     - BROWSER="internet explorer" VERSION=11
+    - BROWSER="internet explorer" VERSION=10
 
 addons:
   sauce_connect:
