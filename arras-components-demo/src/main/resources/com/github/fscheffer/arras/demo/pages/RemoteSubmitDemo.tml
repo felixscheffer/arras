@@ -1,5 +1,5 @@
 <html t:type="Layout" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd" xmlns:a="tapestry-library:arras">
-	<h1>Icon Demo</h1>
+	<h1>Remote Submit Demo</h1>
 
 	<t:alerts />
 
