@@ -9,6 +9,9 @@ public class ImageComponentModule extends ArrasTestCase {
     public void changeImage(int imageIdInLIghtbox) {
 
         hover(".content-image");
+
+        waitUntil(visible(".content-image [data-container-type=lightbox]"));
+
         click(".content-image [data-container-type=lightbox]");
 
         waitUntil(visible("#cboxLoadedContent"));
