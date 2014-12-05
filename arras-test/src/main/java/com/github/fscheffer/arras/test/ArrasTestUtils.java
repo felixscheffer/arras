@@ -2,6 +2,7 @@ package com.github.fscheffer.arras.test;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.tapestry5.ioc.internal.util.InternalUtils;
@@ -97,9 +98,13 @@ public class ArrasTestUtils {
 
     protected static WebDriver createRemoteWebDriver(URL remoteAddress, Capabilities capabilities) {
 
-        log.info("Creating remote webdriver with {}", capabilities);
+        log.info("Creating remote webdriver with {} at {}", capabilities, new Date());
 
-        return new RemoteWebDriver(remoteAddress, capabilities);
+        RemoteWebDriver driver = new RemoteWebDriver(remoteAddress, capabilities);
+
+        log.info("Received driver at {}", new Date());
+
+        return driver;
     }
 
     public static WebDriver createWebDrive(Capabilities capabilities) {
