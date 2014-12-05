@@ -99,6 +99,9 @@ public class ArrasConditions {
                 try {
                     body = findElement(By.cssSelector("body"), driver);
                 }
+                catch (StaleElementReferenceException e) {
+                    return null;
+                }
                 catch (NoSuchElementException e) {
 
                     // In a limited number of cases, a "page" is an container error page or raw HTML content
