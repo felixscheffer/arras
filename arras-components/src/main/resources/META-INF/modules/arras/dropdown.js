@@ -67,9 +67,7 @@
 		    	if (e.nativeEvent.which == 27)
 		    		$parent.findFirst(toggle).focus()
 		    	
-		    	console.log("$this.element: " + $this.element);
-		    	console.log("$this.element.click: " + $this.element.click);
-		    	
+		    	// older browsers do not support HTMLUListElement.click()
 		    	return $this.element.click()
 		    }
 
