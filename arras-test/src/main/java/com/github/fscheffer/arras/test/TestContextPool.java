@@ -3,6 +3,10 @@ package com.github.fscheffer.arras.test;
 import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.tapestry5.ioc.internal.util.CollectionFactory;
 import org.apache.tapestry5.ioc.internal.util.InternalUtils;
@@ -15,9 +19,13 @@ import org.slf4j.LoggerFactory;
 
 public class TestContextPool {
 
-    private Logger                               logger = LoggerFactory.getLogger(TestContextPool.class);
+    private Logger                               logger    = LoggerFactory.getLogger(TestContextPool.class);
 
-    private Map<Capabilities, List<TestContext>> pool   = CollectionFactory.newMap();
+    private Map<Capabilities, List<TestContext>> pool      = CollectionFactory.newMap();
+
+    private ExecutorService                      executors = Executors.newFixedThreadPool(1);
+
+    private Future<?>                            supplier;
 
     public TestContextPool() {
         Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
@@ -32,7 +40,45 @@ public class TestContextPool {
         }));
     }
 
-    public TestContext aquire(Capabilities capabilities) {
+    public TestContext aquire(final Capabilities capabilities) {
+
+        // 250 ms * 1200 = 300sec / 5min
+        for (int i = 0; i < 1200; i++) {
+
+            TestContext context = poll(capabilities);
+            if (context != null) {
+                return context;
+            }
+
+            synchronized (this) {
+
+                if (this.supplier == null || this.supplier.isDone()) {
+
+                    this.supplier = this.executors.submit(new Runnable() {
+
+                        @Override
+                        public void run() {
+
+                            TestContext context = createTestContext(capabilities);
+
+                            release(context);
+                        }
+                    });
+                }
+            }
+
+            try {
+                Thread.sleep(250);
+            }
+            catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        throw new RuntimeException("TIMEOUT: Failed to create web driver for " + capabilities.toString());
+    }
+
+    private TestContext poll(Capabilities capabilities) {
 
         List<TestContext> available = this.pool.get(capabilities);
 
@@ -47,7 +93,7 @@ public class TestContextPool {
             }
         }
 
-        return createTestContext(capabilities);
+        return null;
     }
 
     public void release(TestContext context) {
@@ -67,14 +113,33 @@ public class TestContextPool {
             return factory.build(capabilities);
         }
 
-        LoggerFactory.getLogger(PerThreadTestContext.class)
-        .debug("No implementation of TestConfig was found. Falling back to DefaultTestContext!");
+        this.logger.warn("No implementation of TestConfig was found. Falling back to DefaultTestContext!");
 
         return new DefaultTestContext(capabilities);
     }
 
     protected void terminate() {
 
+        this.logger.info("Terminating TestContextPool!");
+
+        // terminate contexts asap to prevent timeout errors for remote drivers.
+        terminatePool();
+
+        try {
+            this.executors.shutdown();
+            // this may take some time
+            this.executors.awaitTermination(60, TimeUnit.SECONDS);
+        }
+        catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        finally {
+            // terminate all the drivers that are late.
+            terminatePool();
+        }
+    }
+
+    private void terminatePool() {
         synchronized (this.pool) {
 
             for (List<TestContext> list : this.pool.values()) {
