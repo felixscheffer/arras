@@ -35,9 +35,13 @@ import com.github.fscheffer.arras.PlayerSourceImpl;
 
 public class PlayerDemo {
 
-    private static final String MIAOW_OGG = "miaowOgg";
+    private static final String MIAOW_OGG         = "miaowOgg";
 
-    private static final String MIAOW_M4A = "miaowM4a";
+    private static final String MIAOW_M4A         = "miaowM4a";
+
+    private static final String BIG_BUG_BUNNY_OGV = "bigBugBunnyOgv";
+
+    private static final String BIG_BUG_BUNNY_M4V = "bigBugBunnyM4a";
 
     @Inject
     @Path("Miaow-07-Bubble.m4a")
@@ -65,9 +69,6 @@ public class PlayerDemo {
     private Request             request;
 
     @Inject
-    private Response            response;
-
-    @Inject
     private Logger              log;
 
     public PlayerSource getAudio() {
@@ -81,8 +82,8 @@ public class PlayerDemo {
     public PlayerSource getVideo() {
 
         PlayerSource source = new PlayerSourceImpl();
-        source.add("video/m4v", this.bigBuckBunnyM4v.toClientURL());
-        source.add("video/ogg", this.bigBuckBunnyOgv.toClientURL());
+        source.add("video/m4v", toUrl(BIG_BUG_BUNNY_M4V));
+        source.add("video/ogg", toUrl(BIG_BUG_BUNNY_OGV));
         return source;
     }
 
@@ -92,27 +93,25 @@ public class PlayerDemo {
 
     @OnEvent(MIAOW_OGG)
     public Object onMiaowOgg() {
-
-        Resource resource = PlayerDemo.this.miaowOgg.getResource();
-
-        String range = this.request.getHeader("Range");
-
-        return new MediaStreamingResponse(resource, 209.0f, range);
+        return new MediaStreamingResponse(this.miaowOgg, this.request);
     }
 
     @OnEvent(MIAOW_M4A)
     public StreamResponse onMiaowM4a() {
+        return new MediaStreamingResponse(this.miaowM4a, this.request);
+    }
 
-        Resource resource = PlayerDemo.this.miaowM4a.getResource();
+    @OnEvent(BIG_BUG_BUNNY_M4V)
+    public StreamResponse onBigBugBunnyM4v() {
+        return new MediaStreamingResponse(this.bigBuckBunnyM4v, this.request);
+    }
 
-        String range = this.request.getHeader("Accept-Ranges");
-
-        return new MediaStreamingResponse(resource, 209f, range);
+    @OnEvent(BIG_BUG_BUNNY_OGV)
+    public StreamResponse onBigBugBunnyOgv() {
+        return new MediaStreamingResponse(this.bigBuckBunnyOgv, this.request);
     }
 
     private final class MediaStreamingResponse implements StreamResponse {
-
-        private final Float       length;
 
         private final Resource    resource;
 
@@ -120,14 +119,13 @@ public class PlayerDemo {
 
         private String            range;
 
-        private MediaStreamingResponse(Resource resource, Float length, String range) {
+        private MediaStreamingResponse(Asset asset, Request request) {
 
-            this.length = length;
-            this.resource = resource;
-            this.range = range;
+            this.resource = asset.getResource();
+            this.range = request.getHeader("Range");
 
             try {
-                this.is = resource.openStream();
+                this.is = this.resource.openStream();
             }
             catch (IOException e) {
                 throw new RuntimeException(e);
@@ -137,7 +135,6 @@ public class PlayerDemo {
         @Override
         public void prepareResponse(Response response) {
 
-            response.setHeader("X-Content-Duration", this.length.toString());
             response.setHeader("Accept-Ranges", "bytes");
 
             try {
