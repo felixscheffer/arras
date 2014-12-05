@@ -98,7 +98,7 @@ public class ArrasTestUtils {
 
     protected static WebDriver createRemoteWebDriver(URL remoteAddress, Capabilities capabilities) {
 
-        log.info("Creating remote webdriver with {} at {}", capabilities, new Date());
+        log.info("Requesting remote webdriver with {} at {}", capabilities, new Date());
 
         RemoteWebDriver driver = new RemoteWebDriver(remoteAddress, capabilities);
 
@@ -112,7 +112,7 @@ public class ArrasTestUtils {
         URL remoteUrl = toUrl(ArrasTestUtils.getConfiguration(TestConstants.REMOTE_URL));
 
         WebDriver driver = remoteUrl != null ? ArrasTestUtils.createRemoteWebDriver(remoteUrl, capabilities)
-                                            : ArrasTestUtils.createLocalWebDriver(capabilities);
+                                             : ArrasTestUtils.createLocalWebDriver(capabilities);
 
         // Note: use explicit wait if you need to wait (see waitUntil)
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
@@ -130,5 +130,13 @@ public class ArrasTestUtils {
             capabilities.setCapability(capability, value);
         }
 
+    }
+
+    public static final Capabilities getDesiredCapabilities() {
+        String browser = getConfiguration(TestConstants.BROWSER, "firefox");
+        String version = getConfiguration(TestConstants.VERSION, "");
+        Platform platform = Platform.valueOf(getConfiguration(TestConstants.PLATFORM, "ANY"));
+    
+        return new DesiredCapabilities(browser, version, platform);
     }
 }

@@ -8,12 +8,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Platform;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -53,11 +51,7 @@ public abstract class ArrasTestCase {
                 throw new IllegalStateException();
             }
 
-            String browser = ArrasTestUtils.getConfiguration(TestConstants.BROWSER, "firefox");
-            String version = ArrasTestUtils.getConfiguration(TestConstants.VERSION, "");
-            Platform platform = Platform.valueOf(ArrasTestUtils.getConfiguration(TestConstants.PLATFORM, "ANY"));
-
-            Capabilities capabilities = new DesiredCapabilities(browser, version, platform);
+            Capabilities capabilities = ArrasTestUtils.getDesiredCapabilities();
 
             this.threadContext.set(pool.aquire(capabilities));
         }
@@ -210,6 +204,10 @@ public abstract class ArrasTestCase {
 
     protected static final ExpectedCondition<WebElement> focused(String cssSelector) {
         return ArrasConditions.focusOnElementLocated(By.cssSelector(cssSelector));
+    }
+
+    protected static final ExpectedCondition<WebElement> attributeHasValue(String cssSelector, String name, String value) {
+        return ArrasConditions.attributeHasValueOnElementLocated(By.cssSelector(cssSelector), name, value);
     }
 
     protected static final ExpectedCondition<List<WebElement>> present(String cssSelector) {

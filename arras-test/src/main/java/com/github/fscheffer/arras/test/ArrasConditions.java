@@ -99,9 +99,6 @@ public class ArrasConditions {
                 try {
                     body = findElement(By.cssSelector("body"), driver);
                 }
-                catch (StaleElementReferenceException e) {
-                    return null;
-                }
                 catch (NoSuchElementException e) {
 
                     // In a limited number of cases, a "page" is an container error page or raw HTML content
@@ -177,5 +174,27 @@ public class ArrasConditions {
             logger.warn(String.format("WebDriverException thrown by findElement(%s)", by), e);
             throw e;
         }
+    }
+
+    public static ExpectedCondition<WebElement> attributeHasValueOnElementLocated(final By locator, final String name,
+                                                                                  final String expectedValue) {
+
+        return new ExpectedCondition<WebElement>() {
+
+            @Override
+            public WebElement apply(WebDriver driver) {
+
+                WebElement element = findElement(locator, driver);
+
+                String actualValue = element.getAttribute(name);
+
+                // Note: if null is the expected value, return true
+                if (expectedValue == actualValue || expectedValue.equals(actualValue)) {
+                    return element;
+                }
+
+                return null;
+            }
+        };
     }
 }
