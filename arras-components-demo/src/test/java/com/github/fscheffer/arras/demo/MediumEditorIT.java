@@ -23,11 +23,18 @@ import com.github.fscheffer.arras.test.ArrasTestCase;
 
 public class MediumEditorIT extends ArrasTestCase {
 
+    private static final Logger log = LoggerFactory.getLogger(MediumEditorIT.class);
+
     @BeforeMethod
     public void before() {
-        open("/MediumEditorDemo");
-        element(By.linkText("Reset demo")).click();
-        waitUntil(pageHasLoaded());
+        try {
+            open("/MediumEditorDemo");
+            element(By.linkText("Reset demo")).click();
+            waitUntil(pageHasLoaded());
+        }
+        catch (Exception e) {
+            log.error("Exception: ", e);
+        }
     }
 
     // TODO: test the toolbar but I have absolutely no clue how to select a text using selenium webdriver api
@@ -49,8 +56,6 @@ public class MediumEditorIT extends ArrasTestCase {
 
         waitUntil(containsText(selector, "foobar"));
     }
-
-    private static Logger log = LoggerFactory.getLogger(MediumEditorIT.class);
 
     @Test
     public void testDisabled() {
