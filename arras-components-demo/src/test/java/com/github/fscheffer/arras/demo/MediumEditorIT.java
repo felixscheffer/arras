@@ -46,6 +46,8 @@ public class MediumEditorIT extends ArrasTestCase {
 
         click(selector);
 
+        waitUntil(attributeHasValue(selector, "contenteditable", "true"));
+
         waitUntil(focused(selector));
 
         sendKeys(selector, " foobar");
