@@ -14,6 +14,7 @@ import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.annotations.SupportsInformalParameters;
 import org.apache.tapestry5.json.JSONObject;
 import org.apache.tapestry5.services.Environment;
+import org.slf4j.Logger;
 
 import com.github.fscheffer.arras.cms.ArrasCmsConstants;
 import com.github.fscheffer.arras.cms.BlockContext;
@@ -33,6 +34,9 @@ public class ContentAdd {
 
     @Inject
     private Environment        environment;
+
+    @Inject
+    private Logger             log;
 
     @BeginRender
     void begin(MarkupWriter writer) {
@@ -56,6 +60,8 @@ public class ContentAdd {
 
     @OnEvent(ArrasCmsConstants.ADD_CONTENT)
     Block onAddContent() {
+
+        this.log.info("Adding new content");
 
         this.environment.push(BlockContext.class, new BlockContext(new JSONObject()));
         return this.block;
