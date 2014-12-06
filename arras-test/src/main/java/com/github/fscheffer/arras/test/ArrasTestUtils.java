@@ -96,9 +96,13 @@ public class ArrasTestUtils {
         return new FirefoxDriver(new FirefoxBinary(), null, capabilities);
     }
 
-    protected static WebDriver createRemoteWebDriver(URL remoteAddress, Capabilities capabilities) {
+    protected static WebDriver createRemoteWebDriver(URL remoteAddress, DesiredCapabilities capabilities) {
 
         log.info("Requesting remote webdriver with {} at {}", capabilities, new Date());
+
+        if (BrowserType.CHROME.equals(capabilities.getBrowserName())) {
+            capabilities.setCapability("chromedriver-version", "2.11");
+        }
 
         RemoteWebDriver driver = new RemoteWebDriver(remoteAddress, capabilities);
 
@@ -107,7 +111,7 @@ public class ArrasTestUtils {
         return driver;
     }
 
-    public static WebDriver createWebDrive(Capabilities capabilities) {
+    public static WebDriver createWebDrive(DesiredCapabilities capabilities) {
 
         URL remoteUrl = toUrl(ArrasTestUtils.getConfiguration(TestConstants.REMOTE_URL));
 
@@ -136,7 +140,7 @@ public class ArrasTestUtils {
         String browser = getConfiguration(TestConstants.BROWSER, "firefox");
         String version = getConfiguration(TestConstants.VERSION, "");
         Platform platform = Platform.valueOf(getConfiguration(TestConstants.PLATFORM, "ANY"));
-    
+
         return new DesiredCapabilities(browser, version, platform);
     }
 }
