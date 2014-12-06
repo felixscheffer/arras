@@ -36,10 +36,15 @@ public class BlocksIT extends ArrasTestCase {
         this.module.changeImage("#fixedNumber .ui-sortable-handle:nth-child(1)", 3);
 
         WebElement addButton = element("#variableNumber [data-component-type=content-add]");
+
         addButton.click();
+        sleep(100);
         addButton.click();
+        sleep(100);
         addButton.click();
+        sleep(100);
         addButton.click();
+        sleep(100);
 
         waitUntil(count("#variableNumber .content-block", 4));
         waitUntil(visible("#variableNumber .content-block"));
