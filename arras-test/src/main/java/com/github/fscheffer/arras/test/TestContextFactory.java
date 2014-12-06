@@ -1,8 +1,8 @@
 package com.github.fscheffer.arras.test;
 
-import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
 public interface TestContextFactory {
 
-    TestContext build(Capabilities capabilities);
+    TestContext build(DesiredCapabilities capabilities);
 }

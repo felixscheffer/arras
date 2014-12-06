@@ -1,6 +1,5 @@
 package com.github.fscheffer.arras.demo;
 
-import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import com.github.fscheffer.arras.test.ArrasTestUtils;
@@ -11,7 +10,7 @@ import com.github.fscheffer.arras.test.TestContextFactory;
 public class TestConfig implements TestContextFactory {
 
     @Override
-    public TestContext build(Capabilities original) {
+    public TestContext build(DesiredCapabilities original) {
 
         DesiredCapabilities capabilities = new DesiredCapabilities(original);
 
