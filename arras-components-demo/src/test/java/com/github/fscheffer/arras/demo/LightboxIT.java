@@ -88,7 +88,7 @@ public class LightboxIT extends ArrasTestCase {
     }
 
     private String toPixel(double a) {
-        return (int) Math.ceil(a) + "px";
+        return (int) Math.round(a) + "px";
     }
 
     @Test
