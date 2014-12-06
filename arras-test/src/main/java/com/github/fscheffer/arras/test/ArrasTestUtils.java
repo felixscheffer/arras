@@ -112,7 +112,7 @@ public class ArrasTestUtils {
         URL remoteUrl = toUrl(ArrasTestUtils.getConfiguration(TestConstants.REMOTE_URL));
 
         WebDriver driver = remoteUrl != null ? ArrasTestUtils.createRemoteWebDriver(remoteUrl, capabilities)
-                                             : ArrasTestUtils.createLocalWebDriver(capabilities);
+                                            : ArrasTestUtils.createLocalWebDriver(capabilities);
 
         // Note: use explicit wait if you need to wait (see waitUntil)
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
@@ -135,7 +135,9 @@ public class ArrasTestUtils {
     public static final DesiredCapabilities getDesiredCapabilities() {
         String browser = getConfiguration(TestConstants.BROWSER, "firefox");
         String version = getConfiguration(TestConstants.VERSION, "");
-        Platform platform = Platform.valueOf(getConfiguration(TestConstants.PLATFORM, "ANY"));
+        String rawplatform = getConfiguration(TestConstants.PLATFORM, "ANY");
+
+        Platform platform = InternalUtils.isBlank(rawplatform) ? Platform.ANY : Platform.valueOf(rawplatform);
 
         return new DesiredCapabilities(browser, version, platform);
     }
