@@ -85,6 +85,11 @@ public class ArrasConditions {
 
                 return focusedElement.equals(findElement(locator, driver)) ? focusedElement : null;
             }
+
+            @Override
+            public String toString() {
+                return "focus on element located by: " + locator;
+            }
         };
     }
 
@@ -117,6 +122,11 @@ public class ArrasConditions {
 
                 return false;
             }
+
+            @Override
+            public String toString() {
+                return "page has loaded";
+            }
         };
     }
 
@@ -143,6 +153,11 @@ public class ArrasConditions {
 
                 return true;
             }
+
+            @Override
+            public String toString() {
+                return "presence of classes " + classes.toString() + " on element located by " + locator;
+            }
         };
     }
 
@@ -151,6 +166,58 @@ public class ArrasConditions {
         String attr = element.getAttribute("class");
 
         return attr == null ? Collections.<String> emptyList() : Arrays.asList(attr.split(" "));
+    }
+
+    public static ExpectedCondition<WebElement> attributeHasValueOnElementLocated(final By locator, final String name,
+                                                                                  final String expectedValue) {
+
+        return new ExpectedCondition<WebElement>() {
+
+            @Override
+            public WebElement apply(WebDriver driver) {
+
+                WebElement element = findElement(locator, driver);
+
+                String actualValue = element.getAttribute(name);
+
+                // Note: if null is the expected value, return true
+                if (expectedValue == actualValue || expectedValue.equals(actualValue)) {
+                    return element;
+                }
+
+                return null;
+            }
+
+            @Override
+            public String toString() {
+                return "attribute " + name + " has value " + expectedValue + " on element located by: " + locator;
+            }
+        };
+    }
+
+    public static ExpectedCondition<List<WebElement>> countOfElementsLocated(final By locator, final int count) {
+
+        return new ExpectedCondition<List<WebElement>>() {
+
+            @Override
+            public List<WebElement> apply(WebDriver driver) {
+
+                try {
+
+                    List<WebElement> elements = findElements(locator, driver);
+
+                    return elements.size() == count ? elements : null;
+                }
+                catch (NoSuchElementException e) {
+                    return null;
+                }
+            }
+
+            @Override
+            public String toString() {
+                return "count " + count + " elements located by " + locator;
+            }
+        };
     }
 
     private static WebElement findElement(By by, WebDriver driver) {
@@ -174,27 +241,5 @@ public class ArrasConditions {
             logger.warn(String.format("WebDriverException thrown by findElement(%s)", by), e);
             throw e;
         }
-    }
-
-    public static ExpectedCondition<WebElement> attributeHasValueOnElementLocated(final By locator, final String name,
-                                                                                  final String expectedValue) {
-
-        return new ExpectedCondition<WebElement>() {
-
-            @Override
-            public WebElement apply(WebDriver driver) {
-
-                WebElement element = findElement(locator, driver);
-
-                String actualValue = element.getAttribute(name);
-
-                // Note: if null is the expected value, return true
-                if (expectedValue == actualValue || expectedValue.equals(actualValue)) {
-                    return element;
-                }
-
-                return null;
-            }
-        };
     }
 }
