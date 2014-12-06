@@ -11,7 +11,6 @@ env:
     - BROWSER=chrome VERSION=39 PLATFORM=LINUX
     - BROWSER=chrome VERSION=39 PLATFORM=WINDOWS
     - BROWSER="internet explorer" VERSION=11
-    - BROWSER="internet explorer" VERSION=10
 
 addons:
   sauce_connect:
