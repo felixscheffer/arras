@@ -101,7 +101,7 @@ public class ArrasTestUtils {
         log.info("Requesting remote webdriver with {} at {}", capabilities, new Date());
 
         if (BrowserType.CHROME.equals(capabilities.getBrowserName())) {
-            capabilities.setCapability("chromedriver-version", "2.11");
+            capabilities.setCapability("chromedriver-version", "2.12");
         }
 
         RemoteWebDriver driver = new RemoteWebDriver(remoteAddress, capabilities);
@@ -116,7 +116,7 @@ public class ArrasTestUtils {
         URL remoteUrl = toUrl(ArrasTestUtils.getConfiguration(TestConstants.REMOTE_URL));
 
         WebDriver driver = remoteUrl != null ? ArrasTestUtils.createRemoteWebDriver(remoteUrl, capabilities)
-                                            : ArrasTestUtils.createLocalWebDriver(capabilities);
+                                             : ArrasTestUtils.createLocalWebDriver(capabilities);
 
         // Note: use explicit wait if you need to wait (see waitUntil)
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
