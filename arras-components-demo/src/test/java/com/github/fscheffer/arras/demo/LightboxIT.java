@@ -85,17 +85,18 @@ public class LightboxIT extends ArrasTestCase {
         // fixed size in percent
         openLightbox(By.linkText("Rocky cliffs (Fixed size in percent)"));
 
-        log.info("({},{}), ({},{})", wrapper.getCssValue("width"), wrapper.getCssValue("height"), viewport.width * 0.5,
-                 viewport.height * 0.75);
-
-        Assert.assertEquals(wrapper.getCssValue("width"), toPixel(viewport.width * 0.5));
-        Assert.assertEquals(wrapper.getCssValue("height"), toPixel(viewport.height * 0.75));
+        Assert.assertTrue(equals(wrapper.getCssValue("width"), viewport.width * 0.5));
+        Assert.assertTrue(equals(wrapper.getCssValue("height"), viewport.height * 0.75));
 
         closeLightbox();
     }
 
-    private String toPixel(double a) {
-        return (int) Math.round(a) + "px";
+    private boolean equals(String cssValue, double numericValue) {
+
+        String floor = (int) Math.floor(numericValue) + "px";
+        String ceil = (int) Math.ceil(numericValue) + "px";
+
+        return floor.equals(cssValue) || ceil.equals(cssValue);
     }
 
     @Test
