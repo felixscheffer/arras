@@ -41,8 +41,8 @@ public class BlocksIT extends ArrasTestCase {
         addButton.click();
         addButton.click();
 
-        // TODO: far from perfect. this waits until the first content block is present, but there should be 4!
-        waitUntil(visible("#variableNumber .medium-editor"));
+        waitUntil(count("#variableNumber .content-block", 4));
+        waitUntil(visible("#variableNumber .content-block"));
 
         click("[data-container-type=remote-submit]");
 
