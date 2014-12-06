@@ -167,7 +167,7 @@ public abstract class ArrasTestCase {
         try {
             String value = element.getCssValue(property);
             if (value != null) {
-                return null;
+                return value;
             }
             // null indicates the property is not present (or unknown), trying fallback.
         }
