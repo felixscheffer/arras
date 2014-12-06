@@ -113,7 +113,7 @@ public class TestContextPool {
         }
     }
 
-    private TestContext createTestContext(DesiredCapabilities capabilities) {
+    private TestContext createTestContext(Capabilities capabilities) {
 
         ServiceLoader<TestContextFactory> factories = ServiceLoader.load(TestContextFactory.class);
 

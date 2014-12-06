@@ -1,5 +1,6 @@
 package com.github.fscheffer.arras.cms.demo;
 
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import com.github.fscheffer.arras.test.ArrasTestUtils;
@@ -11,7 +12,7 @@ public class TestConfig implements TestContextFactory {
 
     // TODO: surefire thinks this is a test
     @Override
-    public TestContext build(DesiredCapabilities original) {
+    public TestContext build(Capabilities original) {
 
         DesiredCapabilities capabilities = new DesiredCapabilities(original);
 

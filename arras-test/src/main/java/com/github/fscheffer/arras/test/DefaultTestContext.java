@@ -2,7 +2,6 @@ package com.github.fscheffer.arras.test;
 
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
 
 public class DefaultTestContext implements TestContext {
 
@@ -18,7 +17,7 @@ public class DefaultTestContext implements TestContext {
         this.capabilities = capabilities;
     }
 
-    DefaultTestContext(DesiredCapabilities capabilities) {
+    DefaultTestContext(Capabilities capabilities) {
         this(ArrasTestUtils.createWebDrive(capabilities), "localhost:8080", capabilities);
     }
 
