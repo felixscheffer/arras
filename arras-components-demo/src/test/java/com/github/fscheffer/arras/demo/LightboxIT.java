@@ -15,6 +15,8 @@ package com.github.fscheffer.arras.demo;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -22,6 +24,8 @@ import org.testng.annotations.Test;
 import com.github.fscheffer.arras.test.ArrasTestCase;
 
 public class LightboxIT extends ArrasTestCase {
+
+    private static Logger log = LoggerFactory.getLogger(LightboxIT.class);
 
     @BeforeMethod
     public void before() {
@@ -80,6 +84,9 @@ public class LightboxIT extends ArrasTestCase {
 
         // fixed size in percent
         openLightbox(By.linkText("Rocky cliffs (Fixed size in percent)"));
+
+        log.info("({},{}), ({},{})", wrapper.getCssValue("width"), wrapper.getCssValue("height"), viewport.width * 0.5,
+                 viewport.height * 0.75);
 
         Assert.assertEquals(wrapper.getCssValue("width"), toPixel(viewport.width * 0.5));
         Assert.assertEquals(wrapper.getCssValue("height"), toPixel(viewport.height * 0.75));
