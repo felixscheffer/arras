@@ -213,6 +213,10 @@ public abstract class ArrasTestCase {
         return ArrasConditions.visibiltyOfElementsLocated(By.cssSelector(cssSelector));
     }
 
+    protected static final ExpectedCondition<List<WebElement>> count(String cssSelector, int count) {
+        return ArrasConditions.countOfElementsLocated(By.cssSelector(cssSelector), count);
+    }
+
     protected static final ExpectedCondition<Boolean> invisible(String cssSelector) {
         return ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(cssSelector));
     }
