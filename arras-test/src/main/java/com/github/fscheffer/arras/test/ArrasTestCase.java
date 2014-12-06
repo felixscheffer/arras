@@ -7,6 +7,7 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.BrowserType;
@@ -164,13 +165,17 @@ public abstract class ArrasTestCase {
         WebElement element = element(cssSelector);
 
         try {
-            return element.getCssValue(property);
+            String value = element.getCssValue(property);
+            if (value != null) {
+                return null;
+            }
+            // null indicates the property is not present (or unknown), trying fallback.
         }
-        catch (Exception e) {
-            logger.info("DEBUG: ", e);
-            String browserPrefix = findBrowserPrefix();
-            return element.getCssValue(browserPrefix + property);
+        catch (WebDriverException e) {
+            // can happen when the browser does not support the property, trying fallback.
         }
+
+        return element.getCssValue(findBrowserPrefix() + property);
     }
 
     private String findBrowserPrefix() {
