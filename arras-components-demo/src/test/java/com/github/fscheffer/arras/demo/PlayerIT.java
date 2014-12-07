@@ -21,10 +21,10 @@ public class PlayerIT extends ArrasTestCase {
         waitUntil(classesPresent("#video > div", "vjs-playing"));
 
         // wait until the video is loaded
-        waitUntil(invisible("#video .vjs-loading-spinner"));
+        waitUntil(classesNotPresent("#video > div", "vjs-waiting"));
 
         // make sure the controls are visible
-        hover("#video");
+        hover("#video .vjs-control-bar");
 
         waitUntil(visible("#video .vjs-control-bar"));
 
