@@ -7,6 +7,8 @@
 			var url = this.attr("data-url");
 			var element = this;
 			
+			console.log("Requesting new content: " + url);
+			
 			dom.ajaxRequest(url, {
 				success: function(response) {
 					var _ref = response.json;
@@ -16,6 +18,8 @@
 		})
 		
 		function addContent(element, content) {
+			
+			console.log("Adding new content: "+content);
 			
 			var container = element.closest(".content-blocks").findFirst("> div");
 			container.append(content);
