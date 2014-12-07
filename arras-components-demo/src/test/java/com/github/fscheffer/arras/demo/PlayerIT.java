@@ -1,6 +1,5 @@
 package com.github.fscheffer.arras.demo;
 
-import org.openqa.selenium.By;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -26,7 +25,7 @@ public class PlayerIT extends ArrasTestCase {
 
         waitUntil(visible("#video .vjs-control-bar"));
 
-        click("#video .vjs-playing");
+        click("#video .vjs-play-control");
 
         if (!isLive()) {
 
@@ -39,9 +38,9 @@ public class PlayerIT extends ArrasTestCase {
 
         click("#audio .vjs-play-control");
 
-        waitUntil(visible("#audio .vjs-playing"));
+        waitUntil(classesPresent("#audio > div", "vjs-playing"));
 
-        click("#audio .vjs-playing");
+        click("#audio .vjs-play-control");
 
         if (!isLive()) {
             waitUntil(containsText("#audio .vjs-duration-display", "3:29"));
@@ -49,6 +48,6 @@ public class PlayerIT extends ArrasTestCase {
     }
 
     protected boolean isLive() {
-        return element(By.cssSelector(".vjs-live-display")).isDisplayed();
+        return element(".vjs-live-display").isDisplayed();
     }
 }
