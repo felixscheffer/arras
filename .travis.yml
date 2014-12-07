@@ -17,10 +17,10 @@ env:
     - BROWSER=chrome VERSION=26 PLATFORM=WINDOWS
     - BROWSER=chrome VERSION=26 PLATFORM=LINUX
 
-	# for debugging
-	- BROWSER=chrome VERSION=27 PLATFORM=LINUX
-	- BROWSER=chrome VERSION=30 PLATFORM=LINUX
-	
+    # for debugging
+    - BROWSER=chrome VERSION=27 PLATFORM=LINUX
+    - BROWSER=chrome VERSION=30 PLATFORM=LINUX
+
 # audio player is not loading (due to a vm issue?)
 #    - BROWSER="internet explorer" VERSION=11
 #    - BROWSER="internet explorer" VERSION=10
