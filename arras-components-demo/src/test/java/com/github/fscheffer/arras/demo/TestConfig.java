@@ -21,13 +21,15 @@ public class TestConfig implements TestContextFactory {
         capabilities.setCapability("name", "arras-components");
 
         if (BrowserType.CHROME.equals(capabilities.getBrowserName())
-            && InternalUtils.isNonBlank(capabilities.getVersion()) && Integer.valueOf(capabilities.getVersion()) >= 37) {
-            capabilities.setCapability("chromedriver-version", "2.11");
-        }
-
-        if (BrowserType.CHROME.equals(capabilities.getBrowserName())
             && Platform.LINUX.equals(capabilities.getPlatform())) {
-            capabilities.setCapability("chromedriver-version", "26.0.1383.0");
+
+            if (InternalUtils.isNonBlank(capabilities.getVersion()) && Integer.valueOf(capabilities.getVersion()) >= 29) {
+                capabilities.setCapability("chromedriver-version", "2.4");
+            }
+
+            if (InternalUtils.isNonBlank(capabilities.getVersion()) && Integer.valueOf(capabilities.getVersion()) >= 37) {
+                capabilities.setCapability("chromedriver-version", "2.11");
+            }
         }
 
         ArrasTestUtils.setCapabilityFromConfiguration(capabilities, "tunnel-identifier", "TRAVIS_JOB_NUMBER");
