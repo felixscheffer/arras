@@ -23,8 +23,8 @@ public class PlayerIT extends ArrasTestCase {
         // wait until the video is loaded
         waitUntil(classesNotPresent("#video > div", "vjs-waiting"));
 
-        // make sure the controls are visible
-        hover("#video .vjs-control-bar");
+        // pause the video and bring up the controls in case they auto-hide
+        click("#video video");
 
         waitUntil(visible("#video .vjs-control-bar"));
 
