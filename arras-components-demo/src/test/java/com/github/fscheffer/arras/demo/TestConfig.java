@@ -2,6 +2,7 @@ package com.github.fscheffer.arras.demo;
 
 import org.apache.tapestry5.ioc.internal.util.InternalUtils;
 import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -22,6 +23,11 @@ public class TestConfig implements TestContextFactory {
         if (BrowserType.CHROME.equals(capabilities.getBrowserName())
             && InternalUtils.isNonBlank(capabilities.getVersion()) && Integer.valueOf(capabilities.getVersion()) >= 37) {
             capabilities.setCapability("chromedriver-version", "2.11");
+        }
+
+        if (BrowserType.CHROME.equals(capabilities.getBrowserName())
+            && Platform.LINUX.equals(capabilities.getPlatform())) {
+            capabilities.setCapability("chromedriver-version", "26.0.1383.0");
         }
 
         ArrasTestUtils.setCapabilityFromConfiguration(capabilities, "tunnel-identifier", "TRAVIS_JOB_NUMBER");
