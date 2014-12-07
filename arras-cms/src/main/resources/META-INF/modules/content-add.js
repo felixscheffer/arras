@@ -4,8 +4,8 @@
 		
 		dom.onDocument("click", "[data-component-type=content-add]", function() {
 			
-			var url = this.attr("data-url");
 			var element = this.closest("[data-component-type=content-add]");
+			var url = element.attr("data-url");
 			
 			console.log("Requesting new content: " + url + " element: "+ element);
 			
