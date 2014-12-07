@@ -12,6 +12,7 @@ env:
     - BROWSER=firefox VERSION=23
     # latest version of chrome
     - BROWSER=chrome VERSION=39 PLATFORM=WINDOWS
+    - BROWSER=chrome VERSION=39 PLATFORM=LINUX
     # oldest version of chrome supported by SauceLabs
     - BROWSER=chrome VERSION=26 PLATFORM=WINDOWS
     - BROWSER=chrome VERSION=26 PLATFORM=LINUX
