@@ -7,8 +7,6 @@
 			var element = this.closest("[data-component-type=content-add]");
 			var url = element.attr("data-url");
 			
-			console.log("Requesting new content: " + url + " element: "+ element);
-			
 			dom.ajaxRequest(url, {
 				success: function(response) {
 					var _ref = response.json;
@@ -18,8 +16,6 @@
 		})
 		
 		function addContent(element, content) {
-			
-			console.log("Adding new content: "+content);
 			
 			var container = element.closest(".content-blocks").findFirst("> div");
 			container.append(content);
