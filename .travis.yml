@@ -6,10 +6,15 @@ env:
   global:
     - REMOTE_URL=http://fscheffer:634bce7e-ddfd-4ae4-8ea2-c3bac682f796@ondemand.saucelabs.com:80/wd/hub
   matrix:
+  	# latest version of firefox
     - BROWSER=firefox VERSION=34
+    # oldest firefox that is supported by the current firefox driver
     - BROWSER=firefox VERSION=23
-    - BROWSER=chrome VERSION=39 PLATFORM=VISTA
-    - BROWSER=chrome VERSION=20 PLATFORM=VISTA
+    # latest version of chrome
+    - BROWSER=chrome VERSION=39 PLATFORM=WINDOWS
+    # oldest version of chrome supported by SauceLabs
+    - BROWSER=chrome VERSION=26 PLATFORM=WINDOWS
+    - BROWSER=chrome VERSION=26 PLATFORM=LINUX
 
 # audio player is not loading (due to a vm issue?)
 #    - BROWSER="internet explorer" VERSION=11
