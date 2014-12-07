@@ -17,8 +17,11 @@ public class PlayerIT extends ArrasTestCase {
 
         click("#video .vjs-big-play-button");
 
-        // wait until we loaded the video
+        // wait for the click
         waitUntil(classesPresent("#video > div", "vjs-playing"));
+
+        // wait until the video is loaded
+        waitUntil(invisible("#video .vjs-loading-spinner"));
 
         // make sure the controls are visible
         hover("#video");
