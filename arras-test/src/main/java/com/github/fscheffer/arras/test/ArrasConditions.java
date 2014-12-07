@@ -161,6 +161,37 @@ public class ArrasConditions {
         };
     }
 
+    public static ExpectedCondition<Boolean> absenceOfClasses(final By locator, final String[] classes) {
+
+        return new ExpectedCondition<Boolean>() {
+
+            @Override
+            public Boolean apply(WebDriver driver) {
+
+                List<WebElement> elements = findElements(locator, driver);
+
+                for (WebElement element : elements) {
+
+                    List<String> list = retrieveClasses(element);
+
+                    for (String clazz : classes) {
+
+                        if (list.contains(clazz)) {
+                            return false;
+                        }
+                    }
+                }
+
+                return true;
+            }
+
+            @Override
+            public String toString() {
+                return "absence of classes " + classes.toString() + " on element located by " + locator;
+            }
+        };
+    }
+
     private static List<String> retrieveClasses(WebElement element) {
 
         String attr = element.getAttribute("class");

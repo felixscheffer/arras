@@ -242,6 +242,10 @@ public abstract class ArrasTestCase {
         return ArrasConditions.presenceOfClasses(By.cssSelector(cssSelector), classes);
     }
 
+    protected ExpectedCondition<Boolean> classesNotPresent(String cssSelector, String... classes) {
+        return ArrasConditions.absenceOfClasses(By.cssSelector(cssSelector), classes);
+    }
+
     protected final <T> T waitUntil(ExpectedCondition<T> condition) {
         // Note: 10 sec is sometimes not enough
         int timeOutInSeconds = 30;
