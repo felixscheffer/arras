@@ -61,7 +61,7 @@ public class ContentAdd {
     @OnEvent(ArrasCmsConstants.ADD_CONTENT)
     Block onAddContent() {
 
-        this.log.info("Adding new content");
+        this.log.debug("Adding new content");
 
         this.environment.push(BlockContext.class, new BlockContext(new JSONObject()));
         return this.block;
