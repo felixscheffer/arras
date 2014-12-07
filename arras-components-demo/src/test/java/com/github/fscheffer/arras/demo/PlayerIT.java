@@ -25,8 +25,6 @@ public class PlayerIT extends ArrasTestCase {
 
         waitUntil(visible("#video .vjs-control-bar"));
 
-        click("#video .vjs-play-control");
-
         if (!isLive()) {
 
             waitUntil(containsText("#video .vjs-duration-display", "0:33"));
@@ -39,8 +37,6 @@ public class PlayerIT extends ArrasTestCase {
         click("#audio .vjs-play-control");
 
         waitUntil(classesPresent("#audio > div", "vjs-playing"));
-
-        click("#audio .vjs-play-control");
 
         if (!isLive()) {
             waitUntil(containsText("#audio .vjs-duration-display", "3:29"));
