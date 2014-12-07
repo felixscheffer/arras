@@ -7,7 +7,7 @@
 			var url = this.attr("data-url");
 			var element = this;
 			
-			console.log("Requesting new content: " + url);
+			console.log("Requesting new content: " + url + " element: "+ element);
 			
 			dom.ajaxRequest(url, {
 				success: function(response) {
