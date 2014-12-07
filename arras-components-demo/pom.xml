@@ -43,8 +43,10 @@
 			<plugin>
 				<artifactId>maven-failsafe-plugin</artifactId>
 				<configuration>
-					<parallel>classes</parallel>
-					<threadCount>2</threadCount>
+				<!-- technically it's possible to run the tests in parallel, but it does more harm than good on SauceLabs -->
+				<!-- so disable parallel testing for the moment -->
+<!-- 					<parallel>classes</parallel> -->
+<!-- 					<threadCount>2</threadCount> -->
 
 					<properties>
 						<property>
