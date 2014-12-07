@@ -18,12 +18,21 @@ public class PlayerIT extends ArrasTestCase {
 
         click("#video .vjs-big-play-button");
 
+        // make sure the player was loaded
+        waitUntil(visible("#video .vjs-control-bar"));
+
+        // wait until we loaded the video
+        waitUntil(invisible(".vjs-loading-spinner"));
+
+        // make sure the controls are visible
+        hover("#video");
+
         waitUntil(visible("#video .vjs-control-bar"));
 
         click("#video .vjs-playing");
 
-        // FIXME: sometimes video.js thinks the file is a live stream. Not sure why. Probably another timing issue.
         if (!isLive()) {
+
             waitUntil(containsText("#video .vjs-duration-display", "0:33"));
         }
     }
@@ -37,7 +46,6 @@ public class PlayerIT extends ArrasTestCase {
 
         click("#audio .vjs-playing");
 
-        // FIXME: sometimes video.js thinks the file is a live stream. Not sure why. Probably another timing issue.
         if (!isLive()) {
             waitUntil(containsText("#audio .vjs-duration-display", "3:29"));
         }
