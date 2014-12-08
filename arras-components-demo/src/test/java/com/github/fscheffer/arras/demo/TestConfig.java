@@ -21,14 +21,14 @@ public class TestConfig implements TestContextFactory {
         capabilities.setCapability("name", "arras-components");
 
         if (BrowserType.CHROME.equals(capabilities.getBrowserName())
-            /*&& Platform.LINUX.equals(capabilities.getPlatform())*/) {
+        /*&& Platform.LINUX.equals(capabilities.getPlatform())*/) {
 
             if (InternalUtils.isNonBlank(capabilities.getVersion()) && Integer.valueOf(capabilities.getVersion()) >= 29) {
                 capabilities.setCapability("chromedriver-version", "2.4");
             }
 
             if (InternalUtils.isNonBlank(capabilities.getVersion()) && Integer.valueOf(capabilities.getVersion()) >= 37) {
-                capabilities.setCapability("chromedriver-version", "2.12");
+                capabilities.setCapability("chromedriver-version", "2.11");
             }
         }
 
