@@ -2,7 +2,6 @@ package com.github.fscheffer.arras.demo;
 
 import org.apache.tapestry5.ioc.internal.util.InternalUtils;
 import org.openqa.selenium.Capabilities;
-import org.openqa.selenium.Platform;
 import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -21,7 +20,7 @@ public class TestConfig implements TestContextFactory {
         capabilities.setCapability("name", "arras-components");
 
         if (BrowserType.CHROME.equals(capabilities.getBrowserName())
-            && Platform.LINUX.equals(capabilities.getPlatform())) {
+        /*&& Platform.LINUX.equals(capabilities.getPlatform())*/) {
 
             if (InternalUtils.isNonBlank(capabilities.getVersion()) && Integer.valueOf(capabilities.getVersion()) >= 29) {
                 capabilities.setCapability("chromedriver-version", "2.4");
