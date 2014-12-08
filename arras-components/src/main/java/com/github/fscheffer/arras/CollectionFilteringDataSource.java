@@ -27,11 +27,10 @@ import org.apache.tapestry5.grid.ColumnSort;
 import org.apache.tapestry5.grid.SortConstraint;
 import org.apache.tapestry5.ioc.internal.util.CollectionFactory;
 import org.apache.tapestry5.ioc.internal.util.InternalUtils;
-import org.apache.tapestry5.ioc.services.TypeCoercer;
 
-public class CollectionFilteringDataSource<T> implements FilteringDataSource {
+public class CollectionFilteringDataSource implements FilteringDataSource {
 
-    private final List<T>       list;
+    private final List<?>       list;
 
     private List<Object>        preparedResults;
 
@@ -39,12 +38,9 @@ public class CollectionFilteringDataSource<T> implements FilteringDataSource {
 
     private List<PropertyModel> properties;
 
-    private TypeCoercer         typeCoercer;
-
     private String[]            terms;
 
-    public CollectionFilteringDataSource(Collection<T> collection, TypeCoercer typeCoercer) {
-        this.typeCoercer = typeCoercer;
+    public CollectionFilteringDataSource(Collection<?> collection) {
         this.list = CollectionFactory.newList(collection);
         this.preparedResults = CollectionFactory.newList(collection);
         this.terms = new String[] {};
@@ -194,7 +190,7 @@ public class CollectionFilteringDataSource<T> implements FilteringDataSource {
 
             Object rawValue = property.getConduit().get(instance);
 
-            String value = this.typeCoercer.coerce(rawValue, String.class);
+            String value = rawValue == null ? null : rawValue.toString();
 
             if (InternalUtils.isBlank(value)) {
                 continue;
