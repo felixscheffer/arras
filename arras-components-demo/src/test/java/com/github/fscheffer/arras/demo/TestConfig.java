@@ -7,6 +7,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 import com.github.fscheffer.arras.test.ArrasTestUtils;
 import com.github.fscheffer.arras.test.DefaultTestContext;
+import com.github.fscheffer.arras.test.TestConstants;
 import com.github.fscheffer.arras.test.TestContext;
 import com.github.fscheffer.arras.test.TestContextFactory;
 
@@ -20,21 +21,22 @@ public class TestConfig implements TestContextFactory {
         capabilities.setCapability("name", "arras-components");
 
         if (BrowserType.CHROME.equals(capabilities.getBrowserName())
-        /*&& Platform.LINUX.equals(capabilities.getPlatform())*/) {
+            /*&& Platform.LINUX.equals(capabilities.getPlatform())*/) {
 
             if (InternalUtils.isNonBlank(capabilities.getVersion()) && Integer.valueOf(capabilities.getVersion()) >= 29) {
                 capabilities.setCapability("chromedriver-version", "2.4");
             }
 
             if (InternalUtils.isNonBlank(capabilities.getVersion()) && Integer.valueOf(capabilities.getVersion()) >= 37) {
-                capabilities.setCapability("chromedriver-version", "2.11");
+                capabilities.setCapability("chromedriver-version", "2.12");
             }
         }
 
         ArrasTestUtils.setCapabilityFromConfiguration(capabilities, "tunnel-identifier", "TRAVIS_JOB_NUMBER");
         ArrasTestUtils.setCapabilityFromConfiguration(capabilities, "build", "TRAVIS_BUILD_NUMBER");
 
-        return new DefaultTestContext(ArrasTestUtils.createWebDrive(capabilities), "http://127.0.0.1:8080/arras",
-                                      original);
+        String baseUrl = ArrasTestUtils.getConfiguration(TestConstants.BASE_URL, "http://127.0.0.1:8080/arras");
+
+        return new DefaultTestContext(ArrasTestUtils.createWebDrive(capabilities), baseUrl, original);
     }
 }
