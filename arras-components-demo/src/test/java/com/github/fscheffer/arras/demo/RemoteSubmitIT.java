@@ -50,7 +50,7 @@ public class RemoteSubmitIT extends ArrasTestCase {
 
         // Note: sometimes selenium sends the keys to the textfield of the visible example above.
         //       maybe the dom was not loaded..so try waiting.
-        sleep(500);
+        //        sleep(500);
 
         text("#invisibleExampleTextfield", "Hello Tapestry!");
 
