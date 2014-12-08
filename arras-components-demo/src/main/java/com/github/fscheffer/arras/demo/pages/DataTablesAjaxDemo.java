@@ -12,13 +12,12 @@
 
 package com.github.fscheffer.arras.demo.pages;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.apache.tapestry5.annotations.Property;
-import org.apache.tapestry5.ioc.services.TypeCoercer;
 
-import com.github.fscheffer.arras.CollectionFilteringDataSource;
-import com.github.fscheffer.arras.FilteringDataSource;
 import com.github.fscheffer.arras.test.Track;
 import com.github.fscheffer.arras.test.services.MusicLibrary;
 
@@ -27,13 +26,10 @@ public class DataTablesAjaxDemo {
     @Inject
     private MusicLibrary library;
 
-    @Inject
-    private TypeCoercer  coercer;
-
     @Property
     private Track        track;
 
-    public FilteringDataSource getTracks() {
-        return new CollectionFilteringDataSource<Track>(this.library.getTracks(), this.coercer);
+    public List<Track> getTracks() {
+        return this.library.getTracks();
     }
 }

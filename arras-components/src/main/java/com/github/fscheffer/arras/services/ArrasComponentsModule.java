@@ -12,18 +12,24 @@
 
 package com.github.fscheffer.arras.services;
 
+import java.util.Collection;
+
 import org.apache.tapestry5.annotations.Path;
 import org.apache.tapestry5.ioc.Configuration;
 import org.apache.tapestry5.ioc.MappedConfiguration;
 import org.apache.tapestry5.ioc.Resource;
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.Contribute;
+import org.apache.tapestry5.ioc.services.Coercion;
+import org.apache.tapestry5.ioc.services.CoercionTuple;
 import org.apache.tapestry5.services.BindingFactory;
 import org.apache.tapestry5.services.LibraryMapping;
 import org.apache.tapestry5.services.javascript.JavaScriptModuleConfiguration;
 import org.apache.tapestry5.services.javascript.ModuleManager;
 
 import com.github.fscheffer.arras.ArrasConstants;
+import com.github.fscheffer.arras.CollectionFilteringDataSource;
+import com.github.fscheffer.arras.FilteringDataSource;
 
 public class ArrasComponentsModule {
 
@@ -52,6 +58,19 @@ public class ArrasComponentsModule {
 
     public static void contributeBindingSource(MappedConfiguration<String, BindingFactory> conf) {
         conf.add("clientid", new ClientIdBindingFactory());
+    }
+
+    public static void contributeTypeCoercer(Configuration<CoercionTuple> conf) {
+
+        conf.add(CoercionTuple.create(Collection.class, FilteringDataSource.class,
+                                      new Coercion<Collection, FilteringDataSource>() {
+
+                                          @Override
+                                          public FilteringDataSource coerce(Collection input) {
+
+                                              return new CollectionFilteringDataSource(input);
+                                          }
+                                      }));
     }
 
     public static void contributeContentTypeAnalyzer(MappedConfiguration<String, String> conf) {
