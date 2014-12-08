@@ -36,7 +36,6 @@ import org.apache.tapestry5.beaneditor.BeanModel;
 import org.apache.tapestry5.beaneditor.PropertyModel;
 import org.apache.tapestry5.dom.Element;
 import org.apache.tapestry5.grid.ColumnSort;
-import org.apache.tapestry5.grid.GridDataSource;
 import org.apache.tapestry5.grid.GridSortModel;
 import org.apache.tapestry5.internal.services.AjaxPartialResponseRenderer;
 import org.apache.tapestry5.internal.services.PageRenderQueue;
@@ -65,12 +64,6 @@ import com.github.fscheffer.arras.base.GridColumns;
 public class DataTable extends AbstractTable {
 
     /**
-     * Triggered by the DataTable component to give a chance to the developer to filter data on server-side when the
-     * data source is not a {@link FilteringDataSource}
-     */
-    public static final String FILTER_DATA    = "filterData";
-
-    /**
      * Triggered by the javascript component using ajax to indicate that the table's data need to be updated.
      */
     public static final String DATA           = "Data";
@@ -89,33 +82,33 @@ public class DataTable extends AbstractTable {
 
     public static final String ECHO           = "sEcho";
 
-    private final class PartialMarkupRendererFilterImplementation implements PartialMarkupRendererFilter {
+    private final class DataTablePartialMarkupFilter implements PartialMarkupRendererFilter {
 
-        private final GridDataSource    source;
+        private final FilteringDataSource source;
 
-        private final GridSortModel     sortModel;
+        private final GridSortModel       sortModel;
 
-        private final int               records;
+        private final int                 records;
 
-        private final int               startIndex;
+        private final int                 startIndex;
 
-        private final String            sEcho;
+        private final String              sEcho;
 
-        private final int               totalRecords;
+        private final int                 totalRecords;
 
-        private final int               rowsPerPage;
+        private final int                 rowsPerPage;
 
-        private final PropertyOverrides overrides;
+        private final PropertyOverrides   overrides;
 
-        private final BeanModel         model;
+        private final BeanModel           model;
 
-        private PartialMarkupRendererFilterImplementation(GridDataSource source,
-                                                          GridSortModel sortModel,
-                                                          int startIndex,
-                                                          String sEcho,
-                                                          int rowsPerPage,
-                                                          PropertyOverrides overrides,
-                                                          BeanModel model) {
+        private DataTablePartialMarkupFilter(FilteringDataSource source,
+                                             GridSortModel sortModel,
+                                             int startIndex,
+                                             String sEcho,
+                                             int rowsPerPage,
+                                             PropertyOverrides overrides,
+                                             BeanModel model) {
             this.source = source;
             this.sortModel = sortModel;
             this.overrides = overrides;
@@ -124,12 +117,7 @@ public class DataTable extends AbstractTable {
             this.startIndex = startIndex;
             this.rowsPerPage = rowsPerPage;
             this.records = source.getAvailableRows();
-            this.totalRecords = determineTotalRecords(source);
-        }
-
-        private int determineTotalRecords(GridDataSource source) {
-            return source instanceof FilteringDataSource ? ((FilteringDataSource) source).getTotalRows()
-                                                         : source.getAvailableRows();
+            this.totalRecords = source.getTotalRows();
         }
 
         @Override
@@ -190,7 +178,7 @@ public class DataTable extends AbstractTable {
                         setRow(obj);
 
                         RenderCommand renderCommand = DataTable.this.typeCoercer.coerce(override, RenderCommand.class);
-                        DataTable.this.pageRenderQueue.addPartialRenderer(renderCommand);
+                        DataTable.this.renderQueue.addPartialRenderer(renderCommand);
                         renderer.renderMarkup(writer, reply);
 
                         writer.end(); // the zoneContainer element
@@ -302,7 +290,7 @@ public class DataTable extends AbstractTable {
     private Environment                 environment;
 
     @Inject
-    private PageRenderQueue             pageRenderQueue;
+    private PageRenderQueue             renderQueue;
 
     @Inject
     private AjaxFormUpdateController    ajaxFormUpdateController;
@@ -312,7 +300,6 @@ public class DataTable extends AbstractTable {
 
     /**
      * Event method in order to get the data to display.
-     * @throws IOException
      */
     @OnEvent(value = DATA)
     void onData(Object context, //
@@ -328,32 +315,19 @@ public class DataTable extends AbstractTable {
             updateSortModel(sortingCols);
         }
 
-        final GridDataSource source = getSource();
+        FilteringDataSource source = getSource();
         BeanModel model = getDataModel();
-
-        if (source instanceof FilteringDataSource) {
-            ((FilteringDataSource) source).updateFilter(search, toFilterModel(model));
-        }
-        else {
-            /**
-             * Give a chance to the developer to update the GridDataSource to filter data server-side
-             * */
-            this.resources.triggerEvent(FILTER_DATA, new Object[] { search }, null);
-        }
-
         GridSortModel sortModel = getSortModel();
         PropertyOverrides overrides = getOverrides();
+
+        source.updateFilter(search, toFilterModel(model));
 
         /**
          * Add a filter to initialize the data to be sent to the client
          * */
-        this.pageRenderQueue.addPartialMarkupRendererFilter(new PartialMarkupRendererFilterImplementation(source,
-                                                                                                          sortModel,
-                                                                                                          startIndex,
-                                                                                                          sEcho,
-                                                                                                          rowsPerPage,
-                                                                                                          overrides,
-                                                                                                          model));
+        this.renderQueue.addPartialMarkupRendererFilter(new DataTablePartialMarkupFilter(source, sortModel, startIndex,
+                                                                                         sEcho, rowsPerPage, overrides,
+                                                                                         model));
 
         /**
          * Even if it will be done once again in AjaxComponentEventRequestHandler, we must call
@@ -383,7 +357,7 @@ public class DataTable extends AbstractTable {
             ColumnSort colSort = sortModel.getColumnSort(propName);
 
             if (!(InternalUtils.isNonBlank(colSort.name()) && colSort.name().startsWith(sord.toUpperCase()))) {
-                getSortModel().updateSort(propName);
+                sortModel.updateSort(propName);
             }
         }
 

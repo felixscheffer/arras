@@ -47,6 +47,8 @@ import org.apache.tapestry5.services.Request;
 import org.apache.tapestry5.services.TranslatorSource;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 
+import com.github.fscheffer.arras.FilteringDataSource;
+
 @SupportsInformalParameters
 public class AbstractTable implements ClientElement {
 
@@ -57,14 +59,14 @@ public class AbstractTable implements ClientElement {
      * around the underlying List.
      */
     @Parameter(required = true, autoconnect = true)
-    private GridDataSource     source;
+    private FilteringDataSource source;
 
     /**
      * Defines where the pager (used to navigate within the "pages" of results)
      * should be displayed: "top", "bottom", "both" or "none".
      */
     @Parameter(value = "top", defaultPrefix = BindingConstants.LITERAL)
-    private GridPagerPosition  pagerPosition;
+    private GridPagerPosition   pagerPosition;
 
     /**
      * The model used to identify the properties to be presented and the order
@@ -77,7 +79,7 @@ public class AbstractTable implements ClientElement {
      * explicitly provided one.
      */
     @Parameter
-    private BeanModel<?>       model;
+    private BeanModel<?>        model;
 
     /**
      * The number of rows of data displayed on each page. If there are more rows
@@ -86,7 +88,7 @@ public class AbstractTable implements ClientElement {
      * overall result set.
      */
     @Parameter(value = "25")
-    private int                rowsPerPage;
+    private int                 rowsPerPage;
 
     /**
      * The model used to handle sorting of the Grid. This is generally not
@@ -95,7 +97,7 @@ public class AbstractTable implements ClientElement {
      * descending) is stored as persistent fields of the Grid component.
      */
     @Parameter
-    private GridSortModel      sortModel;
+    private GridSortModel       sortModel;
 
     /**
      * A comma-seperated list of property names to be added to the
@@ -104,14 +106,14 @@ public class AbstractTable implements ClientElement {
      * is only used when a default model is created automatically.
      */
     @Parameter(defaultPrefix = BindingConstants.LITERAL)
-    private String             add;
+    private String              add;
 
     /**
      * Defines where block and label overrides are obtained from. By default,
      * the Grid component provides block overrides (from its block parameters).
      */
     @Parameter(value = "this", allowNull = false)
-    private PropertyOverrides  overrides;
+    private PropertyOverrides   overrides;
 
     /**
      * A comma-separated list of property names to be retained from the
@@ -121,7 +123,7 @@ public class AbstractTable implements ClientElement {
      * created automatically.
      */
     @Parameter(defaultPrefix = BindingConstants.LITERAL)
-    private String             include;
+    private String              include;
 
     /**
      * A comma-separated list of property names to be removed from the
@@ -130,7 +132,7 @@ public class AbstractTable implements ClientElement {
      * created automatically.
      */
     @Parameter(defaultPrefix = BindingConstants.LITERAL)
-    private String             exclude;
+    private String              exclude;
 
     /**
      * A comma-separated list of property names indicating the order in which
@@ -140,13 +142,13 @@ public class AbstractTable implements ClientElement {
      * created automatically.
      */
     @Parameter(defaultPrefix = BindingConstants.LITERAL)
-    private String             reorder;
+    private String              reorder;
 
     /**
      * The current value, set before the component renders its body.
      */
     @Parameter
-    private Object             value;
+    private Object              value;
 
     /**
      * If true, then the Grid will be wrapped in an element that acts like a
@@ -155,53 +157,53 @@ public class AbstractTable implements ClientElement {
      * it, but leaving the rest of the page (outside the zone) unchanged.
      */
     @Parameter
-    private boolean            inPlace;
+    private boolean             inPlace;
 
     /**
      * The model parameter after modification due to the add, include, exclude
      * and reorder parameters.
      */
-    private BeanModel<?>       dataModel;
+    private BeanModel<?>        dataModel;
 
     @Inject
-    private JavaScriptSupport  javaScriptSupport;
+    private JavaScriptSupport   javaScriptSupport;
 
     @Inject
-    private ComponentResources resources;
+    private ComponentResources  resources;
 
     @Inject
-    private BeanModelSource    modelSource;
+    private BeanModelSource     modelSource;
 
     @Inject
-    private TranslatorSource   translatorSource;
+    private TranslatorSource    translatorSource;
 
     @Persist
-    private Boolean            sortAscending;
+    private Boolean             sortAscending;
 
     @Persist
-    private String             sortColumnId;
+    private String              sortColumnId;
 
-    private String             clientId;
-
-    @Property
-    private Integer            index;
+    private String              clientId;
 
     @Property
-    private String             cellModel;
+    private Integer             index;
+
+    @Property
+    private String              cellModel;
 
     @Inject
-    private TypeCoercer        typeCoercer;
+    private TypeCoercer         typeCoercer;
 
     @Inject
-    private Request            request;
+    private Request             request;
 
     @Override
     public String getClientId() {
         if (InternalUtils.isBlank(this.clientId)) {
             this.clientId = InternalUtils.isNonBlank(this.resources.getInformalParameter("id", String.class))
-                                                                                                             ? this.resources.getInformalParameter("id",
-                                                                                                                                                   String.class)
-                                                                                                             : this.javaScriptSupport.allocateClientId(this.resources);
+                ? this.resources.getInformalParameter("id",
+                                                      String.class)
+                                                      : this.javaScriptSupport.allocateClientId(this.resources);
         }
         return this.clientId;
     }
@@ -236,7 +238,7 @@ public class AbstractTable implements ClientElement {
         return this.dataModel;
     }
 
-    public GridDataSource getSource() {
+    public FilteringDataSource getSource() {
         return this.source;
     }
 
