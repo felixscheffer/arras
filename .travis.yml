@@ -19,7 +19,8 @@ env:
 
     # for debugging
     - BROWSER=chrome VERSION=28 PLATFORM=LINUX
-    - BROWSER=chrome VERSION=29 PLATFORM=LINUX
+    # fails like chrome 39
+    #  - BROWSER=chrome VERSION=29 PLATFORM=LINUX
 
 # audio player is not loading (due to a vm issue?)
 #    - BROWSER="internet explorer" VERSION=11
