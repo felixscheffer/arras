@@ -17,13 +17,13 @@
 		<dependency>
 			<groupId>org.apache.tapestry</groupId>
 			<artifactId>tapestry-core</artifactId>
-			<version>5.4-beta-22</version>
+			<version>${tapestry-version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.apache.tapestry</groupId>
 			<artifactId>tapestry-jpa</artifactId>
-			<version>5.4-beta-22</version>
+			<version>${tapestry-version}</version>
 		</dependency>
 		
 		<dependency>
