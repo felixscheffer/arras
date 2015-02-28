@@ -7,7 +7,7 @@ env:
     - REMOTE_URL=http://fscheffer:634bce7e-ddfd-4ae4-8ea2-c3bac682f796@ondemand.saucelabs.com:80/wd/hub
   matrix:
     # latest version of firefox
-    - BROWSER=firefox VERSION=34
+    - BROWSER=firefox VERSION=35
     # oldest firefox that is supported by the current firefox driver
     - BROWSER=firefox VERSION=23
     # latest version of chrome
