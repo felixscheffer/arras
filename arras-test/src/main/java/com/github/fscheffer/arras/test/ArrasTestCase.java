@@ -246,6 +246,11 @@ public abstract class ArrasTestCase {
         return ArrasConditions.absenceOfClasses(By.cssSelector(cssSelector), classes);
     }
 
+    protected static final ExpectedCondition<Boolean> attributeContains(String cssSelector, String attrName,
+                                                                        String value) {
+        return ArrasConditions.textToBePresentInAttribute(By.cssSelector(cssSelector), attrName, value);
+    }
+
     protected final <T> T waitUntil(ExpectedCondition<T> condition) {
         // Note: 10 sec is sometimes not enough
         int timeOutInSeconds = 30;

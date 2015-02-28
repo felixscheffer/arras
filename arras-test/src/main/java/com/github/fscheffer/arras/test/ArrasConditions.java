@@ -226,6 +226,22 @@ public class ArrasConditions {
         };
     }
 
+    public static ExpectedCondition<Boolean> textToBePresentInAttribute(final By locator, final String name,
+                                                                        final String expectedValue) {
+        return new ExpectedCondition<Boolean>() {
+
+            @Override
+            public Boolean apply(WebDriver driver) {
+
+                WebElement element = findElement(locator, driver);
+
+                String actualValue = element.getAttribute(name);
+
+                return actualValue.contains(expectedValue);
+            }
+        };
+    }
+
     public static ExpectedCondition<List<WebElement>> countOfElementsLocated(final By locator, final int count) {
 
         return new ExpectedCondition<List<WebElement>>() {
