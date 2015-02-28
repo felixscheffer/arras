@@ -206,7 +206,8 @@ public class DataTableIT extends ArrasTestCase {
     private void assertRowCount(int expected, String paginationInfo) {
 
         // give the DataTable time to show the ".datatable_processing"-element
-        sleep(250);
+        // Note: 250ms was not enough
+        sleep(500);
 
         // wait until DataTable has finished processing
         waitUntil(invisible(".datatable_processing"));
