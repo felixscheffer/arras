@@ -234,15 +234,15 @@ public abstract class ArrasTestCase {
         return ExpectedConditions.not(containsText(cssSelector, text));
     }
 
-    protected ExpectedCondition<Boolean> valueContainsText(String cssSelector, String text) {
+    protected static final ExpectedCondition<Boolean> valueContainsText(String cssSelector, String text) {
         return ExpectedConditions.textToBePresentInElementValue(By.cssSelector(cssSelector), text);
     }
 
-    protected ExpectedCondition<Boolean> classesPresent(String cssSelector, String... classes) {
+    protected static final ExpectedCondition<Boolean> classesPresent(String cssSelector, String... classes) {
         return ArrasConditions.presenceOfClasses(By.cssSelector(cssSelector), classes);
     }
 
-    protected ExpectedCondition<Boolean> classesNotPresent(String cssSelector, String... classes) {
+    protected static final ExpectedCondition<Boolean> classesNotPresent(String cssSelector, String... classes) {
         return ArrasConditions.absenceOfClasses(By.cssSelector(cssSelector), classes);
     }
 
