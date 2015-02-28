@@ -273,12 +273,7 @@ public abstract class ArrasTestCase {
         // and body[data-ajax-active] as appropriate.
 
         try {
-            // TODO: body[data-ajax-active=false] is broken in Prototype
-            //       This was fixed in tapestry-5.4-beta-23 which is a non-public beta
-            //       Once Tapesty releases a new beta change the selector to
-            //
-            //          body[data-ajax-active='0']
-            new WebDriverWait(driver(), 30, 250).until(present("body[data-ajax-active=false]"));
+            new WebDriverWait(driver(), 30, 250).until(present("body[data-ajax-active='0']"));
         }
         catch (TimeoutException e) {
             throw new AssertionError("Ajax request did not complete within 30 seconds.");
