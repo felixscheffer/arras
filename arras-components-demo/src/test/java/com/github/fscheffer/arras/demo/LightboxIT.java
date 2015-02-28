@@ -163,12 +163,8 @@ public class LightboxIT extends ArrasTestCase {
 
         String selector = "#cboxLoadedContent > img";
 
-        waitUntil(visible(selector));
-
-        String attr = attr(selector, "src");
-
         // ignore base url
-        Assert.assertTrue(attr.endsWith(expected), "Expected \"" + expected + "\", but got \"" + attr + "\"");
+        waitUntil(attributeContains(selector, "src", expected));
     }
 
 }
