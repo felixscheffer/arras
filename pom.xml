@@ -17,7 +17,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<tapestry-version>5.4-beta-22</tapestry-version>
+		<tapestry-version>5.4-beta-26</tapestry-version>
 	</properties>
 
 	<modules>
