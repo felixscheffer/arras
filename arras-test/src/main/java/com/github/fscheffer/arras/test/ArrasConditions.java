@@ -233,7 +233,14 @@ public class ArrasConditions {
             @Override
             public Boolean apply(WebDriver driver) {
 
-                WebElement element = findElement(locator, driver);
+                WebElement element;
+
+                try {
+                    element = findElement(locator, driver);
+                }
+                catch (StaleElementReferenceException e) {
+                    return null;
+                }
 
                 String actualValue = element.getAttribute(name);
 
