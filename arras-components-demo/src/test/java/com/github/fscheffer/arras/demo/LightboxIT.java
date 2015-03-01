@@ -73,7 +73,7 @@ public class LightboxIT extends ArrasTestCase {
         // fixed size
         openLightbox(By.linkText("San Joaquin River (Fixed size)"));
 
-        WebElement wrapper = element(By.cssSelector("#cboxWrapper"));
+        WebElement wrapper = element("#cboxWrapper");
 
         Assert.assertEquals(wrapper.getCssValue("height"), "700px");
         Assert.assertEquals(wrapper.getCssValue("width"), "500px");
@@ -85,18 +85,19 @@ public class LightboxIT extends ArrasTestCase {
         // fixed size in percent
         openLightbox(By.linkText("Rocky cliffs (Fixed size in percent)"));
 
-        Assert.assertTrue(equals(wrapper.getCssValue("width"), viewport.width * 0.5));
-        Assert.assertTrue(equals(wrapper.getCssValue("height"), viewport.height * 0.75));
+        assertPixelValue(wrapper.getCssValue("width"), viewport.width * 0.5);
+        assertPixelValue(wrapper.getCssValue("height"), viewport.height * 0.75);
 
         closeLightbox();
     }
 
-    private boolean equals(String cssValue, double numericValue) {
+    private void assertPixelValue(String actualValue, double expectedValue) {
 
-        String floor = (int) Math.floor(numericValue) + "px";
-        String ceil = (int) Math.ceil(numericValue) + "px";
+        String floor = (int) Math.floor(expectedValue) + "px";
+        String ceil = (int) Math.ceil(expectedValue) + "px";
 
-        return floor.equals(cssValue) || ceil.equals(cssValue);
+        Assert.assertTrue(floor.equals(actualValue) || ceil.equals(actualValue), "Expected " + expectedValue
+                                                                                 + "but got " + actualValue);
     }
 
     @Test
