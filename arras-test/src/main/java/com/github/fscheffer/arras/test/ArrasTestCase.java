@@ -253,7 +253,7 @@ public abstract class ArrasTestCase {
 
     protected final <T> T waitUntil(ExpectedCondition<T> condition) {
         // Note: 10 sec is sometimes not enough
-        int timeOutInSeconds = 30;
+        int timeOutInSeconds = 45;
         int sleepInMillis = 200;
         return new WebDriverWait(driver(), timeOutInSeconds, sleepInMillis).until(condition);
     }
@@ -273,7 +273,7 @@ public abstract class ArrasTestCase {
         // and body[data-ajax-active] as appropriate.
 
         try {
-            new WebDriverWait(driver(), 30, 250).until(present("body[data-ajax-active='0']"));
+            waitUntil(present("body[data-ajax-active='0']"));
         }
         catch (TimeoutException e) {
             throw new AssertionError("Ajax request did not complete within 30 seconds.");
