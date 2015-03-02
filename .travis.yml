@@ -17,15 +17,11 @@ env:
     - BROWSER=chrome VERSION=26 PLATFORM=WINDOWS
     - BROWSER=chrome VERSION=26 PLATFORM=LINUX
 
-    - BROWSER=opera VERSION=12
-
-    # for debugging
-    - BROWSER=chrome VERSION=28 PLATFORM=LINUX
-    # fails like chrome 39
-    #  - BROWSER=chrome VERSION=29 PLATFORM=LINUX
+	# player issues, dropdown key interaction issue
+    # - BROWSER=opera VERSION=12
 
 # audio player is not loading (due to a vm issue?)
-    - BROWSER="internet explorer" VERSION=11
+#    - BROWSER="internet explorer" VERSION=11
 #    - BROWSER="internet explorer" VERSION=10
 
 addons:
