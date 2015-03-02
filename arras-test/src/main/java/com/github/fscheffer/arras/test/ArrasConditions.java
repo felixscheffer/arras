@@ -187,7 +187,7 @@ public class ArrasConditions {
 
             @Override
             public String toString() {
-                return "absence of classes " + classes.toString() + " on element located by " + locator;
+                return "absence of classes " + Arrays.toString(classes) + " on element located by " + locator;
             }
         };
     }
@@ -245,6 +245,11 @@ public class ArrasConditions {
                 String actualValue = element.getAttribute(name);
 
                 return actualValue.contains(expectedValue);
+            }
+
+            @Override
+            public String toString() {
+                return "attribute " + name + " contains value " + expectedValue + " on element located by: " + locator;
             }
         };
     }
