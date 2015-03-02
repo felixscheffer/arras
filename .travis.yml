@@ -17,7 +17,7 @@ env:
     - BROWSER=chrome VERSION=26 PLATFORM=WINDOWS
     - BROWSER=chrome VERSION=26 PLATFORM=LINUX
 
-	# player issues, dropdown key interaction issue
+    # player issues, dropdown key interaction issue
     # - BROWSER=opera VERSION=12
 
 # audio player is not loading (due to a vm issue?)
