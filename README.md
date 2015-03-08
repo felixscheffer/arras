@@ -51,6 +51,30 @@ To log in, just click on "sign in". You don't have to enter a username or a pass
 
 The war file is also available on Maven Central.
 
+## Arras Bootstrap
+
+A convenience module to add Bootstrap's less files to your project. 
+
+Override Tapestry's default bootstrap.css with your own less file (e.g. your-project.less)
+
+```
+    @Contribute(JavaScriptStack.class)
+    @Core
+    public static void overrideBootstrapCSS(OrderedConfiguration<StackExtension> conf) {
+        conf.override("bootstrap.css", StackExtension.stylesheet("META-INF/assets/your-project.less"));
+    }
+```
+
+Import Bootstrap's less files in your project's less file and adjust Bootstrap variables as you wish:
+
+```
+@import "arras/bootstrap/less/bootstrap.less";
+
+// adjust bootstrap here, e.g:
+@brand-primary:         purple;
+```
+
+
 ## Name
 Arras is [a city in France](http://en.wikipedia.org/wiki/Arras) which was specialized in fine wool tapestries in the 14th and 15th centuries. The term Arras is still used as a synonym for a rich tapestry. 
 
@@ -58,6 +82,8 @@ Arras is [a city in France](http://en.wikipedia.org/wiki/Arras) which was specia
 * 1.2.0 (unreleased)
  - added "dom" and "placeholder" parameters to DataTable
  - added LoadingOverlay mixin
+ - added Select2 and MultiSelect2 components (based on select2 js)
+ - added arras-bootstrap module
  
 * 1.1.2 (2014-11-27)
  - improved reliability of selenium tests
