@@ -45,6 +45,9 @@
 						<li>
 							<t:pagelink page="loadingOverlayDemo">Loading overlay</t:pagelink>
 						</li>
+						<li>
+							<t:pagelink page="select2Demo">Select2</t:pagelink>
+						</li>
 					</ul>
 				</div>
 			</div>

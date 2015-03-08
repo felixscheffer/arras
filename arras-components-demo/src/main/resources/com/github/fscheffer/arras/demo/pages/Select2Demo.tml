@@ -1,0 +1,14 @@
+<html t:type="Layout" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd">
+	<h1>Select2 Demo</h1>
+
+	<t:form t:id="select2Form" class="form">
+		<div class="form-group">
+			<t:arras.Select2 t:id="select" model="literal:London,New York, Berlin, Paris" />
+		</div>
+		<div class="form-group">
+			<t:arras.MultiSelect2 t:id="selectMultiple" encoder="stringEncoder" model="literal:London,New York, Berlin, Paris"  />
+		</div>
+
+		<t:submit class="btn btn-primary" />
+	</t:form>
+</html>
