@@ -1,0 +1,29 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.github.fscheffer</groupId>
+		<artifactId>arras</artifactId>
+		<version>1.2.0-SNAPSHOT</version>
+	</parent>
+	<artifactId>arras-bootstrap</artifactId>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.tapestry</groupId>
+			<artifactId>tapestry-webresources</artifactId>
+			<version>${tapestry-version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>less4j</artifactId>
+					<groupId>com.github.sommeri</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<artifactId>less4j</artifactId>
+			<groupId>com.github.sommeri</groupId>
+			<version>1.9.0</version>
+		</dependency>
+	</dependencies>
+</project>
