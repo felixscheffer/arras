@@ -16,7 +16,9 @@ import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.corelib.base.AbstractField;
 import org.apache.tapestry5.internal.util.SelectModelRenderer;
 
-@Import(module = "arras/select2", stylesheet = "select2.css")
+import com.github.fscheffer.arras.ArrasConstants;
+
+@Import(module = "arras/select2", stylesheet = ArrasConstants.SELECT2_CSS_PATH_VALUE)
 public class MultiSelect2 extends AbstractField {
 
     /**
@@ -57,25 +59,25 @@ public class MultiSelect2 extends AbstractField {
 
     public final Renderable        mainRenderer = new Renderable() {
 
-                                                    @Override
-                                                    public void render(MarkupWriter writer) {
-                                                        SelectModelRenderer visitor = new SelectModelRenderer(
-                                                                                                              writer,
-                                                                                                              MultiSelect2.this.encoder,
-                                                                                                              false) {
+        @Override
+        public void render(MarkupWriter writer) {
+            SelectModelRenderer visitor = new SelectModelRenderer(
+                                                                  writer,
+                                                                  MultiSelect2.this.encoder,
+                                                                  false) {
 
-                                                            @Override
-                                                            protected boolean isOptionSelected(OptionModel optionModel,
-                                                                                               String clientValue) {
+                @Override
+                protected boolean isOptionSelected(OptionModel optionModel,
+                                                   String clientValue) {
 
-                                                                return MultiSelect2.this.selected.contains(optionModel.getValue());
-                                                            }
+                    return MultiSelect2.this.selected.contains(optionModel.getValue());
+                }
 
-                                                        };
+            };
 
-                                                        MultiSelect2.this.model.visit(visitor);
-                                                    }
-                                                };
+            MultiSelect2.this.model.visit(visitor);
+        }
+    };
 
     @Override
     protected void processSubmission(String controlName) {

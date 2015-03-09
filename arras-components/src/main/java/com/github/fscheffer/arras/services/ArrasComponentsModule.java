@@ -45,6 +45,7 @@ public class ArrasComponentsModule {
 
         conf.add(ArrasConstants.LIGHTBOX_CSS_PATH, "colorbox/example1/colorbox.css");
         conf.add(ArrasConstants.PLAYER_CSS_PATH, "video-js/video-js.css");
+        conf.add(ArrasConstants.SELECT2_CSS_PATH, "select2.css");
     }
 
     @Contribute(ModuleManager.class)
@@ -65,12 +66,12 @@ public class ArrasComponentsModule {
         conf.add(CoercionTuple.create(Collection.class, FilteringDataSource.class,
                                       new Coercion<Collection, FilteringDataSource>() {
 
-                                          @Override
-                                          public FilteringDataSource coerce(Collection input) {
+            @Override
+            public FilteringDataSource coerce(Collection input) {
 
-                                              return new CollectionFilteringDataSource(input);
-                                          }
-                                      }));
+                return new CollectionFilteringDataSource(input);
+            }
+        }));
     }
 
     public static void contributeContentTypeAnalyzer(MappedConfiguration<String, String> conf) {

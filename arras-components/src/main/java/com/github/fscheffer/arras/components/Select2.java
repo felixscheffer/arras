@@ -5,7 +5,9 @@ import org.apache.tapestry5.annotations.AfterRender;
 import org.apache.tapestry5.annotations.Import;
 import org.apache.tapestry5.corelib.components.Select;
 
-@Import(module = "arras/select2", stylesheet = "select2.css")
+import com.github.fscheffer.arras.ArrasConstants;
+
+@Import(module = "arras/select2", stylesheet = ArrasConstants.SELECT2_CSS_PATH_VALUE)
 public class Select2 extends Select {
 
     @AfterRender

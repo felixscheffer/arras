@@ -23,6 +23,10 @@ public class ArrasConstants {
 
     public static final String PLAYER_CSS_PATH_VALUE   = "${" + PLAYER_CSS_PATH + "}";
 
+    public static final String SELECT2_CSS_PATH        = "arras.select2.css-path";
+
+    public static final String SELECT2_CSS_PATH_VALUE  = "${" + SELECT2_CSS_PATH + "}";
+
     // events
     public static final String UPDATE_CONTENT          = "updateContent";
 }
