@@ -16,7 +16,6 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import org.apache.tapestry5.Asset;
 import org.apache.tapestry5.ClientElement;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.MarkupWriter;
@@ -24,7 +23,6 @@ import org.apache.tapestry5.annotations.AfterRender;
 import org.apache.tapestry5.annotations.BeginRender;
 import org.apache.tapestry5.annotations.Import;
 import org.apache.tapestry5.annotations.Parameter;
-import org.apache.tapestry5.annotations.Path;
 import org.apache.tapestry5.annotations.SupportsInformalParameters;
 import org.apache.tapestry5.dom.Element;
 import org.apache.tapestry5.ioc.internal.util.InternalUtils;
@@ -34,7 +32,7 @@ import com.github.fscheffer.arras.ArrasConstants;
 import com.github.fscheffer.arras.PlayerSource;
 
 @SupportsInformalParameters
-@Import(module = { "arras/player" })
+@Import(module = "arras/player", stylesheet = ArrasConstants.PLAYER_CSS_PATH_VALUE)
 public class Player implements ClientElement {
 
     @Parameter(required = true, allowNull = false, autoconnect = true)
@@ -67,18 +65,12 @@ public class Player implements ClientElement {
     @Inject
     private JavaScriptSupport  support;
 
-    @Inject
-    @Path(ArrasConstants.PLAYER_CSS_PATH_VALUE)
-    private Asset              cssFile;
-
     private Element            tag;
 
     private String             uniqueId;
 
     @BeginRender
     void begin(MarkupWriter writer) {
-
-        this.support.importStylesheet(this.cssFile);
 
         this.tag = writer.element("div", "data-component-type", "player");
 

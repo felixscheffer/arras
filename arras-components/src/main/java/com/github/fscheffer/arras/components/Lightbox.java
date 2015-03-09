@@ -14,7 +14,6 @@ package com.github.fscheffer.arras.components;
 
 import javax.inject.Inject;
 
-import org.apache.tapestry5.Asset;
 import org.apache.tapestry5.BindingConstants;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.MarkupWriter;
@@ -22,16 +21,13 @@ import org.apache.tapestry5.annotations.AfterRender;
 import org.apache.tapestry5.annotations.BeginRender;
 import org.apache.tapestry5.annotations.Import;
 import org.apache.tapestry5.annotations.Parameter;
-import org.apache.tapestry5.annotations.Path;
-import org.apache.tapestry5.annotations.SetupRender;
 import org.apache.tapestry5.annotations.SupportsInformalParameters;
 import org.apache.tapestry5.ioc.internal.util.InternalUtils;
-import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 
 import com.github.fscheffer.arras.ArrasConstants;
 import com.github.fscheffer.arras.ArrasUtils;
 
-@Import(module = "arras/lightbox")
+@Import(module = "arras/lightbox", stylesheet = ArrasConstants.LIGHTBOX_CSS_PATH_VALUE)
 @SupportsInformalParameters
 public class Lightbox {
 
@@ -92,23 +88,10 @@ public class Lightbox {
     private String             zone;
 
     @Inject
-    @Path(ArrasConstants.LIGHTBOX_CSS_PATH_VALUE)
-    private Asset              cssFile;
-
-    @Inject
     private ComponentResources resources;
-
-    @Inject
-    private JavaScriptSupport  support;
-
-    @SetupRender
-    void setup() {
-        this.support.importStylesheet(this.cssFile);
-    }
 
     @BeginRender
     void begin(MarkupWriter writer) {
-
         writer.element("a", "data-container-type", "lightbox");
     }
 
