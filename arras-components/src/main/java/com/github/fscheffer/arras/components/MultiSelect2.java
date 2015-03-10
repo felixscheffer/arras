@@ -13,11 +13,13 @@ import org.apache.tapestry5.ValidationException;
 import org.apache.tapestry5.ValueEncoder;
 import org.apache.tapestry5.annotations.Import;
 import org.apache.tapestry5.annotations.Parameter;
+import org.apache.tapestry5.annotations.SupportsInformalParameters;
 import org.apache.tapestry5.corelib.base.AbstractField;
 import org.apache.tapestry5.internal.util.SelectModelRenderer;
 
 import com.github.fscheffer.arras.ArrasConstants;
 
+@SupportsInformalParameters
 @Import(module = "arras/select2", stylesheet = ArrasConstants.SELECT2_CSS_PATH_VALUE)
 public class MultiSelect2 extends AbstractField {
 
@@ -57,6 +59,9 @@ public class MultiSelect2 extends AbstractField {
     @SuppressWarnings("unchecked")
     private FieldValidator<Object> validate;
 
+    @Parameter(defaultPrefix = BindingConstants.LITERAL)
+    private String                 placeholder;
+
     public final Renderable        mainRenderer = new Renderable() {
 
         @Override
@@ -83,6 +88,10 @@ public class MultiSelect2 extends AbstractField {
     protected void processSubmission(String controlName) {
 
         String[] parameterValues = this.request.getParameters(controlName);
+
+        if (parameterValues == null) {
+            parameterValues = new String[] {};
+        }
 
         // Use a couple of local variables to cut down on access via bindings
 
@@ -118,6 +127,10 @@ public class MultiSelect2 extends AbstractField {
     void beginRender(MarkupWriter writer) {
         writer.element("select", "name", getControlName(), "multiple", "multiple", "disabled", getDisabledValue(),
                        "data-component-type", "select2", "class", "form-control");
+
+        if (this.placeholder != null) {
+            writer.attributes("data-placeholder", this.placeholder);
+        }
 
         this.resources.renderInformalParameters(writer);
     }
