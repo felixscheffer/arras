@@ -7,6 +7,10 @@
 	</parent>
 	<artifactId>arras-bootstrap</artifactId>
 
+	<name>Arras Bootstrap</name>
+	<description>Arras Bootstrap provides simple way to include Twitter Bootstrap's less files into a project.</description>
+	<url>https://github.com/fscheffer/arras</url>
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.tapestry</groupId>
