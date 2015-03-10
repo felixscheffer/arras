@@ -83,7 +83,9 @@ Arras is [a city in France](http://en.wikipedia.org/wiki/Arras) which was specia
  - added "dom" and "placeholder" parameters to DataTable
  - added LoadingOverlay mixin
  - added Select2 and MultiSelect2 components (based on select2 js)
+ - added DataSourceLoop component
  - added arras-bootstrap module
+ - added arras-mail module
  
 * 1.1.2 (2014-11-27)
  - improved reliability of selenium tests
