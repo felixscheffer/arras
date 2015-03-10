@@ -1,0 +1,8 @@
+/target/
+/build/
+
+# eclipse specific
+/.settings/
+.classpath
+.project
+/release.properties

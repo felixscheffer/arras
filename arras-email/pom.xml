@@ -1,0 +1,41 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.github.fscheffer</groupId>
+		<artifactId>arras</artifactId>
+		<version>1.2.0-SNAPSHOT</version>
+	</parent>
+	<artifactId>arras-email</artifactId>
+
+	<name>Arras Mail</name>
+	<description>Arras Mail provides simple mailing functionality based on Apache commons-email for Apache Tapestry 5.4 projects.</description>
+	<url>https://github.com/fscheffer/arras</url>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.tapestry</groupId>
+			<artifactId>tapestry-ioc</artifactId>
+			<version>${tapestry-version}</version>
+		</dependency>
+		
+		<!-- for SymbolConstants.PRODUCTION_MODE -->
+		<dependency>
+			<groupId>org.apache.tapestry</groupId>
+			<artifactId>tapestry-core</artifactId>
+			<version>${tapestry-version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-email</artifactId>
+			<version>1.3.3</version>
+			<exclusions>
+				<exclusion>
+					<!-- 01.09.2013, FS: should be part of JDK since java 1.6 -->
+					<artifactId>activation</artifactId>
+					<groupId>javax.activation</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+	</dependencies>
+</project>

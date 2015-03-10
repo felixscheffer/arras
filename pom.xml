@@ -27,6 +27,7 @@
 		<module>arras-cms-demo</module>
 		<module>arras-test</module>
 		<module>arras-bootstrap</module>
+		<module>arras-email</module>
 	</modules>
 
 	<licenses>
