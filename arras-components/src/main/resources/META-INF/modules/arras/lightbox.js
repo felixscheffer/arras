@@ -13,7 +13,7 @@
 (function() {
 	define(["jquery", "shim/jquery.colorbox", "t5/core/dom"], function($, colorbox, dom) {
 		
-		var supportedOptions = ["rel", "transition", "height", "width", "innerWidth", "innerHeight", "inline", "fixed", "slideshow", "iframe"];
+		var supportedOptions = ["rel", "transition", "height", "width", "innerWidth", "innerHeight", "maxWidth", "maxHeight", "inline", "fixed", "slideshow", "iframe"];
 		
 		dom.scanner("[data-container-type=lightbox]", function(elementWrapper) {
 			

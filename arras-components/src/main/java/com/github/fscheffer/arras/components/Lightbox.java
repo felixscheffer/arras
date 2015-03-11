@@ -58,6 +58,12 @@ public class Lightbox {
     private String             height;
 
     @Parameter(defaultPrefix = BindingConstants.LITERAL)
+    private String             maxWidth;
+
+    @Parameter(defaultPrefix = BindingConstants.LITERAL)
+    private String             maxHeight;
+
+    @Parameter(defaultPrefix = BindingConstants.LITERAL)
     private String             transition;
 
     @Parameter(defaultPrefix = BindingConstants.LITERAL)
@@ -119,6 +125,8 @@ public class Lightbox {
         ArrasUtils.addOption(writer, "fixed", this.fixed);
         ArrasUtils.addOption(writer, "height", this.height);
         ArrasUtils.addOption(writer, "width", this.width);
+        ArrasUtils.addOption(writer, "maxHeight", this.maxHeight);
+        ArrasUtils.addOption(writer, "maxWidth", this.maxWidth);
 
         if (!this.scrolling) {
             ArrasUtils.addDataAttribute(writer, "scrolling", false);
