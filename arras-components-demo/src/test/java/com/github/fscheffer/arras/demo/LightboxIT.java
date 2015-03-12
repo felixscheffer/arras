@@ -166,6 +166,9 @@ public class LightboxIT extends ArrasTestCase {
 
         // ignore base url
         waitUntil(attributeContains(selector, "src", expected));
+
+        // avoid race condition
+        waitUntil(visible(selector));
     }
 
 }
