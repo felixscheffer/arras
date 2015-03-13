@@ -28,7 +28,7 @@ public class DataSourceLoop {
     @Parameter(required = true)
     private int                  rowsPerPage;
 
-    @Parameter(value = "emptyList")
+    @Parameter
     private List<SortConstraint> sorting;
 
     @Parameter(defaultPrefix = BindingConstants.LITERAL)
