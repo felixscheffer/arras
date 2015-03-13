@@ -29,7 +29,7 @@ public class DataSourceLoop {
     private int                  rowsPerPage;
 
     @Parameter(value = "emptyList")
-    private List<SortConstraint> sortConstraints;
+    private List<SortConstraint> sorting;
 
     @Parameter(defaultPrefix = BindingConstants.LITERAL)
     private Block                empty;
@@ -42,12 +42,12 @@ public class DataSourceLoop {
         this.index = this.rowsPerPage * this.currentPage;
         this.endIndex = Math.min(this.rowsPerPage * (this.currentPage + 1), this.source.getAvailableRows()) - 1;
 
-        this.source.prepare(this.index, this.endIndex, this.sortConstraints);
+        this.source.prepare(this.index, this.endIndex, this.sorting != null ? this.sorting : emptySortConstraints());
 
         return this.index <= this.endIndex;
     }
 
-    public List<SortConstraint> getEmptyList() {
+    private List<SortConstraint> emptySortConstraints() {
         return Collections.emptyList();
     }
 
