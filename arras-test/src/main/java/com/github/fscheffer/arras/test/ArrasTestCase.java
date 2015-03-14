@@ -230,6 +230,10 @@ public abstract class ArrasTestCase {
         return ExpectedConditions.textToBePresentInElementLocated(By.cssSelector(cssSelector), text);
     }
 
+    protected static final ExpectedCondition<Boolean> equalsText(String cssSelector, String text) {
+        return ArrasConditions.textToBeEqualInElementLocated(By.cssSelector(cssSelector), text);
+    }
+
     protected static final ExpectedCondition<Boolean> notContainsText(String cssSelector, String text) {
         return ExpectedConditions.not(containsText(cssSelector, text));
     }
