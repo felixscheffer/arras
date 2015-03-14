@@ -44,8 +44,8 @@ public class SimpleIT extends ArrasTestCase {
 
         click("#logout");
 
-        waitUntil(containsText("h1", "An even better headline!"));
-        waitUntil(containsText("h2", "And an amazing subtitle..."));
+        waitUntil(equalsText("h1", "An even better headline!"));
+        waitUntil(equalsText("h2", "And an amazing subtitle..."));
 
         this.module.assertImage(".content-image > img", "/photos/paris/eiffel-tower.jpg");
     }
@@ -62,7 +62,7 @@ public class SimpleIT extends ArrasTestCase {
 
         sendKeys(selector, keys);
 
-        waitUntil(containsText(selector, value));
+        waitUntil(equalsText(selector, value));
     }
 
     private String buildKeys(int length, String value) {
