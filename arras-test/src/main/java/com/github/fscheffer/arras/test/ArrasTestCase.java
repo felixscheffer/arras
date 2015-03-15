@@ -157,6 +157,10 @@ public abstract class ArrasTestCase {
     }
 
     protected final void hover(String cssSelector) {
+        moveTo(cssSelector);
+    }
+
+    protected final void moveTo(String cssSelector) {
         new Actions(driver()).moveToElement(element(cssSelector)).perform();
     }
 
