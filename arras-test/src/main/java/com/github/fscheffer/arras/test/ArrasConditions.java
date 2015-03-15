@@ -309,7 +309,7 @@ public class ArrasConditions {
             public Boolean apply(WebDriver driver) {
                 try {
                     String elementText = findElement(locator, driver).getText();
-                    return elementText.contains(text);
+                    return elementText.equals(text);
                 }
                 catch (StaleElementReferenceException e) {
                     return null;
