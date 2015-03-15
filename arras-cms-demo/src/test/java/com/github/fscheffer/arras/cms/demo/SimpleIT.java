@@ -69,6 +69,10 @@ public class SimpleIT extends ArrasTestCase {
 
         StringBuilder sb = new StringBuilder();
 
+        // work around for Chrome, which places the cursor at the end of the line
+        // the actual cursor position should be equal to the position of the click
+        sb.append(Keys.HOME);
+
         for (int i = 0; i < length; i++) {
             sb.append(Keys.DELETE);
         }
