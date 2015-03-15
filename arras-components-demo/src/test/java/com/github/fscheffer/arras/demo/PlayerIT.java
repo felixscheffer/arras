@@ -15,6 +15,9 @@ public class PlayerIT extends ArrasTestCase {
     @Test
     public void testVideoPlayer() {
 
+        // for debugging, show the complete video player
+        moveTo("#video");
+
         click("#video .vjs-big-play-button");
 
         // wait for the click
