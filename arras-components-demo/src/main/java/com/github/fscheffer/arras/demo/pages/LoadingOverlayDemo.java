@@ -16,7 +16,7 @@ public class LoadingOverlayDemo {
     Block onTrigger() {
 
         try {
-            Thread.sleep(500000);
+            Thread.sleep(20000);
         }
         catch (InterruptedException e) {}
 
