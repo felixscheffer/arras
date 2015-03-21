@@ -38,16 +38,16 @@ public class BlocksIT extends ArrasTestCase {
         WebElement addButton = element("#variableNumber [data-component-type=content-add]");
 
         addButton.click();
-        sleep(100);
-        addButton.click();
-        sleep(100);
-        addButton.click();
-        sleep(100);
-        addButton.click();
-        sleep(100);
-
-        waitUntil(count("#variableNumber .content-block", 4));
         waitUntil(visible("#variableNumber .content-block"));
+
+        addButton.click();
+        waitUntil(count("#variableNumber .content-block", 2));
+
+        addButton.click();
+        waitUntil(count("#variableNumber .content-block", 3));
+
+        addButton.click();
+        waitUntil(count("#variableNumber .content-block", 4));
 
         click("[data-container-type=remote-submit]");
 
