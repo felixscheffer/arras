@@ -67,6 +67,13 @@ public class ArrasUtils {
         }
     }
 
+    public static final void addNonNullOption(MarkupWriter writer, String option, Object value) {
+
+        if (value != null) {
+            addDataAttribute(writer, option, value);
+        }
+    }
+
     public static final void addDataAttribute(MarkupWriter writer, String option, Object value) {
         writer.attributes("data-" + option, value);
     }
