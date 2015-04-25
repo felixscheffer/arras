@@ -53,7 +53,7 @@
   position: absolute;
   left: -100000px;
   width: 100%;
-  z-index: 10051; }
+  z-index: 1051; }
 
 .select2-results {
   display: block; }
@@ -111,6 +111,16 @@
   z-index: 99;
   background-color: #fff;
   filter: alpha(opacity=0); }
+
+.select2-hidden-accessible {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px; }
 
 .select2-container--default .select2-selection--single {
   background-color: #fff;
