@@ -27,7 +27,7 @@
 		<dependency>
 			<artifactId>less4j</artifactId>
 			<groupId>com.github.sommeri</groupId>
-			<version>1.9.0</version>
+			<version>1.11.0</version>
 		</dependency>
 	</dependencies>
 </project>
