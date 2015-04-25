@@ -207,9 +207,17 @@ public class ArrasConditions {
             @Override
             public WebElement apply(WebDriver driver) {
 
-                WebElement element = findElement(locator, driver);
+                WebElement element;
+                String actualValue;
 
-                String actualValue = element.getAttribute(name);
+                try {
+                    element = findElement(locator, driver);
+
+                    actualValue = element.getAttribute(name);
+                }
+                catch (StaleElementReferenceException e) {
+                    return null;
+                }
 
                 // Note: if null is the expected value, return true
                 if (expectedValue == actualValue || expectedValue.equals(actualValue)) {
