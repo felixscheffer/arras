@@ -161,7 +161,11 @@ public abstract class ArrasTestCase {
     }
 
     protected final void moveTo(String cssSelector) {
-        new Actions(driver()).moveToElement(element(cssSelector)).perform();
+        actions().moveToElement(element(cssSelector)).perform();
+    }
+
+    protected final Actions actions() {
+        return new Actions(driver());
     }
 
     protected final String css(String cssSelector, String property) {
