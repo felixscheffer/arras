@@ -8,11 +8,14 @@ public class ImageComponentModule extends ArrasTestCase {
 
     public void changeImage(String selector, int imageIdInLIghtbox) {
 
+        String imageSelector = selector + " .content-image [data-container-type=lightbox]";
+
         hover(selector + " .content-image");
 
-        waitUntil(visible(selector + " .content-image [data-container-type=lightbox]"));
+        waitUntil(visible(imageSelector));
 
-        click(selector + " .content-image [data-container-type=lightbox]");
+        // use mouse action click here instead of click(element) or selenium thinks the element is not visible
+        actions().click(element(imageSelector)).perform();
 
         waitUntil(visible("#cboxLoadedContent"));
 
